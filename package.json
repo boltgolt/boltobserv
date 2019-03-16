@@ -1,0 +1,14 @@
+{
+  "name": "boltobserv",
+  "version": "0.0.1",
+  "description": "External support for CSGO observers",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^4.1.0"
+  }
+}
