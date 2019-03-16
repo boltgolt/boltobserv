@@ -50,4 +50,4 @@ let server = http.createServer(function(req, res) {
 })
 
 server.listen(port, host)
-console.log(`Active at http://${host}:${port}`)
+console.info(`Active at http://${host}:${port}`)

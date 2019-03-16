@@ -3,14 +3,30 @@
 	<head>
 		<link rel="stylesheet" href="../style/main.css">
 		<link rel="stylesheet" href="../style/waiting.css">
+
 		<meta charset="utf-8">
-		<title>Boltobserv</title>
+		<title>Boltobserv - Waiting for CSGO</title>
 	</head>
 	<body>
 		<div>
+			<img src="../img/icon.svg">
 			<div id="noconnection">
 				Waiting for CSGO to connect...
 			</div>
 		</div>
+
+		<script>
+			require("electron").ipcRenderer.on("connection", (event, data) => {
+				let output = "CSGO instance "
+
+				if (data.player) {
+					output += `from ${data.player} `
+				}
+
+				output += "connected. <br /> Waiting for map..."
+
+				document.getElementById("noconnection").innerHTML = output
+			})
+		</script>
 	</body>
 </html>

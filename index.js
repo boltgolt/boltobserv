@@ -1,19 +1,29 @@
 const path = require("path")
 const electron = require("electron")
-const events = require("events")
 const child_process = require('child_process')
 
 const app = electron.app
-global.bus = new events.EventEmitter()
+
+let hasMap = false
 
 function createWindow () {
 	let win = new electron.BrowserWindow({
 		width: 600,
 		height: 600,
+		minHeight: 100,
+		minWidth: 100,
 		frame: false,
 		resizable: true,
 		nodeIntegration: false,
-		icon: path.join(__dirname, "img/icon-64x64.png")
+		enableLargerThanScreen: true,
+		darkTheme: true,
+		title: "Boltobserv",
+		backgroundColor: "#000",
+		icon: path.join(__dirname, "img/icon-64x64.png"),
+
+		webPreferences: {
+			nodeIntegration: true
+		}
 	})
 
 	win.loadFile("html/waiting.html")
@@ -21,12 +31,29 @@ function createWindow () {
 	let http = child_process.fork(`${__dirname}/http.js`)
 
 	http.on("message", (message) => {
-		bus.emit(message.type, message.data)
+		win.webContents.send(message.type, message.data)
+
+		if (message.type == "connection") {
+			if (message.data.status == "up") {
+				console.info("CSGO has pinged server, connection established")
+			}
+		}
+		else if (!hasMap) {
+			if (message.type == "map") {
+				win.loadFile("html/map.html")
+				console.info(`Map ${message.data} selected`)
+
+				win.webContents.on("did-finish-load", () => {
+					console.log("load")
+					win.webContents.send(message.type, message.data)
+				})
+
+				hasMap = true
+			}
+		}
+
 		console.log(message)
 	})
-
-	// app.server = require("./http.js")
-
 }
 
 app.on("ready", createWindow)
