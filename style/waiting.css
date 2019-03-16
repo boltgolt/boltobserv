@@ -1,0 +1,10 @@
+body > div {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#noconnection {
+	font-size: 4vh;
+	text-align: center;
+}
