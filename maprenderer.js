@@ -43,16 +43,20 @@ renderer.on("players", (event, players) => {
 		}
 
 		let playerElement  = document.getElementById("player" + player.num)
+		let classes = ["player", player.team]
 
-		if (player.alive) {
-			playerElement.className = player.team
-			playerElement.style.display = "block"
+		if (!player.alive) {
+			classes.push("dead")
+		}
 
-			playerElement.style.left = percentPosition.x + "%"
-			playerElement.style.bottom = percentPosition.y + "%"
+		if (player.bomb) {
+			classes.push("bomb")
 		}
-		else {
-			playerElement.style.display = "none"
-		}
+
+		playerElement.className = classes.join(" ")
+		playerElement.style.display = "block"
+
+		playerElement.style.left = percentPosition.x + "%"
+		playerElement.style.bottom = percentPosition.y + "%"
 	}
 })

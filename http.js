@@ -47,19 +47,31 @@ let server = http.createServer(function(req, res) {
 			})
 		}
 
+		console.log("msg")
+		console.log(JSON.stringify(game))
 		if (game.allplayers) {
 			let playerArr = []
+
 
 			for (let i in game.allplayers) {
 				if (!Number.isInteger(game.allplayers[i].observer_slot)) continue
 
 				let player = game.allplayers[i]
 				let pos = player.position.split(", ")
+				let hasBomb = false
+
+				for (let t in player.weapons) {
+					if (player.weapons[t].name == "weapon_c4") {
+						hasBomb = true
+						break
+					}
+				}
 
 				playerArr.push({
 					num: player.observer_slot,
 					team: player.team,
 					alive: player.state.health > 0,
+					bomb: hasBomb,
 					position: {
 						x: parseFloat(pos[0]),
 						y: parseFloat(pos[1]),

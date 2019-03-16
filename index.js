@@ -52,7 +52,7 @@ function createWindow () {
 			}
 		}
 
-		console.log(message)
+		// console.log(message)
 	})
 }
 
