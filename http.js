@@ -21,7 +21,7 @@ let server = http.createServer(function(req, res) {
 
 		let game = JSON.parse(body)
 
-		console.log(">", game)
+		// console.log(">", game)
 
 		if (!hasConnection && game.provider) {
 			let connObject = {
@@ -44,6 +44,34 @@ let server = http.createServer(function(req, res) {
 			process.send({
 				type: "map",
 				data: game.map.name
+			})
+		}
+
+		if (game.allplayers) {
+			let playerArr = []
+
+			for (let i in game.allplayers) {
+				if (!Number.isInteger(game.allplayers[i].observer_slot)) continue
+
+				let player = game.allplayers[i]
+				let pos = player.position.split(", ")
+
+				playerArr.push({
+					num: player.observer_slot,
+					team: player.team,
+					alive: player.state.health > 0,
+					position: {
+						x: parseFloat(pos[0]),
+						y: parseFloat(pos[1]),
+						z: parseFloat(pos[2])
+					}
+				})
+			}
+			// console.log(playerArr)
+
+			process.send({
+				type: "players",
+				data: playerArr
 			})
 		}
 	})
