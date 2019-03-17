@@ -44,7 +44,6 @@ function createWindow () {
 				console.info(`Map ${message.data} selected`)
 
 				win.webContents.on("did-finish-load", () => {
-					console.log("load")
 					win.webContents.send(message.type, message.data)
 				})
 

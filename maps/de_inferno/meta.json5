@@ -20,16 +20,20 @@
 	// Defined in in-game units
 	"bombsites": {
 		"a": {
-			"x1": 200,
-			"y1": 200,
-			"x2": 200,
-			"y2": 200
+			// Bottom left point
+			"x1": 120,
+			"y1": 2560,
+			// Top right point
+			"x2": 650,
+			"y2": 3130
 		},
 		"b": {
-			"x1": 200,
-			"y1": 200,
-			"x2": 200,
-			"y2": 200
+			// Bottom left point
+			"x1": 1780,
+			"y1": 180,
+			// Top right point
+			"x2": 2220,
+			"y2": 800
 		}
 	},
 
