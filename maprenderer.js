@@ -75,7 +75,7 @@ renderer.on("players", (event, data) => {
 
 	let advisory = {
 		"type": "none",
-		"player": "none"
+		"player": "?"
 	}
 
 	let playersOnSites = []
@@ -97,15 +97,18 @@ renderer.on("players", (event, data) => {
 				ctsAlive.push(player)
 			}
 			else {
-				ctsAlive.push(player)
+				tsAlive.push(player)
 			}
 		}
 
-		if (playerOnSite(player.position, mapData.bombsites.a) || playerOnSite(player.position, mapData.bombsites.b)) {
+		let onA = playerOnSite(player.position, mapData.bombsites.a)
+		let onB = playerOnSite(player.position, mapData.bombsites.b)
+
+		if (onA || onB) {
 			playersOnSites.push(player)
 
 			if (player.bombActive) {
-				advisory.type = "holdingbomb"
+				advisory.type = "holdingbomb" + (onA ? "A" : "B")
 				advisory.player = player.num
 			}
 		}
@@ -142,5 +145,6 @@ renderer.on("players", (event, data) => {
 		}
 	}
 
-	console.log(advisory)
+	document.getElementById("advisory").className = advisory.type
+	document.getElementById("advisory").children[0].innerHTML = advisory.player
 })

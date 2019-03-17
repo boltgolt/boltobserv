@@ -71,6 +71,7 @@ div.player.bomb {
 	color: #000;
 	box-shadow: 0 0 .4vh .3vh rgba(255, 255, 255, .05);
 	display: none;
+	transition: background .1s, box-shadow .1s;
 }
 
 #advisory::before {
