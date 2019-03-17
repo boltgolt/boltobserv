@@ -5,8 +5,10 @@ const renderer = require("electron").ipcRenderer
 
 let mapData = {}
 let currentMap = "none"
+let locBufferX = [[], [], [], [], [], [], [], [], [], []]
+let locBufferY = [[], [], [], [], [], [], [], [], [], []]
 
-let drawBombsites = true
+let drawBombsites = false
 
 /**
  * Convert in-game position units to radar percentages
@@ -83,9 +85,6 @@ renderer.on("players", (event, data) => {
 	let tsAlive = []
 
 	for (let player of data.players) {
-		let percX = positionToPerc(player.position.x, mapData.offset.x)
-		let percY = positionToPerc(player.position.y, mapData.offset.y)
-
 		let playerElement  = document.getElementById("player" + player.num)
 		let classes = ["player", player.team]
 
@@ -123,8 +122,20 @@ renderer.on("players", (event, data) => {
 		playerElement.className = classes.join(" ")
 		playerElement.style.display = "block"
 
-		playerElement.style.left = percX + "%"
-		playerElement.style.bottom = percY + "%"
+		let percX = positionToPerc(player.position.x, mapData.offset.x)
+		let percY = positionToPerc(player.position.y, mapData.offset.y)
+
+		locBufferX[player.num].unshift(percX)
+		locBufferY[player.num].unshift(percY)
+
+		locBufferX[player.num] = locBufferX[player.num].slice(0, 2)
+		locBufferY[player.num] = locBufferY[player.num].slice(0, 2)
+
+		let bufferPercX = (locBufferX[player.num].reduce((prev, curr) => prev + curr, 0) / (locBufferX[player.num].length))
+		let bufferPercY = (locBufferY[player.num].reduce((prev, curr) => prev + curr, 0) / (locBufferY[player.num].length))
+
+		playerElement.style.left = bufferPercX + "%"
+		playerElement.style.bottom = bufferPercY + "%"
 	}
 
 	if (ctsAlive.length == 1) {

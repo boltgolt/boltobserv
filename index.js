@@ -27,6 +27,11 @@ function createWindow () {
 		}
 	})
 
+	win.on("closed", () => {
+		http.kill()
+		app.quit()
+	})
+
 	win.loadFile("html/waiting.html")
 
 	let http = child_process.fork(`${__dirname}/http.js`)
@@ -57,8 +62,6 @@ function createWindow () {
 			hasMap = false
 			win.loadFile("html/waiting.html")
 		}, 10000)
-
-		// console.log(message)
 	})
 }
 
