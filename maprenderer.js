@@ -116,6 +116,9 @@ renderer.on("players", (event, data) => {
 		if (player.bomb) {
 			classes.push("bomb")
 		}
+		if (player.nadeActive) {
+			classes.push("nade")
+		}
 
 		playerElement.className = classes.join(" ")
 		playerElement.style.display = "block"

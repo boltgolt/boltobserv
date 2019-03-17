@@ -43,7 +43,6 @@ let server = http.createServer(function(req, res) {
 			})
 		}
 
-		console.log("msg")
 		// console.log(JSON.stringify(game))
 		if (game.allplayers) {
 			let playerArr = []
@@ -60,16 +59,21 @@ let server = http.createServer(function(req, res) {
 			for (let i in game.allplayers) {
 				if (!Number.isInteger(game.allplayers[i].observer_slot)) continue
 
+				const nadeIDs = ["weapon_smokegrenade", "weapon_flashbang", "weapon_hegrenade", "weapon_incgrenade", "weapon_smokegrenade"]
 				let player = game.allplayers[i]
 				let pos = player.position.split(", ")
 				let hasBomb = false
 				let bombActive = false
+				let nadeActive = false
 
 				for (let t in player.weapons) {
 					if (player.weapons[t].name == "weapon_c4") {
 						hasBomb = true
 						bombActive = player.weapons[t].state == "active"
-						break
+					}
+
+					if (player.weapons[t].state == "active" && nadeIDs.includes(player.weapons[t].name)) {
+						nadeActive = true
 					}
 				}
 
@@ -79,6 +83,7 @@ let server = http.createServer(function(req, res) {
 					alive: player.state.health > 0,
 					bomb: hasBomb,
 					bombActive: bombActive,
+					nadeActive: nadeActive,
 					position: {
 						x: parseFloat(pos[0]),
 						y: parseFloat(pos[1]),

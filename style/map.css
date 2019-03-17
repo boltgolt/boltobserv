@@ -38,6 +38,8 @@ div.player {
 	font-size: 14px;
 	opacity: 1;
 	z-index: 15;
+	transition: bottom .035s linear, left: .035s linear;
+	will-change: bottom, left;
 }
 
 div.player.dead {
@@ -56,6 +58,13 @@ div.player.T {
 	background: #f0c941;
 }
 
+div.player.nade {
+	padding-top: 2px;
+	transform: translate(-8px, -9px);
+	clip-path: polygon(0 100%, 100% 100%, 100% 38%, 51% 0, 0 37%);
+	border-radius: 2px 2px 12px 12px;;
+}
+
 div.player.bomb {
 	border-radius: 2px;
 	background: #FF8200;
@@ -71,7 +80,6 @@ div.player.bomb {
 	color: #000;
 	box-shadow: 0 0 .4vh .3vh rgba(255, 255, 255, .05);
 	display: none;
-	transition: background .1s, box-shadow .1s;
 }
 
 #advisory::before {
@@ -98,7 +106,7 @@ div.player.bomb {
 	background: #000;
 	text-align: center;
 	color: #000;
-	line-height: 5.8vh;
+	line-height: 5.9vh;
 	font-weight: bold;
 	font-size: 4vh;
 }

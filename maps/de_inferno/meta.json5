@@ -7,7 +7,7 @@
 	// How many in-game units is the origin (0,0) of the map from the bottom left point of the radar
 	"offset": {
 		"x": 2100,
-		"y": 1090
+		"y": 1085
 	},
 
 	// The minimum and maximum z (height) values the players can have on the map
