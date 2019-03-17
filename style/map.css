@@ -76,10 +76,10 @@ div.player.bomb {
 	width: 14%;
 	height: 7%;
 	background: #f00;
-	border-radius: 3vh 8vh 8vh 3vh;
+	border-radius: 3vmin 8vmin 8vmin 3vmin;
 	background: linear-gradient(to right, #222, #292929);
 	color: #000;
-	box-shadow: 0 0 .4vh .3vh rgba(255, 255, 255, .05);
+	box-shadow: 0 0 .4vmin .3vmin rgba(255, 255, 255, .05);
 	display: none;
 }
 
@@ -103,13 +103,13 @@ div.player.bomb {
 	width: 40%;
 	border-radius: 100%;
 	box-sizing: border-box;
-	box-shadow: 0 0 .4vh .3vh rgba(255, 255, 255, .2) inset;
+	box-shadow: 0 0 .4vmin .3v rgba(255, 255, 255, .2) inset;
 	background: #000;
 	text-align: center;
 	color: #000;
-	line-height: 5.9vh;
+	line-height: 5.9vmin;
+	font-size: 5vmin;
 	font-weight: bold;
-	font-size: 4vh;
 }
 
 #advisory.holdingbombA::before {
@@ -122,7 +122,7 @@ div.player.bomb {
 
 #advisory.holdingbombA, #advisory.holdingbombB {
 	background: linear-gradient(to right, #AD9A3C, #ECCD37);
-	box-shadow: 0 0 .4vh .3vh rgba(255,252,0,.2);
+	box-shadow: 0 0 .4vmin .3vmin rgba(255,252,0,.2);
 }
 
 #advisory.defuse::before {
@@ -131,7 +131,7 @@ div.player.bomb {
 
 #advisory.defuse {
 	background: linear-gradient(to right, #39536d, #3a7eb1);
-	box-shadow: 0 0 .4vh .3vh rgba(0,41,255,.2);
+	box-shadow: 0 0 .4vmin .3vmin rgba(0,41,255,.2);
 }
 
 #advisory.solesurvivor::before {
@@ -140,7 +140,7 @@ div.player.bomb {
 
 #advisory.solesurvivor {
 	background: linear-gradient(to right, #436C39, #40B13A);
-	box-shadow: 0 0 .4vh .3vh rgba(13,255,0,.2);
+	box-shadow: 0 0 .4vmin .3vmin rgba(13,255,0,.2);
 }
 
 #advisory.holdingbombA span, #advisory.holdingbombB span, #advisory.defuse span, #advisory.solesurvivor span {

@@ -11,8 +11,8 @@ function createWindow () {
 	let win = new electron.BrowserWindow({
 		width: 600,
 		height: 600,
-		minHeight: 100,
-		minWidth: 100,
+		minHeight: 200,
+		minWidth: 200,
 		frame: false,
 		resizable: true,
 		nodeIntegration: false,

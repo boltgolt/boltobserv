@@ -138,12 +138,12 @@ renderer.on("players", (event, data) => {
 		playerElement.style.bottom = bufferPercY + "%"
 	}
 
-	if (ctsAlive.length == 1) {
+	if (ctsAlive.length == 1 && advisory.type == "none") {
 		advisory.type = "solesurvivor"
 		advisory.player = ctsAlive[0].num
 	}
 
-	if (tsAlive.length == 1) {
+	if (tsAlive.length == 1 && advisory.type == "none") {
 		advisory.type = "solesurvivor"
 		advisory.player = tsAlive[0].num
 	}
