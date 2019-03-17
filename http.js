@@ -3,8 +3,6 @@ const http = require("http")
 const port = 36363
 const host = "localhost"
 
-let hasConnection = false
-
 let server = http.createServer(function(req, res) {
 	if (req.method != "POST") {
 		res.writeHead(405)
@@ -23,7 +21,7 @@ let server = http.createServer(function(req, res) {
 
 		// console.log(">", game)
 
-		if (!hasConnection && game.provider) {
+		if (game.provider) {
 			let connObject = {
 				status: "up"
 			}
@@ -36,8 +34,6 @@ let server = http.createServer(function(req, res) {
 				type: "connection",
 				data: connObject
 			})
-
-			hasConnection = true
 		}
 
 		if (game.map) {
@@ -48,10 +44,18 @@ let server = http.createServer(function(req, res) {
 		}
 
 		console.log("msg")
-		console.log(JSON.stringify(game))
+		// console.log(JSON.stringify(game))
 		if (game.allplayers) {
 			let playerArr = []
+			let context = {
+				defusing: false
+			}
 
+			if (game.phase_countdowns) {
+				if (game.phase_countdowns.phase == "defuse") {
+					context.defusing = true
+				}
+			}
 
 			for (let i in game.allplayers) {
 				if (!Number.isInteger(game.allplayers[i].observer_slot)) continue
@@ -59,10 +63,12 @@ let server = http.createServer(function(req, res) {
 				let player = game.allplayers[i]
 				let pos = player.position.split(", ")
 				let hasBomb = false
+				let bombActive = false
 
 				for (let t in player.weapons) {
 					if (player.weapons[t].name == "weapon_c4") {
 						hasBomb = true
+						bombActive = player.weapons[t].state == "active"
 						break
 					}
 				}
@@ -72,6 +78,7 @@ let server = http.createServer(function(req, res) {
 					team: player.team,
 					alive: player.state.health > 0,
 					bomb: hasBomb,
+					bombActive: bombActive,
 					position: {
 						x: parseFloat(pos[0]),
 						y: parseFloat(pos[1]),
@@ -83,7 +90,10 @@ let server = http.createServer(function(req, res) {
 
 			process.send({
 				type: "players",
-				data: playerArr
+				data: {
+					context: context,
+					players: playerArr
+				}
 			})
 		}
 	})

@@ -21,19 +21,19 @@
 	"bombsites": {
 		"a": {
 			// Bottom left point
-			"x1": 120,
-			"y1": 2560,
+			"x1": 1740,
+			"y1": 140,
 			// Top right point
-			"x2": 650,
-			"y2": 3130
+			"x2": 2240,
+			"y2": 820
 		},
 		"b": {
 			// Bottom left point
-			"x1": 1780,
-			"y1": 180,
+			"x1": 100,
+			"y1": 2520,
 			// Top right point
-			"x2": 2220,
-			"y2": 800
+			"x2": 670,
+			"y2": 3140
 		}
 	},
 

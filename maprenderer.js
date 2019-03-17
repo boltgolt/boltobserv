@@ -59,10 +59,26 @@ renderer.on("map", (event, map) => {
 	}
 })
 
-renderer.on("players", (event, players) => {
+renderer.on("players", (event, data) => {
 	if (currentMap == "none") return
 
-	for (let player of players) {
+	function playerOnSite(cords, rect) {
+		return rect.x1 <= cords.x
+				&& cords.x <= rect.x2
+				&& rect.y1 <= cords.y
+				&& cords.y <= rect.y2
+	}
+
+	let advisory = {
+		"type": "none",
+		"player": "none"
+	}
+
+	let playersOnSites = []
+	let ctsAlive = []
+	let tsAlive = []
+
+	for (let player of data.players) {
 		let percX = positionToPerc(player.position.x, mapData.offset.x)
 		let percY = positionToPerc(player.position.y, mapData.offset.y)
 
@@ -71,6 +87,23 @@ renderer.on("players", (event, players) => {
 
 		if (!player.alive) {
 			classes.push("dead")
+		}
+		else {
+			if (player.team == "CT") {
+				ctsAlive.push(player)
+			}
+			else {
+				ctsAlive.push(player)
+			}
+		}
+
+		if (playerOnSite(player.position, mapData.bombsites.a) || playerOnSite(player.position, mapData.bombsites.b)) {
+			playersOnSites.push(player)
+
+			if (player.bombActive) {
+				advisory.type = "holdingbomb"
+				advisory.player = player.num
+			}
 		}
 
 		if (player.bomb) {
@@ -83,4 +116,27 @@ renderer.on("players", (event, players) => {
 		playerElement.style.left = percX + "%"
 		playerElement.style.bottom = percY + "%"
 	}
+
+	if (ctsAlive.length == 1) {
+		advisory.type = "solesurvivor"
+		advisory.player = ctsAlive[0].num
+	}
+
+	if (tsAlive.length == 1) {
+		advisory.type = "solesurvivor"
+		advisory.player = tsAlive[0].num
+	}
+
+	if (data.context.defusing) {
+		let ctsOnSites = playersOnSites.filter(player => player.team == "CT")
+
+		advisory.type = "defuse"
+		advisory.player = "?"
+
+		if (ctsOnSites.length == 1) {
+			advisory.player = ctsOnSites[0].num
+		}
+	}
+
+	console.log(advisory)
 })

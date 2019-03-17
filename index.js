@@ -5,6 +5,7 @@ const child_process = require('child_process')
 const app = electron.app
 
 let hasMap = false
+let connTimeout = false
 
 function createWindow () {
 	let win = new electron.BrowserWindow({
@@ -34,7 +35,7 @@ function createWindow () {
 		win.webContents.send(message.type, message.data)
 
 		if (message.type == "connection") {
-			if (message.data.status == "up") {
+			if (message.data.status == "up" && connTimeout === false) {
 				console.info("CSGO has pinged server, connection established")
 			}
 		}
@@ -50,6 +51,12 @@ function createWindow () {
 				hasMap = true
 			}
 		}
+
+		clearTimeout(connTimeout)
+		connTimeout = setTimeout(() => {
+			hasMap = false
+			win.loadFile("html/waiting.html")
+		}, 10000)
 
 		// console.log(message)
 	})
