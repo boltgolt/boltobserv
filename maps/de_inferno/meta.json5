@@ -39,7 +39,7 @@
 
 	// Position in which advisoies should be placed, in percentages from the bottom left
 	"advisoryPosition": {
-		"x": 20,
-		"y": 20
+		"x": 16,
+		"y": 56
 	}
 }

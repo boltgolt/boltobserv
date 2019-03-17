@@ -42,6 +42,10 @@ renderer.on("map", (event, map) => {
 
 	mapData = JSON5.parse(fs.readFileSync(metaPath, "utf8"))
 
+	document.getElementById("advisory").style.left = mapData.advisoryPosition.x + "%"
+	document.getElementById("advisory").style.bottom = mapData.advisoryPosition.y + "%"
+	document.getElementById("advisory").style.display = "block"
+
 	function drawSite(element, cords) {
 		element.style.display = "block"
 
