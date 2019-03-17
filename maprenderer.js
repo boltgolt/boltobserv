@@ -1,46 +1,52 @@
+const fs = require("fs")
+const path = require("path")
+const JSON5 = require("json5")
 const renderer = require("electron").ipcRenderer
 
-const mapData = {
-	de_inferno: {
-		resolution: 4.91,
-		offset: {
-			x: 2100,
-			y: 1090
-		}
-	}
-}
-
+let mapData = {}
 let currentMap = "none"
 
 renderer.on("map", (event, map) => {
 	if (currentMap == map) return
 
+	let metaPath = path.join(__dirname, "maps", map, "meta.json5")
+
+	if (!fs.existsSync(metaPath)) {
+		document.getElementById("unknownMap").style.display = "flex"
+		document.getElementById("unknownMap").children[0].innerHTML = "Unsupported map " + map
+		return
+	}
+
+	document.getElementById("unknownMap").style.display = "none"
+
 	currentMap = map
 	document.title = "Boltobserv - " + map
-	document.getElementById("radar").src = `../img/maps/${map}.png`
+	document.getElementById("radar").src = `../maps/${map}/radar.png`
+
+	mapData = JSON5.parse(fs.readFileSync(metaPath, "utf8"))
 })
+
+/**
+ * Convert in-game position units to radar percentages
+ * @param  {float} pos    In-game position
+ * @param  {float} offset Map offest for the right dimension
+ * @return {float}        Relative radar percentage
+ */
+function positionToPerc(pos, offset) {
+	// The position of the player in game, with the bottom left corner as origin (0,0)
+	let gamePosition = pos + offset
+	// The position of the player relative to an 1024x1014 pixel grid
+	let pixelPosition = gamePosition / mapData.resolution
+	// The position of the player as an persentage for any size
+	return pixelPosition / 1024 * 100
+}
 
 renderer.on("players", (event, players) => {
 	if (currentMap == "none") return
 
 	for (let player of players) {
-		// The position of the player in game, with the bottom left corner as origin (0,0)
-		let gamePosition = {
-			x: player.position.x + mapData[currentMap].offset.x,
-			y: player.position.y + mapData[currentMap].offset.y
-		}
-
-		// The position of the player relative to an 1024x1014 pixel grid
-		let pixelPosition = {
-			x: gamePosition.x / mapData[currentMap].resolution,
-			y: gamePosition.y / mapData[currentMap].resolution
-		}
-
-		// The position of the player as an persentage for any size
-		let percentPosition = {
-			x: pixelPosition.x / 1024 * 100,
-			y: pixelPosition.y / 1024 * 100
-		}
+		let percX = positionToPerc(player.position.x, mapData.offset.x)
+		let percY = positionToPerc(player.position.y, mapData.offset.y)
 
 		let playerElement  = document.getElementById("player" + player.num)
 		let classes = ["player", player.team]
@@ -56,7 +62,7 @@ renderer.on("players", (event, players) => {
 		playerElement.className = classes.join(" ")
 		playerElement.style.display = "block"
 
-		playerElement.style.left = percentPosition.x + "%"
-		playerElement.style.bottom = percentPosition.y + "%"
+		playerElement.style.left = percX + "%"
+		playerElement.style.bottom = percY + "%"
 	}
 })

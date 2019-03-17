@@ -10,5 +10,8 @@
   "license": "MIT",
   "devDependencies": {
     "electron": "^4.1.0"
+  },
+  "dependencies": {
+    "json5": "^2.1.0"
   }
 }

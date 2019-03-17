@@ -53,3 +53,15 @@ div.player.bomb {
 	border-radius: 2px;
 	background: #FF8200;
 }
+
+#unknownMap {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background: #000;
+	display: none;
+	justify-content: center;
+	align-items: center;
+}
