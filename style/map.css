@@ -6,13 +6,22 @@
 	z-index: 1;
 }
 
-body > div > div:nth-of-type(1) {
+#smokes, #entities {
 	position: absolute;
 	height: 100%;
 	width: 100%;
 	bottom: 0;
 	left: 0;
 	z-index: 2;
+}
+
+#smokes > div {
+	width: 20px;
+	height: 20px;
+	background: #f00;
+	position: absolute;
+	border-radius: 100%;
+	transform: translate(-50%, -50%);
 }
 
 #siteA, #siteB {

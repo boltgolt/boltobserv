@@ -91,7 +91,6 @@ let server = http.createServer(function(req, res) {
 					}
 				})
 			}
-			// console.log(playerArr)
 
 			process.send({
 				type: "players",
@@ -99,6 +98,34 @@ let server = http.createServer(function(req, res) {
 					context: context,
 					players: playerArr
 				}
+			})
+		}
+
+		if (game.grenades) {
+			let smokes = []
+
+			for (let nadeID in game.grenades) {
+				let nade = game.grenades[nadeID]
+
+				if (nade.type == "smoke") {
+					let pos = nade.position.split(", ")
+
+					smokes.push({
+						id: nadeID,
+						timeLeft: nade.effecttime,
+						position: {
+							x: parseFloat(pos[0]),
+							y: parseFloat(pos[1]),
+							z: parseFloat(pos[2])
+						}
+					})
+				}
+
+			}
+
+			process.send({
+				type: "smokes",
+				data: smokes
 			})
 		}
 	})

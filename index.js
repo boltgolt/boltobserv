@@ -55,11 +55,11 @@ function createWindow () {
 			}
 		}
 
-		clearTimeout(connTimeout)
-		connTimeout = setTimeout(() => {
-			hasMap = false
-			win.loadFile("html/waiting.html")
-		}, 10000)
+		// clearTimeout(connTimeout)
+		// connTimeout = setTimeout(() => {
+		// 	hasMap = false
+		// 	win.loadFile("html/waiting.html")
+		// }, 10000)
 	})
 }
 

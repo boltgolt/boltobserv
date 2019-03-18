@@ -162,3 +162,22 @@ renderer.on("players", (event, data) => {
 	document.getElementById("advisory").className = advisory.type
 	document.getElementById("advisory").children[0].innerHTML = advisory.player
 })
+
+renderer.on("smokes", (event, smokes) => {
+	for (let smoke of smokes) {
+		let smokeElement = document.getElementById("smoke" + smoke.id)
+
+		if (!smokeElement) {
+			smokeElement = document.createElement("div")
+			smokeElement.id = "smoke" + smoke.id
+
+			smokeElement.style.height = 288 / mapData.resolution / 1024 * 100 + "%"
+			smokeElement.style.width = 288 / mapData.resolution / 1024 * 100 + "%"
+
+			document.getElementById("smokes").appendChild(smokeElement)
+		}
+
+		smokeElement.style.left = positionToPerc(smoke.position.x, mapData.offset.x) + "%"
+		smokeElement.style.bottom = positionToPerc(smoke.position.y, mapData.offset.y) + "%"
+	}
+})

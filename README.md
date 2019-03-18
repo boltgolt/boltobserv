@@ -1,18 +1,17 @@
-
-## Boltobserv: A CSGO radar, made specifically for observing
+## Boltobserv: A CSGO radar made specifically for observing
 
 <div align="center">
 	<img src="https://i.imgur.com/PDiQuLl.png" /><br />
 	<strong>Giving CSGO observers a powerful new radar.</strong><br />
-	<span>Easy to read, infinitely resizable, and with plenty of features the the default CSGO radar does not have.</span>
+	<span>Easy to read, infinitely resizable, and with plenty of features the default CSGO radar does not have.</span>
 </div>
 
 ## Features
 
 ### Advisories
 
-Advisories are automatically detected events that the observer might want to switch to. 
-To make switching to this event easier, the observer slot number is displayed next to an icon noting the type of advisory. 
+Advisories are automatically detected events that the observer might want to switch to.
+To make switching to this event easier, the observer slot number is displayed next to an icon noting the type of advisory.
 The observer should still make his own judgement of the situation.
 
 All possible advisories are (with increasing priority):
@@ -26,9 +25,9 @@ All possible advisories are (with increasing priority):
 
 ### Advanced player dots
 
-Just like in the default CSGO radar, players are represented as dots. Every dot has its observer slot number on it.
+Just like in the default CSGO radar, players are represented as dots. Every dot has its observer slot number on top of it.
 
-The type of bots displayed by Boltobserv:
+The type of dots displayed by Boltobserv:
 
 | Dot                                    | Type              | Description                                                                                                          |
 |----------------------------------------|-------------------|----------------------------------------------------------------------------------------------------------------------|
@@ -39,15 +38,15 @@ The type of bots displayed by Boltobserv:
 
 ### Clean radar backgrounds
 
-Using radar backgrounds from [simpleradar.com](http://simpleradar.com/) that are even more accurate and clean than those in-game. 
+Using radar backgrounds from [simpleradar.com](http://simpleradar.com/) that are even more accurate and clean than those in-game.
 They're also much easier on the eyes.
 
 ![](https://i.imgur.com/Pvfi8vx.png)
 
 ### Infinitely scalable
 
-Because Boltobserv runs as an external application, it can be resized to be whatever size you want, and be moved to any display you want. 
-Running without window borders enables it to dedicate as much space as possible to the radar. 
+Because Boltobserv runs as an external application, it can be resized to be whatever size you want, and be moved to any display you want.
+Running without window borders enables it to dedicate as much space as possible to the radar.
 
 ## Installation
 
@@ -56,4 +55,3 @@ Running without window borders enables it to dedicate as much space as possible 
 3. You're done! Start the `Boltobserv.exe` file in the unzipped folder. Boltobserv should now automatically connect to CSGO when it's launched.
 
 Please report any bugs or feature requests here on Github.
-
