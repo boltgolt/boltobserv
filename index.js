@@ -15,13 +15,11 @@ function createWindow () {
 		minWidth: 200,
 		frame: false,
 		resizable: true,
-		nodeIntegration: false,
 		enableLargerThanScreen: true,
 		darkTheme: true,
 		title: "Boltobserv",
 		backgroundColor: "#000",
 		icon: path.join(__dirname, "img/icon-64x64.png"),
-
 		webPreferences: {
 			nodeIntegration: true
 		}

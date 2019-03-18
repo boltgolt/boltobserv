@@ -6,13 +6,23 @@ body > div {
 }
 
 img {
-	height: 20vh;
-	padding-bottom: 5vh;
+	height: 20vmin;
+	padding-bottom: 5vmin;
 }
 
 #noconnection {
-	font-size: 4vh;
+	font-size: 4vmin;
 	text-align: center;
 	box-sizing: border-box;
-	padding: 0 10vh 5vh 10vh;
+	padding: 0 10vmin 5vmin 10vmin;
+}
+
+#version {
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	color: #636363;
+	bottom: 3vmin;
+	font-size: 1.6vmin;
+	text-transform: uppercase;
 }

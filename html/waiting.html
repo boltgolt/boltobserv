@@ -15,6 +15,8 @@
 			</div>
 		</div>
 
+		<span id="version">version 0.0.1</span>
+
 		<script>
 			require("electron").ipcRenderer.on("connection", (event, data) => {
 				let output = "CSGO instance "
@@ -26,6 +28,23 @@
 				output += "connected. <br /> Waiting for map..."
 
 				document.getElementById("noconnection").innerHTML = output
+			})
+
+			let version = require("../package.json").version
+
+			document.getElementById("version").innerHTML = "Running version " + version
+
+			require("https").get("https://raw.githubusercontent.com/boltgolt/boltobserv/master/package.json", (resp) => {
+				let data = ""
+
+				resp.on("data", (chunk) => {data += chunk})
+				resp.on("end", () => {
+					let newVersion = JSON.parse(data).version
+
+					if (version != newVersion) {
+						document.getElementById("version").innerHTML += ` - A newer version is available on github (${newVersion})`
+					}
+				})
 			})
 		</script>
 	</body>
