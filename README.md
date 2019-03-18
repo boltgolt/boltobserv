@@ -4,7 +4,7 @@
 <div align="center">
 	<img src="https://i.imgur.com/PDiQuLl.png" /><br />
 	<strong>Giving CSGO observers a powerful new radar.</strong><br />
-	<span>Easy to read, infinitely resizable, and with plenty of features the the default CSGO radar does not have.</span>
+	<span>Easy to read, infinitely resizable, and with plenty of features the default CSGO radar does not have.</span>
 </div>
 
 ## Features
@@ -50,6 +50,8 @@ Because Boltobserv runs as an external application, it can be resized to be what
 Running without window borders enables it to dedicate as much space as possible to the radar. 
 
 ## Installation
+
+Be aware that this is the very first release, and that it only supports de_inferno for now. Other active duty maps are on the way.
 
 1. Download the latest .zip form the [releases](https://github.com/boltgolt/boltobserv/releases) page and unzip it.
 2. Copy the `gamestate_integration_boltobserv.cfg` file from the .zip to your CSGO config folder (the same folder you'd put an `autoexec.cfg`). For most installations this should be found at `C:\Program Files\Steam\steamapps\common\Counter-Strike Global Offensive\csgo\cfg`.
