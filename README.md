@@ -1,5 +1,5 @@
 
-## Boltobserv: A CSGO radar, made specifically for observing
+## Boltobserv: A CSGO radar made specifically for observing
 
 <div align="center">
 	<img src="https://i.imgur.com/PDiQuLl.png" /><br />
@@ -26,9 +26,9 @@ All possible advisories are (with increasing priority):
 
 ### Advanced player dots
 
-Just like in the default CSGO radar, players are represented as dots. Every dot has its observer slot number on it.
+Just like in the default CSGO radar, players are represented as dots. Every dot has its observer slot number on top of it.
 
-The type of bots displayed by Boltobserv:
+The type of dots displayed by Boltobserv:
 
 | Dot                                    | Type              | Description                                                                                                          |
 |----------------------------------------|-------------------|----------------------------------------------------------------------------------------------------------------------|
