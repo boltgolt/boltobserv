@@ -8,7 +8,7 @@ let currentMap = "none"
 let locBufferX = [[], [], [], [], [], [], [], [], [], []]
 let locBufferY = [[], [], [], [], [], [], [], [], [], []]
 
-let drawBombsites = false
+let drawBombsites = true
 
 /**
  * Convert in-game position units to radar percentages

@@ -17,4 +17,5 @@ body > div {
 	max-width: 100vh;
 	max-height: 100vw;
 	position: relative;
+	overflow: hidden;
 }
