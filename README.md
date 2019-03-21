@@ -55,3 +55,9 @@ Running without window borders enables it to dedicate as much space as possible 
 3. You're done! Start the `Boltobserv.exe` file in the unzipped folder. Boltobserv should now automatically connect to CSGO when it's launched.
 
 Please report any bugs or feature requests here on Github.
+
+## License 
+
+This project is licensed under GPL-3. In short, this means that all changes you make to this project need to be made open source (among other things). Commercial use is encouraged, as is distribution. 
+
+The paragraph above is not legally binding. See the LICENSE file for the full license.
