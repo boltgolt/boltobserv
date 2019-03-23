@@ -1,5 +1,7 @@
 const http = require("http")
 
+const remotenades = require("./remotenades.js")
+
 const port = 36363
 const host = "localhost"
 
@@ -103,16 +105,16 @@ let server = http.createServer(function(req, res) {
 
 		if (game.grenades) {
 			let smokes = []
+			let nades = []
 
 			for (let nadeID in game.grenades) {
 				let nade = game.grenades[nadeID]
 
-				if (nade.type == "smoke") {
+				if (nade.type == "smoke" && nade.velocity == "0.00, 0.00, 0.00") {
 					let pos = nade.position.split(", ")
-
 					smokes.push({
 						id: nadeID,
-						timeLeft: nade.effecttime,
+						timeLeft: nade.lifetime,
 						position: {
 							x: parseFloat(pos[0]),
 							y: parseFloat(pos[1]),
@@ -120,13 +122,14 @@ let server = http.createServer(function(req, res) {
 						}
 					})
 				}
-
 			}
 
 			process.send({
 				type: "smokes",
 				data: smokes
 			})
+
+			remotenades(game.grenades)
 		}
 	})
 })

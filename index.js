@@ -39,7 +39,7 @@ function createWindow () {
 
 		if (message.type == "connection") {
 			if (message.data.status == "up" && connTimeout === false) {
-				console.info("CSGO has pinged server, connection established")
+				// console.info("CSGO has pinged server, connection established")
 			}
 		}
 		else if (!hasMap) {

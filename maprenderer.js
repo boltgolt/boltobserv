@@ -181,3 +181,9 @@ renderer.on("smokes", (event, smokes) => {
 		smokeElement.style.bottom = positionToPerc(smoke.position.y, mapData.offset.y) + "%"
 	}
 })
+
+renderer.on("smokes", (event, smokes) => {
+	for (let smoke of smokes) {
+		// console.log(smoke)
+	}
+})
