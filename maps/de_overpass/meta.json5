@@ -1,0 +1,45 @@
+{
+	// The version of this meta file
+	"version": 1,
+	// The amount of in-game units per pixel of the 1200px radar image
+	"resolution": 5.17,
+
+	// How many in-game units is the origin (0,0) of the map from the bottom left point of the radar
+	"offset": {
+		"x": 4820,
+		"y": 3350
+	},
+
+	// The minimum and maximum z (height) values the players can have on the map
+	"heightRange": {
+		"min": 0,
+		"max": 0
+	},
+
+	// The bombsites, as defined by a bottom left and top right point
+	// Defined in in-game units
+	"bombsites": {
+		"a": {
+			// Bottom left point
+			"x1": -2680,
+			"y1": 470,
+			// Top right point
+			"x2": -1680,
+			"y2": 1210
+		},
+		"b": {
+			// Bottom left point
+			"x1": -1330,
+			"y1": -20,
+			// Top right point
+			"x2": -900,
+			"y2": 480
+		}
+	},
+
+	// Position in which advisoies should be placed, in percentages from the bottom left
+	"advisoryPosition": {
+		"x": 72,
+		"y": 0
+	}
+}
