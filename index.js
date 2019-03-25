@@ -13,7 +13,7 @@ let hasMap = false
 let connTimeout = false
 
 function createWindow () {
-	let win = new electron.BrowserWindow({
+	let winConfig = {
 		width: 600,
 		height: 600,
 		minHeight: 200,
@@ -23,14 +23,22 @@ function createWindow () {
 		enableLargerThanScreen: true,
 		darkTheme: true,
 		title: "Boltobserv",
-		backgroundColor: "#000",
 		icon: path.join(__dirname, "img/icon-64x64.png"),
 		webPreferences: {
 			nodeIntegration: true,
 			webaudio: false,
 			webgl: false
 		}
-	})
+	}
+
+	if (config.window.transparent) {
+		winConfig.transparent = true
+	}
+	else {
+		winConfig.backgroundColor = "#000"
+	}
+
+	let win = new electron.BrowserWindow(winConfig)
 
 	if (config.window.alwaysOnTop) {
 		win.setAlwaysOnTop(true, "screen")

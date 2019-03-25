@@ -3,12 +3,12 @@ const path = require("path")
 const JSON5 = require("json5")
 const renderer = require("electron").ipcRenderer
 
+const config = JSON5.parse(fs.readFileSync(path.join(__dirname, "config.json5"), "utf8"))
+
 let mapData = {}
 let currentMap = "none"
 let locBufferX = [[], [], [], [], [], [], [], [], [], []]
 let locBufferY = [[], [], [], [], [], [], [], [], [], []]
-
-let drawBombsites = true
 
 /**
  * Convert in-game position units to radar percentages
@@ -44,9 +44,14 @@ renderer.on("map", (event, map) => {
 
 	mapData = JSON5.parse(fs.readFileSync(metaPath, "utf8"))
 
-	document.getElementById("advisory").style.left = mapData.advisoryPosition.x + "%"
-	document.getElementById("advisory").style.bottom = mapData.advisoryPosition.y + "%"
-	document.getElementById("advisory").style.display = "block"
+	if (config.radar.hideAdvisories) {
+		document.getElementById("advisory").style.display = "none"
+	}
+	else {
+		document.getElementById("advisory").style.left = mapData.advisoryPosition.x + "%"
+		document.getElementById("advisory").style.bottom = mapData.advisoryPosition.y + "%"
+		document.getElementById("advisory").style.display = "block"
+	}
 
 	function drawSite(element, cords) {
 		element.style.display = "block"
@@ -59,7 +64,7 @@ renderer.on("map", (event, map) => {
 		element.style.height = ((cords.y2 - cords.y1) / mapData.resolution / 1024 * 100) + "%"
 	}
 
-	if (drawBombsites) {
+	if (config.debug.drawBombsites) {
 		drawSite(document.getElementById("siteA"), mapData.bombsites.a)
 		drawSite(document.getElementById("siteB"), mapData.bombsites.b)
 	}

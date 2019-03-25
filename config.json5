@@ -2,6 +2,21 @@
 	// Settings related to the Boltobserv window
 	"window": {
 		// Always show the window as the top application
-		"alwaysOnTop": true
+		"alwaysOnTop": false,
+
+		// Make the background of the window transparent
+		"transparent": false
+	},
+
+	// Settings that will change the way the radar will be displayed
+	"radar": {
+		// Hide advisories on the radar
+		"hideAdvisories": false
+	},
+
+	// Settings that should not be used in normal oparation, but help to find issues
+	"debug": {
+		// Draw red squares over bombsite locations
+		"drawBombsites": false
 	}
 }
