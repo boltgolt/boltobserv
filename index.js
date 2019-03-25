@@ -1,8 +1,13 @@
 const path = require("path")
 const electron = require("electron")
-const child_process = require('child_process')
+const child_process = require("child_process")
+const fs = require("fs")
+const JSON5 = require("json5")
 
 const app = electron.app
+const config = JSON5.parse(fs.readFileSync(path.join(__dirname, "config.json5"), "utf8"))
+
+console.info("Loaded config:", config)
 
 let hasMap = false
 let connTimeout = false
@@ -21,9 +26,15 @@ function createWindow () {
 		backgroundColor: "#000",
 		icon: path.join(__dirname, "img/icon-64x64.png"),
 		webPreferences: {
-			nodeIntegration: true
+			nodeIntegration: true,
+			webaudio: false,
+			webgl: false
 		}
 	})
+
+	if (config.window.alwaysOnTop) {
+		win.setAlwaysOnTop(true, "screen")
+	}
 
 	win.on("closed", () => {
 		http.kill()
