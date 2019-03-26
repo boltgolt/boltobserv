@@ -213,7 +213,7 @@ setInterval(() => {
 let gamePhase = "freezetime"
 renderer.on("round", (event, phase) => {
 	// Round has restared
-	if (phase == "freezetime" && gamePhase == "over") {
+	if ((phase == "freezetime" && gamePhase == "over") || (phase == "live" && gamePhase == "over")) {
 		for (let num in playerBuffers) {
 			playerBuffers[num] = []
 			playerPos[num] = {
@@ -223,6 +223,7 @@ renderer.on("round", (event, phase) => {
 			}
 		}
 	}
+
 
 	gamePhase = phase
 })
@@ -248,9 +249,9 @@ renderer.on("players", (event, data) => {
 
 let radarStyle = document.getElementById("container").style
 let radarQueues = {
-	scale: [],
-	x: [],
-	y: []
+	scale: [1, 1, 1, 1, 1, 1],
+	x: [0, 0, 0, 0, 0, 0],
+	y: [0, 0, 0, 0, 0, 0]
 }
 
 setInterval(() => {
@@ -275,6 +276,10 @@ setInterval(() => {
 	}
 
 	let radarScale = 1 + (1 - Math.max(bounds.x.max - bounds.x.min, bounds.y.max - bounds.y.min) / 100)
+
+	// Do not zoom if the scale seems to have been calculated with 0 data
+	if (radarScale === 3) return
+
 	// Limit the radar scale to base size, and keep a 20% buffer around the players
 	radarScale = Math.max(1, radarScale - config.autozoom.padding)
 

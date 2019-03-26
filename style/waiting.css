@@ -1,3 +1,7 @@
+body {
+	background: rgba(0, 0, 0, .24);
+}
+
 body > div {
 	display: flex;
 	flex-direction: column;

@@ -58,7 +58,7 @@ function createWindow () {
 
 		if (message.type == "connection") {
 			if (message.data.status == "up" && connTimeout === false) {
-				// console.info("CSGO has pinged server, connection established")
+				console.info("CSGO has pinged server, connection established")
 			}
 		}
 		else if (!hasMap) {
@@ -74,11 +74,11 @@ function createWindow () {
 			}
 		}
 
-		// clearTimeout(connTimeout)
-		// connTimeout = setTimeout(() => {
-		// 	hasMap = false
-		// 	win.loadFile("html/waiting.html")
-		// }, 10000)
+		clearTimeout(connTimeout)
+		connTimeout = setTimeout(() => {
+			hasMap = false
+			win.loadFile("html/waiting.html")
+		}, 10000)
 	})
 }
 

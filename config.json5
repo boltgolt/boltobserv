@@ -14,13 +14,13 @@
 		"hideAdvisories": false,
 
 		// Frames to smooth out player movement
-		"playerSmoothing": 4
+		"playerSmoothing": 8
 	},
 
 	// Settings for automatically zomming in on alive players on the map
 	"autozoom": {
 		// Enable or disable autozoom
-		"enable": false,
+		"enable": true,
 
 		// Frames to smooth out zoom movement
 		"smoothing": 32,
