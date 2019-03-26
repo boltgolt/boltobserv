@@ -168,27 +168,83 @@ renderer.on("players", (event, data) => {
 	document.getElementById("advisory").children[0].innerHTML = advisory.player
 })
 
-renderer.on("smokes", (event, smokes) => {
-	for (let smoke of smokes) {
-		let smokeElement = document.getElementById("smoke" + smoke.id)
-
-		if (!smokeElement) {
-			smokeElement = document.createElement("div")
-			smokeElement.id = "smoke" + smoke.id
-
-			smokeElement.style.height = 288 / mapData.resolution / 1024 * 100 + "%"
-			smokeElement.style.width = 288 / mapData.resolution / 1024 * 100 + "%"
-
-			document.getElementById("smokes").appendChild(smokeElement)
-		}
-
-		smokeElement.style.left = positionToPerc(smoke.position.x, mapData.offset.x) + "%"
-		smokeElement.style.bottom = positionToPerc(smoke.position.y, mapData.offset.y) + "%"
-	}
-})
+// renderer.on("smokes", (event, smokes) => {
+// 	for (let smoke of smokes) {
+// 		let smokeElement = document.getElementById("smoke" + smoke.id)
+//
+// 		if (!smokeElement) {
+// 			smokeElement = document.createElement("div")
+// 			smokeElement.id = "smoke" + smoke.id
+//
+// 			smokeElement.style.height = 288 / mapData.resolution / 1024 * 100 + "%"
+// 			smokeElement.style.width = 288 / mapData.resolution / 1024 * 100 + "%"
+//
+// 			document.getElementById("smokes").appendChild(smokeElement)
+// 		}
+//
+// 		smokeElement.style.left = positionToPerc(smoke.position.x, mapData.offset.x) + "%"
+// 		smokeElement.style.bottom = positionToPerc(smoke.position.y, mapData.offset.y) + "%"
+// 	}
+// })
 
 renderer.on("smokes", (event, smokes) => {
 	for (let smoke of smokes) {
 		// console.log(smoke)
 	}
 })
+
+
+let gamePhase = "freezetime"
+renderer.on("round", (event, phase) => {
+	gamePhase = phase
+})
+
+let playersAlive = []
+
+renderer.on("players", (event, data) => {
+	if (currentMap == "none") return
+
+	let foundArray = []
+
+	for (let player of data.players) {
+		if (!player.alive) continue
+
+		foundArray.push({
+			x: positionToPerc(player.position.x, mapData.offset.x),
+			y: positionToPerc(player.position.y, mapData.offset.y)
+		})
+	}
+
+	playersAlive = foundArray
+})
+
+let radarStyle = document.getElementById("container").style
+
+setInterval(() => {
+	let bounds = {
+		x: {
+			min: 100,
+			max: 0
+		},
+		y: {
+			min: 100,
+			max: 0
+		}
+	}
+
+	for (let player of playersAlive) {
+		if (bounds.x.min > player.x) bounds.x.min = player.x
+		if (bounds.x.max < player.x) bounds.x.max = player.x
+		if (bounds.y.min > player.y) bounds.y.min = player.y
+		if (bounds.y.max < player.y) bounds.y.max = player.y
+	}
+
+	let radarScale = 1 + (1 - Math.max(bounds.x.max - bounds.x.min, bounds.y.max - bounds.y.min) / 100)
+	// Limit the radar scale to base size, and keep a 20% buffer around the players
+	radarScale = Math.max(1, radarScale - 0.2)
+
+	let radarY = ((bounds.y.max + bounds.y.min) / 2) - 50
+	let radarX = ((bounds.x.max + bounds.x.min) / 2) - 50
+
+	radarStyle.transform = `scale(${radarScale}) translate(${radarX * -1}%, ${radarY}%)`
+}, 25)

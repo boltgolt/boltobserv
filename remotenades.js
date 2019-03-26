@@ -11,10 +11,10 @@ module.exports = (nades) => {
 	for (let id in nades) {
 		let nade = nades[id]
 
-		console.log(isIn(collectedNades, id, nade))
+		// console.log(isIn(collectedNades, id, nade))
 		if (isIn(collectedNades, id, nade)) return
 
-		console.log(nade)
+		// console.log(nade)
 
 		collectedNades.push({
 			id: id,
@@ -26,5 +26,5 @@ module.exports = (nades) => {
 		//
 		// }
 	}
-	console.log(nades)
+	// console.log(nades)
 }

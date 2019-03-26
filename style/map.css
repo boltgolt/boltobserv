@@ -1,3 +1,7 @@
+#container {
+	transition: transform .025;
+}
+
 #radar {
 	height: 100%;
 	position: absolute;

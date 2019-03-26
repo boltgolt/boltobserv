@@ -131,6 +131,13 @@ let server = http.createServer(function(req, res) {
 
 			remotenades(game.grenades)
 		}
+
+		if (game.round) {
+			process.send({
+				type: "round",
+				data: game.round.phase
+			})
+		}
 	})
 })
 
