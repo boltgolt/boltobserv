@@ -1,6 +1,6 @@
 {
 	// The version of this meta file
-	"version": 1,
+	"version": 2,
 	// The amount of in-game units per pixel of the 1200px radar image
 	"resolution": 5.17,
 
