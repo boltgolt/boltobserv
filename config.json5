@@ -14,6 +14,18 @@
 		"hideAdvisories": false
 	},
 
+	// Settings for automatically zomming in on alive players on the map
+	"autozoom": {
+		// Enable or disable autozoom
+		"enable": false,
+
+		// Frames to smoothout zoom movement
+		"smoothing": 32,
+
+		// Percentage of radar space to try to keep as padding between the outer most players and the edge of the radar
+		"padding": 0.3
+	},
+
 	// Settings that should not be used in normal oparation, but help to find issues
 	"debug": {
 		// Draw red squares over bombsite locations

@@ -1,4 +1,9 @@
+body {
+	overflow: hidden;
+}
+
 #container {
+	-webkit-backface-visibility: hidden;
 	transition: transform .025;
 }
 

@@ -219,6 +219,11 @@ renderer.on("players", (event, data) => {
 })
 
 let radarStyle = document.getElementById("container").style
+let radarQueues = {
+	scale: [],
+	x: [],
+	y: []
+}
 
 setInterval(() => {
 	let bounds = {
@@ -232,6 +237,8 @@ setInterval(() => {
 		}
 	}
 
+	if (!config.autozoom.enable) return
+
 	for (let player of playersAlive) {
 		if (bounds.x.min > player.x) bounds.x.min = player.x
 		if (bounds.x.max < player.x) bounds.x.max = player.x
@@ -241,10 +248,22 @@ setInterval(() => {
 
 	let radarScale = 1 + (1 - Math.max(bounds.x.max - bounds.x.min, bounds.y.max - bounds.y.min) / 100)
 	// Limit the radar scale to base size, and keep a 20% buffer around the players
-	radarScale = Math.max(1, radarScale - 0.2)
+	radarScale = Math.max(1, radarScale - config.autozoom.padding)
 
+	let radarX = (((bounds.x.max + bounds.x.min) / 2) - 50) * -1
 	let radarY = ((bounds.y.max + bounds.y.min) / 2) - 50
-	let radarX = ((bounds.x.max + bounds.x.min) / 2) - 50
 
-	radarStyle.transform = `scale(${radarScale}) translate(${radarX * -1}%, ${radarY}%)`
+
+	radarQueues.scale.unshift(radarScale)
+	radarQueues.scale = radarQueues.scale.slice(0, config.autozoom.smoothing)
+	radarQueues.x.unshift(radarX)
+	radarQueues.x = radarQueues.x.slice(0, config.autozoom.smoothing)
+	radarQueues.y.unshift(radarY)
+	radarQueues.y = radarQueues.y.slice(0, config.autozoom.smoothing)
+
+	let avgScale = radarQueues.scale.reduce((sum, el) => sum + el, 0) / radarQueues.scale.length
+	let avgX = radarQueues.x.reduce((sum, el) => sum + el, 0) / radarQueues.x.length
+	let avgY = radarQueues.y.reduce((sum, el) => sum + el, 0) / radarQueues.y.length
+
+	radarStyle.transform = `scale(${avgScale}) translate(${avgX}%, ${avgY}%)`
 }, 25)
