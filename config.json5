@@ -11,7 +11,10 @@
 	// Settings that will change the way the radar will be displayed
 	"radar": {
 		// Hide advisories on the radar
-		"hideAdvisories": false
+		"hideAdvisories": false,
+
+		// Frames to smooth out player movement
+		"playerSmoothing": 4
 	},
 
 	// Settings for automatically zomming in on alive players on the map
@@ -19,7 +22,7 @@
 		// Enable or disable autozoom
 		"enable": false,
 
-		// Frames to smoothout zoom movement
+		// Frames to smooth out zoom movement
 		"smoothing": 32,
 
 		// Percentage of radar space to try to keep as padding between the outer most players and the edge of the radar

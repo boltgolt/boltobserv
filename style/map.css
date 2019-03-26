@@ -57,7 +57,7 @@ div.player {
 	font-size: 14px;
 	opacity: 1;
 	z-index: 15;
-	transition: bottom .016s linear, left: .016s linear;
+	transition: bottom .01s linear, left: .01s linear;
 	will-change: bottom, left;
 }
 

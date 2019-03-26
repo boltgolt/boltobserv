@@ -7,8 +7,6 @@ const config = JSON5.parse(fs.readFileSync(path.join(__dirname, "config.json5"),
 
 let mapData = {}
 let currentMap = "none"
-let locBufferX = [[], [], [], [], [], [], [], [], [], []]
-let locBufferY = [[], [], [], [], [], [], [], [], [], []]
 
 /**
  * Convert in-game position units to radar percentages
@@ -95,6 +93,7 @@ renderer.on("players", (event, data) => {
 
 		if (!player.alive) {
 			classes.push("dead")
+			playerPos[player.num].lock = true
 		}
 		else {
 			if (player.team == "CT") {
@@ -127,20 +126,8 @@ renderer.on("players", (event, data) => {
 		playerElement.className = classes.join(" ")
 		playerElement.style.display = "block"
 
-		let percX = positionToPerc(player.position.x, mapData.offset.x)
-		let percY = positionToPerc(player.position.y, mapData.offset.y)
-
-		locBufferX[player.num].unshift(percX)
-		locBufferY[player.num].unshift(percY)
-
-		locBufferX[player.num] = locBufferX[player.num].slice(0, 2)
-		locBufferY[player.num] = locBufferY[player.num].slice(0, 2)
-
-		let bufferPercX = (locBufferX[player.num].reduce((prev, curr) => prev + curr, 0) / (locBufferX[player.num].length))
-		let bufferPercY = (locBufferY[player.num].reduce((prev, curr) => prev + curr, 0) / (locBufferY[player.num].length))
-
-		playerElement.style.left = bufferPercX + "%"
-		playerElement.style.bottom = bufferPercY + "%"
+		playerPos[player.num].x = positionToPerc(player.position.x, mapData.offset.x)
+		playerPos[player.num].y = positionToPerc(player.position.y, mapData.offset.y)
 	}
 
 	if (ctsAlive.length == 1 && advisory.type == "none") {
@@ -193,9 +180,50 @@ renderer.on("smokes", (event, smokes) => {
 	}
 })
 
+let playerPos = []
+for (var i = 0; i < 10; i++) {
+	playerPos.push({
+		x: null,
+		y: null,
+		lock: false
+	})
+}
+
+let playerBuffers = [[], [], [], [], [], [], [], [], [], []]
+
+setInterval(() => {
+	for (let num in playerBuffers) {
+		if (playerPos[num].x != null && !playerPos[num].lock) {
+			playerBuffers[num].unshift({
+				x: playerPos[num].x,
+				y: playerPos[num].y
+			})
+			playerBuffers[num] = playerBuffers[num].slice(0, config.radar.playerSmoothing)
+		}
+
+		let bufferPercX = (playerBuffers[num].reduce((prev, curr) => prev + curr.x, 0) / (playerBuffers[num].length))
+		let bufferPercY = (playerBuffers[num].reduce((prev, curr) => prev + curr.y, 0) / (playerBuffers[num].length))
+
+		let playerElement  = document.getElementById("player" + num)
+		playerElement.style.left = bufferPercX + "%"
+		playerElement.style.bottom = bufferPercY + "%"
+	}
+}, 10)
 
 let gamePhase = "freezetime"
 renderer.on("round", (event, phase) => {
+	// Round has restared
+	if (phase == "freezetime" && gamePhase == "over") {
+		for (let num in playerBuffers) {
+			playerBuffers[num] = []
+			playerPos[num] = {
+				x: null,
+				y: null,
+				lock: false
+			}
+		}
+	}
+
 	gamePhase = phase
 })
 
