@@ -5,6 +5,8 @@ const remotenades = require("./remotenades.js")
 
 const host = "localhost"
 
+let oldPhase = false
+
 let server = http.createServer(function(req, res) {
 	if (req.method != "POST") {
 		res.writeHead(405)
@@ -43,6 +45,10 @@ let server = http.createServer(function(req, res) {
 				type: "map",
 				data: game.map.name
 			})
+
+			if (config.nadeCollection) {
+				remotenades.setMap(game.map.name)
+			}
 		}
 
 		// console.log(JSON.stringify(game))
@@ -129,7 +135,9 @@ let server = http.createServer(function(req, res) {
 				data: smokes
 			})
 
-			remotenades(game.grenades)
+			if (config.nadeCollection) {
+				remotenades.event(game.grenades)
+			}
 		}
 
 		if (game.round) {
@@ -137,6 +145,14 @@ let server = http.createServer(function(req, res) {
 				type: "round",
 				data: game.round.phase
 			})
+
+			if (oldPhase != game.round.phase && config.nadeCollection) {
+				if (oldPhase == "over" && game.round.phase == "freezetime") {
+					remotenades.send()
+				}
+
+				oldPhase = game.round.phase
+			}
 		}
 	})
 })

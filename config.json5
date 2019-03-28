@@ -4,6 +4,11 @@
 // without making changes here. This makes your config a lot more portable.
 
 {
+	// Sends information about the grenades thrown this round to a server
+	// This information in only used to train a model to predict grenade
+	// landings, no personal information is send or logged
+	"nadeCollection": false,
+
 	// Settings related to the Boltobserv window
 	"window": {
 		// Always show the window as the top application
