@@ -114,7 +114,7 @@ let server = http.createServer(function(req, res) {
 					let pos = nade.position.split(", ")
 					smokes.push({
 						id: nadeID,
-						timeLeft: nade.lifetime,
+						time: nade.effecttime,
 						position: {
 							x: parseFloat(pos[0]),
 							y: parseFloat(pos[1]),

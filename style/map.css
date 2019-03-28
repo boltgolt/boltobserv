@@ -25,12 +25,23 @@ body {
 }
 
 #smokes > div {
-	width: 20px;
-	height: 20px;
 	background: #f00;
 	position: absolute;
 	border-radius: 100%;
+	opacity: .8;
+	background: #9F9D9D;
+	box-sizing: border-box;
+	border: #D7D7D7 solid 4px;
 	transform: translate(-50%, -50%);
+	transition: opacity .3s;
+}
+
+#smokes > div.hide {
+	opacity: 0;
+}
+
+#smokes > div.fading {
+	transition: opacity 1.8s;
 }
 
 #siteA, #siteB {

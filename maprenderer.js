@@ -155,24 +155,53 @@ renderer.on("players", (event, data) => {
 	document.getElementById("advisory").children[0].innerHTML = advisory.player
 })
 
-// renderer.on("smokes", (event, smokes) => {
-// 	for (let smoke of smokes) {
-// 		let smokeElement = document.getElementById("smoke" + smoke.id)
-//
-// 		if (!smokeElement) {
-// 			smokeElement = document.createElement("div")
-// 			smokeElement.id = "smoke" + smoke.id
-//
-// 			smokeElement.style.height = 288 / mapData.resolution / 1024 * 100 + "%"
-// 			smokeElement.style.width = 288 / mapData.resolution / 1024 * 100 + "%"
-//
-// 			document.getElementById("smokes").appendChild(smokeElement)
-// 		}
-//
-// 		smokeElement.style.left = positionToPerc(smoke.position.x, mapData.offset.x) + "%"
-// 		smokeElement.style.bottom = positionToPerc(smoke.position.y, mapData.offset.y) + "%"
-// 	}
-// })
+renderer.on("smokes", (event, smokes) => {
+	function fadeIn(smokeElement) {
+		setTimeout(() => {
+			smokeElement.className = "smokeEntity show"
+		}, 25)
+	}
+
+	function remove(smokeElement) {
+		setTimeout(() => {
+			smokeElement.outerHTML = ""
+		}, 2000)
+	}
+
+	let drawnSmokes = []
+
+	for (let smoke of smokes) {
+		let smokeElement = document.getElementById("smoke" + smoke.id)
+
+		if (!smokeElement) {
+			smokeElement = document.createElement("div")
+			smokeElement.id = "smoke" + smoke.id
+			smokeElement.className = "smokeEntity hide"
+
+			smokeElement.style.height = smokeElement.style.width = 290 / mapData.resolution / 1024 * 100 + "%"
+
+			document.getElementById("smokes").appendChild(smokeElement)
+
+			fadeIn(smokeElement)
+		}
+
+		drawnSmokes.push()
+
+		let percOffset  = parseFloat(smokeElement.style.height) / 2
+
+		smokeElement.style.left = positionToPerc(smoke.position.x, mapData.offset.x) + "%"
+		smokeElement.style.bottom = positionToPerc(smoke.position.y, mapData.offset.y) - percOffset + "%"
+
+		if (smoke.time > 15 && smokeElement.className != "smokeEntity fading") {
+			smokeElement.className = "smokeEntity fading"
+		}
+
+		if (smoke.time > 16.4 && smokeElement.className != "smokeEntity fading hide") {
+			smokeElement.className = "smokeEntity fading hide"
+			remove(smokeElement)
+		}
+	}
+})
 
 renderer.on("smokes", (event, smokes) => {
 	for (let smoke of smokes) {
