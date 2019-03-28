@@ -1,13 +1,9 @@
 const path = require("path")
 const electron = require("electron")
 const child_process = require("child_process")
-const fs = require("fs")
-const JSON5 = require("json5")
 
 const app = electron.app
-const config = JSON5.parse(fs.readFileSync(path.join(__dirname, "config.json5"), "utf8"))
-
-console.info("Loaded config:", config)
+const config = require("./loadconfig")(true)
 
 let hasMap = false
 let connTimeout = false
@@ -63,7 +59,7 @@ function createWindow () {
 		win.webContents.send(message.type, message.data)
 
 		if (message.type == "connection") {
-			if (message.data.status == "up" && connTimeout === false) {
+			if (message.data.status == "up" && connTimeout === false && config.game.connectionTimout >= 0) {
 				console.info("CSGO has pinged server, connection established")
 			}
 		}
@@ -80,11 +76,13 @@ function createWindow () {
 			}
 		}
 
-		clearTimeout(connTimeout)
-		connTimeout = setTimeout(() => {
-			hasMap = false
-			win.loadFile("html/waiting.html")
-		}, 10000)
+		if (config.game.connectionTimout >= 0) {
+			clearTimeout(connTimeout)
+			connTimeout = setTimeout(() => {
+				hasMap = false
+				win.loadFile("html/waiting.html")
+			}, config.game.connectionTimout * 1000)
+		}
 	})
 }
 

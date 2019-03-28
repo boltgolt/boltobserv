@@ -1,3 +1,8 @@
+// ============================= MAIN CONFIG FILE =============================
+// It's possible to change values directly in this file, but by creating a file
+// called "config.override.json5" in the same directory you can override values
+// without making changes here. This makes your config a lot more portable.
+
 {
 	// Settings related to the Boltobserv window
 	"window": {
@@ -13,7 +18,7 @@
 			"height": 600,
 			"width": 600,
 
-			// The distance from the top left of the screen
+			// The default distance from the top left of the screen
 			// Set to -1 to let the OS pick the best place
 			"top": -1,
 			"left": -1
@@ -26,7 +31,20 @@
 		"hideAdvisories": false,
 
 		// Frames to smooth out player movement
-		"playerSmoothing": 8
+		"playerSmoothing": 8,
+
+		// Amount of scaling to apply to player dots on the radar
+		"playerDotScale": 1
+	},
+
+	// Settings related to the CSGO game
+	"game": {
+		// Seconds of inactivity before considering a connection to the game client as lost
+		// Set to -1 to never timout
+		"connectionTimout": 30,
+
+		// The port GSI will try to connect to
+		"networkPort": 36363
 	},
 
 	// Settings for automatically zomming in on alive players on the map
@@ -37,13 +55,16 @@
 		// Frames to smooth out zoom movement
 		"smoothing": 32,
 
-		// Percentage of radar space to try to keep as padding between the outer most players and the edge of the radar
+		// Percentage of radar space to try to keep as padding between the outermost players and the edge of the radar
 		"padding": 0.3
 	},
 
 	// Settings that should not be used in normal oparation, but help to find issues
 	"debug": {
 		// Draw red squares over bombsite locations
-		"drawBombsites": false
+		"drawBombsites": false,
+
+		// Print the loaded config into the console
+		"printConfig": false
 	}
 }

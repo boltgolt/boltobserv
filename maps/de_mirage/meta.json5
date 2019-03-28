@@ -1,12 +1,12 @@
 {
 	// The version of this meta file
-	"version": 1,
+	"version": 2,
 	// The amount of in-game units per pixel of the 1200px radar image
 	"resolution": 4.96,
 
 	// How many in-game units is the origin (0,0) of the map from the bottom left point of the radar
 	"offset": {
-		"x": 3190,
+		"x": 3210,
 		"y": 3250
 	},
 

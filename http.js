@@ -1,8 +1,8 @@
 const http = require("http")
 
+const config = require("./loadconfig")()
 const remotenades = require("./remotenades.js")
 
-const port = 36363
 const host = "localhost"
 
 let server = http.createServer(function(req, res) {
@@ -141,5 +141,5 @@ let server = http.createServer(function(req, res) {
 	})
 })
 
-server.listen(port, host)
-console.info(`Active at http://${host}:${port}`)
+server.listen(config.game.networkPort, host)
+console.info(`Active at http://${host}:${config.game.networkPort}`)

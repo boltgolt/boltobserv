@@ -3,10 +3,14 @@ const path = require("path")
 const JSON5 = require("json5")
 const renderer = require("electron").ipcRenderer
 
-const config = JSON5.parse(fs.readFileSync(path.join(__dirname, "config.json5"), "utf8"))
+const config = require("./loadconfig")()
 
 let mapData = {}
 let currentMap = "none"
+
+for (let playerElem of document.getElementsByClassName("player")) {
+	playerElem.style.transform = `scale(${config.radar.playerDotScale})  translate(-50%, -50%)`
+}
 
 /**
  * Convert in-game position units to radar percentages
