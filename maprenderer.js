@@ -207,12 +207,6 @@ renderer.on("smokes", (event, smokes) => {
 	}
 })
 
-renderer.on("smokes", (event, smokes) => {
-	for (let smoke of smokes) {
-		// console.log(smoke)
-	}
-})
-
 let playerPos = []
 for (var i = 0; i < 10; i++) {
 	playerPos.push({
@@ -255,6 +249,8 @@ renderer.on("round", (event, phase) => {
 				lock: false
 			}
 		}
+		
+		
 	}
 
 
