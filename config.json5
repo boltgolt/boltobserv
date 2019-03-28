@@ -5,7 +5,19 @@
 		"alwaysOnTop": false,
 
 		// Make the background of the window transparent
-		"transparent": false
+		"transparent": false,
+
+		// The default shape and position of the window
+		"defaultSize": {
+			// The height and width in pixels
+			"height": 600,
+			"width": 600,
+
+			// The distance from the top left of the screen
+			// Set to -1 to let the OS pick the best place
+			"top": -1,
+			"left": -1
+		}
 	},
 
 	// Settings that will change the way the radar will be displayed
@@ -20,7 +32,7 @@
 	// Settings for automatically zomming in on alive players on the map
 	"autozoom": {
 		// Enable or disable autozoom
-		"enable": true,
+		"enable": false,
 
 		// Frames to smooth out zoom movement
 		"smoothing": 32,

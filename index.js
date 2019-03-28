@@ -14,8 +14,8 @@ let connTimeout = false
 
 function createWindow () {
 	let winConfig = {
-		width: 600,
-		height: 600,
+		width: config.window.defaultSize.width,
+		height: config.window.defaultSize.height,
 		minHeight: 200,
 		minWidth: 200,
 		frame: false,
@@ -27,8 +27,14 @@ function createWindow () {
 		webPreferences: {
 			nodeIntegration: true,
 			webaudio: false,
-			webgl: false
+			webgl: false,
+			backgroundThrottling: false
 		}
+	}
+
+	if (config.window.defaultSize.top >= 0 || config.window.defaultSize.left >= 0) {
+		winConfig.x = Math.max(0, config.window.defaultSize.left)
+		winConfig.y = Math.max(0, config.window.defaultSize.top)
 	}
 
 	if (config.window.transparent) {
