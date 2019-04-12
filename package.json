@@ -1,6 +1,6 @@
 {
   "name": "boltobserv",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "External support for CSGO observers",
   "main": "index.js",
   "homepage": "https://github.com/boltgolt/boltobserv/",

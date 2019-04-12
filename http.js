@@ -23,7 +23,7 @@ let server = http.createServer(function(req, res) {
 
 		let game = JSON.parse(body)
 
-		// console.log(">", game)
+		// console.log(">", game.bomb)
 
 		if (game.provider) {
 			let connObject = {

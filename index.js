@@ -2,13 +2,15 @@ const path = require("path")
 const electron = require("electron")
 const child_process = require("child_process")
 
+
 const app = electron.app
 const config = require("./loadconfig")(true)
+const detectcfg = require("./detectcfg")
 
 let hasMap = false
 let connTimeout = false
 
-function createWindow () {
+function createWindow() {
 	let winConfig = {
 		width: config.window.defaultSize.width,
 		height: config.window.defaultSize.height,
@@ -53,6 +55,8 @@ function createWindow () {
 
 	win.loadFile("html/waiting.html")
 
+	if (config.game.autoInstallCfg) detectcfg.search()
+
 	let http = child_process.fork(`${__dirname}/http.js`)
 
 	http.on("message", (message) => {
@@ -83,6 +87,14 @@ function createWindow () {
 				win.loadFile("html/waiting.html")
 			}, config.game.connectionTimout * 1000)
 		}
+	})
+
+	electron.ipcMain.on("reqInstall", (event) => {
+		event.sender.send("cfgInstall", detectcfg.found)
+	})
+
+	electron.ipcMain.on("install", (event, path) => {
+		detectcfg.install(path)
 	})
 }
 
