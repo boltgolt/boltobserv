@@ -48,10 +48,14 @@
 					let newVersion = JSON.parse(data).version
 
 					if (version != newVersion) {
-						document.getElementById("version").innerHTML += ` - A newer version is available on github (${newVersion})`
+						document.getElementById("version").innerHTML += ` - <small onclick="releases()">A newer version is available on github! (${newVersion})</small>`
 					}
 				})
 			})
+
+			function releases() {
+				require("electron").shell.openExternal("https://github.com/boltgolt/boltobserv/releases")
+			}
 
 			let renderIpc = require("electron").ipcRenderer
 

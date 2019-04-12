@@ -2,7 +2,6 @@ const path = require("path")
 const electron = require("electron")
 const child_process = require("child_process")
 
-
 const app = electron.app
 const config = require("./loadconfig")(true)
 const detectcfg = require("./detectcfg")
@@ -55,7 +54,7 @@ function createWindow() {
 
 	win.loadFile("html/waiting.html")
 
-	if (config.game.autoInstallCfg) detectcfg.search()
+	if (config.game.installCfg) detectcfg.search()
 
 	let http = child_process.fork(`${__dirname}/http.js`)
 

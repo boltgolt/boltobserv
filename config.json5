@@ -52,7 +52,7 @@
 		"networkPort": 36363,
 
 		// Tries to detect the CSGO game on the machine and prompts to install the CFG file if it hasn't already
-		"autoInstallCfg": true
+		"installCfg": true
 	},
 
 	// Settings for automatically zomming in on alive players on the map

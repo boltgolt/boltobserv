@@ -97,6 +97,19 @@ img {
 	text-transform: uppercase;
 }
 
+#version small {
+	font-size: inherit;
+	color: #7E7E7E;
+}
+
+#version small:hover {
+	text-decoration: underline;
+	cursor: pointer;
+	position: relative;
+	z-index: 2000;
+	-webkit-app-region: no-drag;
+}
+
 #dragarea {
 	max-width: initial;
 	max-height: initial;
