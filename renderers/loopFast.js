@@ -1,11 +1,11 @@
 // Main loop
 //
-// Sets player position on screen every 10ms (100fps)
+// Sets player position on screen at +/- 60fps
 
 let global = require("./_global")
 
-// Run the loop every 10ms
-setInterval(() => {
+// Function to be executed before every frame paint
+function step() {
 	// Go though every player location buffre
 	for (let num in global.playerBuffers) {
 		// if a new player position is available
@@ -28,4 +28,11 @@ setInterval(() => {
 		global.playerElements[num].style.left = bufferPercX + "%"
 		global.playerElements[num].style.bottom = bufferPercY + "%"
 	}
-}, 10)
+
+	// Wait for next repaint
+	window.requestAnimationFrame(step)
+}
+
+// Request an update before the next repaint
+// Maximizes FPS with the least CPU possible
+window.requestAnimationFrame(step)

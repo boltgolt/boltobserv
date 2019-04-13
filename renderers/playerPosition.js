@@ -37,9 +37,13 @@ global.renderer.on("players", (event, data) => {
 	}
 })
 
+// On round reset
 global.renderer.on("roundend", (event, phase) => {
+	// Go through each player
 	for (let num in global.playerBuffers) {
+		// Empty the location buffer
 		global.playerBuffers[num] = []
+		// Reset the player position
 		global.playerPos[num] = {
 			x: null,
 			y: null,
