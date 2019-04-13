@@ -25,7 +25,8 @@ function createWindow() {
 			nodeIntegration: true,
 			webaudio: false,
 			webgl: false,
-			backgroundThrottling: false
+			backgroundThrottling: false,
+			allowEval: false
 		}
 	}
 

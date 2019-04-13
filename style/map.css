@@ -52,10 +52,12 @@ body {
 }
 
 div.player {
-	display: none;
 	position: absolute;
 	height: 16px;
 	width: 16px;
+	left: -100vw;
+	bottom: -100vh;
+	display: block;
 	background: #f00;
 	transform: translate(-8px, -8px);
 	text-align: center;
@@ -68,7 +70,6 @@ div.player {
 	font-size: 14px;
 	opacity: 1;
 	z-index: 15;
-	transition: bottom .01s linear, left: .01s linear;
 	will-change: bottom, left;
 }
 
