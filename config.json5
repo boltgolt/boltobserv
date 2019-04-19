@@ -17,6 +17,9 @@
 		// Make the background of the window transparent
 		"transparent": false,
 
+		// Will disable GPU rendering, helps capture the window in programs like OBS
+		"disableGpu": false,
+
 		// The default shape and position of the window
 		"defaultSize": {
 			// The height and width in pixels

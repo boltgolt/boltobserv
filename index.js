@@ -39,7 +39,7 @@ function createWindow() {
 		winConfig.transparent = true
 	}
 	else {
-		winConfig.backgroundColor = "#000"
+		winConfig.backgroundColor = "#f00"
 	}
 
 	let win = new electron.BrowserWindow(winConfig)
@@ -96,6 +96,11 @@ function createWindow() {
 	electron.ipcMain.on("install", (event, path) => {
 		detectcfg.install(path)
 	})
+}
+
+if (config.window.disableGpu) {
+	app.disableHardwareAcceleration()
+	app.commandLine.appendSwitch("disable-gpu")
 }
 
 app.on("ready", createWindow)

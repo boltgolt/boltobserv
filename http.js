@@ -31,7 +31,9 @@ let server = http.createServer(function(req, res) {
 			}
 
 			if (game.player) {
-				connObject.player = game.player.name
+				if (game.player.activity != "playing") {
+					connObject.player = game.player.name
+				}
 			}
 
 			process.send({
@@ -53,6 +55,7 @@ let server = http.createServer(function(req, res) {
 
 		// console.log(JSON.stringify(game))
 		if (game.allplayers) {
+
 			let playerArr = []
 			let context = {
 				defusing: false
@@ -73,6 +76,13 @@ let server = http.createServer(function(req, res) {
 				let hasBomb = false
 				let bombActive = false
 				let nadeActive = false
+				let isActive = false
+
+				if (game.player) {
+					if (game.player.observer_slot == player.observer_slot) {
+						isActive = true
+					}
+				}
 
 				for (let t in player.weapons) {
 					if (player.weapons[t].name == "weapon_c4") {
@@ -89,6 +99,7 @@ let server = http.createServer(function(req, res) {
 					num: player.observer_slot,
 					team: player.team,
 					alive: player.state.health > 0,
+					active: isActive,
 					bomb: hasBomb,
 					bombActive: bombActive,
 					nadeActive: nadeActive,
