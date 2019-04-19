@@ -39,7 +39,7 @@ function createWindow() {
 		winConfig.transparent = true
 	}
 	else {
-		winConfig.backgroundColor = "#f00"
+		winConfig.backgroundColor = "#000"
 	}
 
 	let win = new electron.BrowserWindow(winConfig)
