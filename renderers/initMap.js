@@ -63,8 +63,8 @@ global.renderer.on("map", (event, map) => {
 		element.style.display = "block"
 
 		// Set the bottom left corner as defined in the cords
-		element.style.left = global.positionToPerc(cords.x1, global.mapData.offset.x) + "%"
-		element.style.bottom = global.positionToPerc(cords.y1, global.mapData.offset.y) + "%"
+		element.style.left = global.positionToPerc({x: cords.x1}, "x") + "%"
+		element.style.bottom = global.positionToPerc({y: cords.y1}, "y") + "%"
 
 		// Transform the x2 and y2 cords to height and width, as HTML requires
 		// Calculates the difference between the first and second points and translates that to a relative percentage

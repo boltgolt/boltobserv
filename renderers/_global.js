@@ -13,33 +13,57 @@ module.exports = {
 
 	playerPos: [],
 	playerBuffers: [],
+	playerSplits: [],
 	playerElements: [],
 
 	/**
 	 * Convert in-game position units to radar percentages
-	 * @param  {Float} pos    In-game position
-	 * @param  {Float} offset Map offset
-	 * @param  {Array} options  The y position if this position should be translated in a split map
-	 * @return {Float}        Relative radar percentage
+	 * @param  {Array}  positionObj In-game position object with X and Y, and an optional Z
+	 * @param  {String} axis        The axis to calculate position for
+	 * @param  {Number} playerNum   An optional player number to wipe location buffer on split switch
+	 * @return {Number}             Relative radar percentage
 	 */
-	positionToPerc: (pos, offset, options) => {
-		// The position of the player in game, with the bottom left corner as origin (0,0)
-		let gamePosition = pos + offset
+	positionToPerc: (positionObj, axis, playerNum) => {
+		// The position of the player in game, with the bottom left corner of the radar as origin (0,0)
+		let gamePosition = positionObj[axis] + module.exports.mapData.offset[axis]
 		// The position of the player relative to an 1024x1024 pixel grid
 		let pixelPosition = gamePosition / module.exports.mapData.resolution
 		// The position of the player as an percentage for any size
 		let precPosition = pixelPosition / 1024 * 100
 
+		// Set the split to the default map
+		let currentSplit = -1
+		// Check if there are splits on the map and if we have a Z position
+		if (module.exports.mapData.splits.length > 0 && typeof positionObj.z == "number") {
+			// Go through each split
+			for (let i in module.exports.mapData.splits) {
+				let split = module.exports.mapData.splits[i]
 
-		if (typeof options == "object" && module.exports.mapData.splits.length > 0) {
-			for (let split of module.exports.mapData.splits) {
-				console.log(options[1], split.bounds.bottom, split.bounds.top)
-				if (options[1] > split.bounds.bottom && options[1] < split.bounds.top) {
-					precPosition += split.offset[options[0]]
+				// If the position is within the split
+				if (positionObj.z > split.bounds.bottom && positionObj.z < split.bounds.top) {
+					// Apply the split offset and save this split
+					precPosition += split.offset[axis]
+					currentSplit = parseInt(i)
+
+					// Stop checking other splits as there can only be one active split
+					break
 				}
 			}
 		}
 
+		// If we're calculating a player position
+		if (typeof playerNum == "number") {
+			// Wipe the location buffer if we've changed split
+			// Prevents the player from flying across the radar on split switch
+			if (module.exports.playerSplits[playerNum] != currentSplit) {
+				module.exports.playerBuffers[playerNum] = []
+			}
+
+			// Save this split as the last split id seen
+			module.exports.playerSplits[playerNum] = currentSplit
+		}
+
+		// Return the position relative to the radar image
 		return precPosition
 	}
 }
@@ -52,6 +76,7 @@ for (var i = 0; i < 10; i++) {
 		alive: false
 	})
 
+	module.exports.playerSplits.push(-1)
 	module.exports.playerBuffers.push([])
 	module.exports.playerElements.push(document.getElementById("player" + i))
 }

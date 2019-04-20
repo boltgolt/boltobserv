@@ -46,8 +46,8 @@ global.renderer.on("smokes", (event, smokes) => {
 			let percOffset  = parseFloat(smokeElement.style.height) / 2
 
 			// Set the location of the smoke
-			smokeElement.style.left = global.positionToPerc(smoke.position.x, global.mapData.offset.x) + "%"
-			smokeElement.style.bottom = global.positionToPerc(smoke.position.y, global.mapData.offset.y) - percOffset + "%"
+			smokeElement.style.left = global.positionToPerc(smoke.position, "x") + "%"
+			smokeElement.style.bottom = global.positionToPerc(smoke.position, "y") - percOffset + "%"
 		}
 
 		// If the smoke has been here for over 15 seconds, ready the smoke element for the fade away

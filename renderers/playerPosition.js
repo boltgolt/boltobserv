@@ -30,8 +30,8 @@ global.renderer.on("players", (event, data) => {
 		}
 
 		// Save the position so the main loop can interpolate it
-		global.playerPos[player.num].x = global.positionToPerc(player.position.x, global.mapData.offset.x, ["x", player.position.z])
-		global.playerPos[player.num].y = global.positionToPerc(player.position.y, global.mapData.offset.y, ["y", player.position.z])
+		global.playerPos[player.num].x = global.positionToPerc(player.position, "x", player.num)
+		global.playerPos[player.num].y = global.positionToPerc(player.position, "y", player.num)
 
 		// Set the player alive attribute (used in autozoom)
 		global.playerPos[player.num].alive = player.alive
