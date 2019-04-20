@@ -15,7 +15,7 @@ global.renderer.on("players", (event, data) => {
 		let playerElement  = global.playerElements[player.num]
 		let classes = ["player", player.team]
 
-		// Add the classes for dead players and bomb cariers
+		// Add the classes for dead players and bomb carriers
 		if (!player.alive) classes.push("dead")
 		if (player.bomb) classes.push("bomb")
 		if (player.active) classes.push("active")
@@ -33,7 +33,7 @@ global.renderer.on("players", (event, data) => {
 		global.playerPos[player.num].x = global.positionToPerc(player.position.x, global.mapData.offset.x, ["x", player.position.z])
 		global.playerPos[player.num].y = global.positionToPerc(player.position.y, global.mapData.offset.y, ["y", player.position.z])
 
-		// Set the player alive atribute (used in autozoom)
+		// Set the player alive attribute (used in autozoom)
 		global.playerPos[player.num].alive = player.alive
 	}
 })

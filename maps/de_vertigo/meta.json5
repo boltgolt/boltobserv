@@ -1,7 +1,7 @@
 {
 	"version": {
 		// The version of this meta file
-		"radar": 1,
+		"radar": 2,
 		// The object format version this file is using
 		"format": 2
 	},
@@ -15,38 +15,51 @@
 		"y": 1660
 	},
 
+	// Contains any special map splits, where 
 	"splits": [
 		{
 			"bounds": {
 				"bottom": 0,
-				"top": 11700
+				"top": 11680
 			},
 			"offset": {
 				"x": 45.5,
-				"y": 44,
+				"y": 44
 			}
 		}
 	],
 
-	// The bombsites, as defined by a bottom left and top right point
+	// The bombsites, as defined by a bottom left (lower) and top right (upper) point
 	// Defined in in-game units
 	"bombsites": {
-		"a": {
+		"a": [
 			// Bottom left point
-			"x1": 420,
-			"y1": -840,
+			{
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
 			// Top right point
-			"x2": 970,
-			"y2": -240
-		},
-		"b": {
+			{
+				"x": 0,
+				"y": 0,
+				"z": 0
+			}
+		],
+		"b": [
 			// Bottom left point
-			"x1": 290,
-			"y1": -1370,
+			{
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
 			// Top right point
-			"x2": 1030,
-			"y2": -570
-		}
+			{
+				"x": 0,
+				"y": 0,
+				"z": 0
+			}
+		]
 	},
 
 	// Position in which advisoies should be placed, in percentages from the bottom left

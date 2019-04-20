@@ -25,7 +25,7 @@ module.exports = {
 	positionToPerc: (pos, offset, options) => {
 		// The position of the player in game, with the bottom left corner as origin (0,0)
 		let gamePosition = pos + offset
-		// The position of the player relative to an 1024x1014 pixel grid
+		// The position of the player relative to an 1024x1024 pixel grid
 		let pixelPosition = gamePosition / module.exports.mapData.resolution
 		// The position of the player as an percentage for any size
 		let precPosition = pixelPosition / 1024 * 100

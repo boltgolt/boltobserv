@@ -12,7 +12,7 @@
 
 Advisories are automatically detected events that the observer might want to switch to.
 To make switching to this event easier, the observer slot number is displayed next to an icon noting the type of advisory.
-The observer should still make his own judgement of the situation.
+The observer should still make his own judgment of the situation.
 
 All possible advisories are (with increasing priority):
 
@@ -54,10 +54,10 @@ Running without window borders enables it to dedicate as much space as possible 
 2. Copy the `gamestate_integration_boltobserv.cfg` file from the .zip to your CSGO config folder (the same folder you'd put an `autoexec.cfg`). For most installations this should be found at `C:\Program Files\Steam\steamapps\common\Counter-Strike Global Offensive\csgo\cfg`.
 3. You're done! Start the `Boltobserv.exe` file in the unzipped folder. Boltobserv should now automatically connect to CSGO when it's launched.
 
-Please report any bugs or feature requests here on Github.
+Please report any bugs or feature requests here on Github. 
 
-## License 
+## License
 
-This project is licensed under GPL-3. In short, this means that all changes you make to this project need to be made open source (among other things). Commercial use is encouraged, as is distribution. 
+This project is licensed under GPL-3. In short, this means that all changes you make to this project need to be made open source (among other things). Commercial use is encouraged, as is distribution.
 
 The paragraph above is not legally binding. See the LICENSE file for the full license.

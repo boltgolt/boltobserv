@@ -6,7 +6,7 @@ let global = require("./_global")
 
 // Get the styling for the entire container
 let radarStyle = document.getElementById("container").style
-// Prepair condater position queues
+// Prepare position queues
 let radarQueues = {
 	scale: [1, 1, 1, 1, 1, 1],
 	x: [0, 0, 0, 0, 0, 0],
@@ -19,7 +19,7 @@ setInterval(() => {
 	if (!global.config.autozoom.enable) return
 
 	// Bounding rect around all living players
-	// Starts as impossibly smal or large bounds so players will always overwrite it
+	// Starts as impossibly small or large bounds so players will always overwrite it
 	let bounds = {
 		x: {
 			min: 100,
@@ -43,7 +43,7 @@ setInterval(() => {
 		if (bounds.y.max < player.y) bounds.y.max = player.y
 	}
 
-	// Calculate the zoomlevel where all players alive are visible
+	// Calculate the zoom-level where all players alive are visible
 	let radarScale = 1 + (1 - Math.max(bounds.x.max - bounds.x.min, bounds.y.max - bounds.y.min) / 100)
 
 	// Do not zoom if the scale seems to have been calculated with just the default data
@@ -64,7 +64,7 @@ setInterval(() => {
 	radarQueues.y.unshift(radarY)
 	radarQueues.y = radarQueues.y.slice(0, global.config.autozoom.smoothing)
 
-	// Calculate the avarage for all 3 values
+	// Calculate the average for all 3 values
 	let avgScale = radarQueues.scale.reduce((sum, el) => sum + el, 0) / radarQueues.scale.length
 	let avgX = radarQueues.x.reduce((sum, el) => sum + el, 0) / radarQueues.x.length
 	let avgY = radarQueues.y.reduce((sum, el) => sum + el, 0) / radarQueues.y.length

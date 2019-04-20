@@ -6,7 +6,7 @@ let global = require("./_global")
 
 // Function to be executed before every frame paint
 function step() {
-	// Go though every player location buffre
+	// Go though every player location buffer
 	for (let num in global.playerBuffers) {
 		// if a new player position is available
 		if (global.playerPos[num].x != null) {
@@ -20,7 +20,7 @@ function step() {
 			global.playerBuffers[num] = global.playerBuffers[num].slice(0, global.config.radar.playerSmoothing)
 		}
 
-		// Take the avarage of the X and Y buffers
+		// Take the average of the X and Y buffers
 		let bufferPercX = (global.playerBuffers[num].reduce((prev, curr) => prev + curr.x, 0) / (global.playerBuffers[num].length))
 		let bufferPercY = (global.playerBuffers[num].reduce((prev, curr) => prev + curr.y, 0) / (global.playerBuffers[num].length))
 

@@ -67,7 +67,7 @@ global.renderer.on("map", (event, map) => {
 		element.style.bottom = global.positionToPerc(cords.y1, global.mapData.offset.y) + "%"
 
 		// Transform the x2 and y2 cords to height and width, as HTML requires
-		// Calucates the difference between the first and second points and translates that to a relative percentage
+		// Calculates the difference between the first and second points and translates that to a relative percentage
 		element.style.width = ((cords.x2 - cords.x1) / global.mapData.resolution / 1024 * 100) + "%"
 		element.style.height = ((cords.y2 - cords.y1) / global.mapData.resolution / 1024 * 100) + "%"
 	}

@@ -6,7 +6,7 @@ let global = require("./_global")
 
 // Live the position of all smokes
 global.renderer.on("smokes", (event, smokes) => {
-	// Called to show the fade in amination with a delay
+	// Called to show the fade in animation with a delay
 	function fadeIn(smokeElement) {
 		setTimeout(() => {
 			smokeElement.className = "smokeEntity show"
@@ -50,13 +50,13 @@ global.renderer.on("smokes", (event, smokes) => {
 			smokeElement.style.bottom = global.positionToPerc(smoke.position.y, global.mapData.offset.y) - percOffset + "%"
 		}
 
-		// If the smoke has been here for over 15 seconds, ready the smoke element for the fadeaway
+		// If the smoke has been here for over 15 seconds, ready the smoke element for the fade away
 		// Setting the fading class will set the opacity transition to another value
 		if (smoke.time > 15 && smoke.time <= 16.4 && smokeElement.className != "smokeEntity fading") {
 			smokeElement.className = "smokeEntity fading"
 		}
 
-		// Trugger the fadeaway
+		// Trigger the fade away
 		if (smoke.time > 16.4 && smokeElement.className != "smokeEntity fading hide") {
 			smokeElement.className = "smokeEntity fading hide"
 			remove(smokeElement)
@@ -64,7 +64,7 @@ global.renderer.on("smokes", (event, smokes) => {
 	}
 })
 
-// Clear al smokes on round reset
+// Clear all smokes on round reset
 global.renderer.on("roundend", (event) => {
 	document.getElementById("smokes").innerHTML = ""
 })
