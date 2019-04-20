@@ -51,6 +51,41 @@ body {
 	display: none;
 }
 
+#bomb {
+	position: absolute;
+	background-image: url("../img/bomb-dropped.png");
+	background-size: contain;
+	height: 12px;
+	width: 12px;
+	bottom: -30%;
+	left: -30%;
+}
+
+#bomb.defused {
+	background-image: url("../img/bomb-defused.png");
+	filter: drop-shadow(0 0 4px rgba(0, 255, 0, .3));
+}
+
+#bomb.planted {
+	background-image: url("../img/bomb-planted.png");
+	animation: beep 1s infinite;
+}
+
+@keyframes beep {
+	0% {
+		filter: drop-shadow(0 0 0px rgba(255, 0, 0, 1));
+		background-color: rgba(255, 0, 0, 0);
+	}
+	10% {
+		filter: drop-shadow(0 0 6px rgba(255, 0, 0, 1));
+		background-color: rgba(255, 0, 0, 0.1);
+	}
+	20% {
+		filter: drop-shadow(0 0 14px rgba(255, 0, 0, 0));
+		background-color: rgba(255, 0, 0, 0);
+	}
+}
+
 div.player {
 	position: absolute;
 	height: 16px;

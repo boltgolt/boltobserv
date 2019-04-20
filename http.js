@@ -165,6 +165,23 @@ let server = http.createServer(function(req, res) {
 				oldPhase = game.round.phase
 			}
 		}
+
+		if (game.bomb) {
+			let pos = game.bomb.position.split(", ")
+
+			process.send({
+				type: "bomb",
+					data: {
+					state: game.bomb.state,
+					player: game.bomb.player,
+					position: {
+						x: parseFloat(pos[0]),
+						y: parseFloat(pos[1]),
+						z: parseFloat(pos[2])
+					}
+				}
+			})
+		}
 	})
 })
 

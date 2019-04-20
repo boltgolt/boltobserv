@@ -4,7 +4,7 @@
 
 let global = require("./_global")
 
-// Live the position of all smokes
+// The live position of all smokes
 global.renderer.on("smokes", (event, smokes) => {
 	// Called to show the fade in animation with a delay
 	function fadeIn(smokeElement) {

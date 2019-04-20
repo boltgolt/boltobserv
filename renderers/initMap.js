@@ -8,11 +8,6 @@ const path = require("path")
 const fs = require("fs")
 const JSON5 = require("json5")
 
-// Loop through each player dot to apply the scaling config option
-for (let playerElem of document.getElementsByClassName("player")) {
-	playerElem.style.transform = `scale(${global.config.radar.playerDotScale})  translate(-50%, -50%)`
-}
-
 // Catch map data send by the game
 global.renderer.on("map", (event, map) => {
 	// If map is unchanged we do not need to do anything

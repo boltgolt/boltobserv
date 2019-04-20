@@ -15,3 +15,11 @@ for (let renderer of renderers) {
 	// Load in the render module
 	require(path.join(__dirname, renderer))
 }
+
+// Loop through each player dot to apply the scaling config option
+for (let playerElem of document.getElementsByClassName("player")) {
+	playerElem.style.transform = `scale(${global.config.radar.playerDotScale}) translate(-50%, -50%)`
+}
+
+// Do the same for the bomb icon
+document.getElementById("bomb").style.transform = `scale(${global.config.radar.playerDotScale}) translate(-50%, -50%)`
