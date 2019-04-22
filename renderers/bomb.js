@@ -25,6 +25,5 @@ global.renderer.on("bomb", (event, bomb) => {
 	}
 	else {
 		bombElement.className = ""
-		console.log(bomb.state)
 	}
 })

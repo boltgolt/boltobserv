@@ -183,15 +183,11 @@ div.player.dead {
 	font-weight: bold;
 }
 
-#advisory.holdingbombA::before {
-	background-image: url("../img/adv-bombA.png");
+#advisory.planting::before {
+	background-image: url("../img/adv-plant.png");
 }
 
-#advisory.holdingbombB::before {
-	background-image: url("../img/adv-bombB.png");
-}
-
-#advisory.holdingbombA, #advisory.holdingbombB {
+#advisory.planting {
 	background: linear-gradient(to right, #AD9A3C, #ECCD37);
 	box-shadow: 0 0 .4vmin .3vmin rgba(255,252,0,.2);
 }
@@ -214,7 +210,7 @@ div.player.dead {
 	box-shadow: 0 0 .4vmin .3vmin rgba(13,255,0,.2);
 }
 
-#advisory.holdingbombA span, #advisory.holdingbombB span, #advisory.defuse span, #advisory.solesurvivor span {
+#advisory.planting span, #advisory.defuse span, #advisory.solesurvivor span {
 	color: #fff;
 }
 

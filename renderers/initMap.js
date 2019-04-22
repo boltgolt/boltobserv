@@ -10,6 +10,10 @@ const JSON5 = require("json5")
 
 // Catch map data send by the game
 global.renderer.on("map", (event, map) => {
+	/**
+	 * Show a map error and quit
+	 * @param  {String} text What error message to show
+	 */
 	function throwMapError(text) {
 		document.getElementById("unknownMap").style.display = "flex"
 		document.getElementById("unknownMap").children[0].innerHTML = text

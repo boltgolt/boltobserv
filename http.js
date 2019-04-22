@@ -23,7 +23,7 @@ let server = http.createServer(function(req, res) {
 
 		let game = JSON.parse(body)
 
-		// console.log(">", game.allplayers)
+		// console.log(">", game)
 
 		if (game.provider) {
 			let connObject = {
@@ -53,24 +53,13 @@ let server = http.createServer(function(req, res) {
 			}
 		}
 
-		// console.log(JSON.stringify(game))
 		if (game.allplayers) {
-
 			let playerArr = []
-			let context = {
-				defusing: false
-			}
 
-			if (game.phase_countdowns) {
-				if (game.phase_countdowns.phase == "defuse") {
-					context.defusing = true
-				}
-			}
+			for (let id in game.allplayers) {
+				if (!Number.isInteger(game.allplayers[id].observer_slot)) continue
 
-			for (let i in game.allplayers) {
-				if (!Number.isInteger(game.allplayers[i].observer_slot)) continue
-
-				let player = game.allplayers[i]
+				let player = game.allplayers[id]
 				let pos = player.position.split(", ")
 				let angle = 0
 				let hasBomb = false
@@ -99,6 +88,7 @@ let server = http.createServer(function(req, res) {
 				}
 
 				playerArr.push({
+					id: id,
 					num: player.observer_slot,
 					team: player.team,
 					alive: player.state.health > 0,
@@ -117,7 +107,6 @@ let server = http.createServer(function(req, res) {
 			process.send({
 				type: "players",
 				data: {
-					context: context,
 					players: playerArr
 				}
 			})
@@ -174,7 +163,7 @@ let server = http.createServer(function(req, res) {
 
 			process.send({
 				type: "bomb",
-					data: {
+				data: {
 					state: game.bomb.state,
 					player: game.bomb.player,
 					position: {

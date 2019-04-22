@@ -4,71 +4,82 @@
 
 let global = require("./_global")
 
-function playerOnSite(cords, rect) {
-	return rect.x1 <= cords.x
-			&& cords.x <= rect.x2
-			&& rect.y1 <= cords.y
-			&& cords.y <= rect.y2
+let idToNum = {}
+let advisories = {
+	planting: -1,
+	defuse: -1,
+	solesurvivor: -1
+}
+
+function trim(str) {
+	let string = str + ""
+	return string.substring(0, string.length - 2)
+}
+
+function updateAdvisory() {
+	for (let name in advisories) {
+		if (advisories[name] != -1) {
+			document.getElementById("advisory").className = name
+			document.getElementById("advisory").children[0].innerHTML = idToNum[advisories[name]]
+			return
+		}
+	}
+
+	document.getElementById("advisory").className = ""
 }
 
 global.renderer.on("players", (event, data) => {
-	return
-	if (global.currentMap == "none") return
-
-	let advisory = {
-		"type": "none",
-		"player": "?"
-	}
-
-	let playersOnSites = []
 	let ctsAlive = []
 	let tsAlive = []
 
 	for (let player of data.players) {
-
 		if (player.alive) {
 			if (player.team == "CT") {
-				ctsAlive.push(player)
+				ctsAlive.push(player.id)
 			}
 			else {
-				tsAlive.push(player)
+				tsAlive.push(player.id)
 			}
 		}
 
-		let onA = playerOnSite(player.position, mapData.bombsites.a)
-		let onB = playerOnSite(player.position, mapData.bombsites.b)
-
-		if (onA || onB) {
-			playersOnSites.push(player)
-
-			if (player.bombActive) {
-				advisory.type = "holdingbomb" + (onA ? "A" : "B")
-				advisory.player = player.num
-			}
+		if (idToNum[trim(player.id)] != player.num) {
+			idToNum[trim(player.id)] = player.num
 		}
 	}
 
-	if (ctsAlive.length == 1 && advisory.type == "none") {
-		advisory.type = "solesurvivor"
-		advisory.player = ctsAlive[0].num
+	if (ctsAlive.length == 1) {
+		advisories.solesurvivor = trim(ctsAlive[0])
+	}
+	else if (tsAlive.length == 1) {
+		advisories.solesurvivor = trim(tsAlive[0])
+	}
+	else {
+		advisories.solesurvivor = -1
 	}
 
-	if (tsAlive.length == 1 && advisory.type == "none") {
-		advisory.type = "solesurvivor"
-		advisory.player = tsAlive[0].num
-	}
+	updateAdvisory()
+})
 
-	if (data.context.defusing) {
-		let ctsOnSites = playersOnSites.filter(player => player.team == "CT")
+global.renderer.on("bomb", (event, data) => {
+	if (idToNum[trim(data.player)]) {
+		if (data.state == "planting") {
+			advisories.planting = trim(data.player)
+		}
+		else {
+			advisories.planting = -1
+		}
 
-		advisory.type = "defuse"
-		advisory.player = "?"
-
-		if (ctsOnSites.length == 1) {
-			advisory.player = ctsOnSites[0].num
+		if (data.state == "defusing") {
+			advisories.defuse = trim(data.player)
+		}
+		else {
+			advisories.defuse = -1
 		}
 	}
+	else {
+		advisories.planting = -1
+		advisories.defuse = -1
+	}
 
-	document.getElementById("advisory").className = advisory.type
-	document.getElementById("advisory").children[0].innerHTML = advisory.player
+	updateAdvisory()
 })
