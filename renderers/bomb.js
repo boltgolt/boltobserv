@@ -8,7 +8,7 @@ let bombElement = document.getElementById("bomb")
 let bombStyle = bombElement.style
 
 global.renderer.on("bomb", (event, bomb) => {
-	if (bomb.state == "carried") {
+	if (bomb.state == "carried" || bomb.state == "exploded") {
 		bombStyle.display = "none"
 	}
 	else {
@@ -25,5 +25,6 @@ global.renderer.on("bomb", (event, bomb) => {
 	}
 	else {
 		bombElement.className = ""
+		console.log(bomb.state)
 	}
 })

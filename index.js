@@ -99,6 +99,8 @@ function createWindow() {
 }
 
 if (config.window.disableGpu) {
+	console.info("GPU disabled by config option")
+
 	app.disableHardwareAcceleration()
 	app.commandLine.appendSwitch("disable-gpu")
 }

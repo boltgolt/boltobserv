@@ -15,13 +15,15 @@
 		"y": 1660
 	},
 
-	// Contains any special map splits, where 
+	// Contains any special map splits
 	"splits": [
 		{
+			// The top and bottom y height for this split
 			"bounds": {
-				"bottom": 0,
-				"top": 11680
+				"top": 11680,
+				"bottom": 0
 			},
+			// The radar offset in percentages to apply when player is in the split
 			"offset": {
 				"x": 45.5,
 				"y": 44
@@ -62,7 +64,7 @@
 		]
 	},
 
-	// Position in which advisoies should be placed, in percentages from the bottom left
+	// Position in which advisories should be placed, in percentages from the bottom left
 	"advisoryPosition": {
 		"x": 19,
 		"y": 78

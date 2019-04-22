@@ -48,7 +48,7 @@
 	// Settings related to the CSGO game
 	"game": {
 		// Seconds of inactivity before considering a connection to the game client as lost
-		// Set to -1 to never timout
+		// Set to -1 to never timeout
 		"connectionTimout": 30,
 
 		// The port GSI will try to connect to
@@ -58,7 +58,7 @@
 		"installCfg": true
 	},
 
-	// Settings for automatically zomming in on alive players on the map
+	// Settings for automatically zooming in on alive players on the map
 	"autozoom": {
 		// Enable or disable autozoom
 		"enable": false,
@@ -70,7 +70,7 @@
 		"padding": 0.3
 	},
 
-	// Settings that should not be used in normal oparation, but help to find issues
+	// Settings that should not be used in normal operation, but help to find issues
 	"debug": {
 		// Draw red squares over bombsite locations
 		"drawBombsites": false,

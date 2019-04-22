@@ -95,6 +95,7 @@ div.player {
 	display: block;
 	background: #f00;
 	transform: translate(-8px, -8px);
+	transform-origin: center center;
 	text-align: center;
 	line-height: 16px;
 	border-radius: 100%;
