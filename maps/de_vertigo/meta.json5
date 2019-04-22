@@ -7,20 +7,33 @@
 	},
 
 	// The amount of in-game units per pixel of the 1024px radar image
-	"resolution": 4.40,
+	"resolution": 4.58,
 
 	// How many in-game units is the origin (0,0) of the map from the bottom left point of the radar
 	"offset": {
-		"x": 2490,
-		"y": 1135
+		"x": 2830,
+		"y": 1660
 	},
 
 	// Contains any special map splits
-	"splits": [],
+	"splits": [
+		{
+			// The top and bottom y height for this split
+			"bounds": {
+				"top": 11680,
+				"bottom": 0
+			},
+			// The radar offset in percentages to apply when player is in the split
+			"offset": {
+				"x": 45.5,
+				"y": 44
+			}
+		}
+	],
 
 	// Position in which advisories should be placed, in percentages from the bottom left
 	"advisoryPosition": {
-		"x": 80,
-		"y": 8.9
+		"x": 19,
+		"y": 78
 	}
 }

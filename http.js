@@ -31,7 +31,9 @@ let server = http.createServer(function(req, res) {
 			}
 
 			if (game.player) {
-				connObject.player = game.player.name
+				if (game.player.activity != "playing") {
+					connObject.player = game.player.name
+				}
 			}
 
 			process.send({
@@ -51,47 +53,49 @@ let server = http.createServer(function(req, res) {
 			}
 		}
 
-		// console.log(JSON.stringify(game))
 		if (game.allplayers) {
 			let playerArr = []
-			let context = {
-				defusing: false
-			}
 
-			if (game.phase_countdowns) {
-				if (game.phase_countdowns.phase == "defuse") {
-					context.defusing = true
-				}
-			}
+			for (let id in game.allplayers) {
+				if (!Number.isInteger(game.allplayers[id].observer_slot)) continue
 
-			for (let i in game.allplayers) {
-				if (!Number.isInteger(game.allplayers[i].observer_slot)) continue
-
-				const nadeIDs = ["weapon_smokegrenade", "weapon_flashbang", "weapon_hegrenade", "weapon_incgrenade", "weapon_smokegrenade"]
-				let player = game.allplayers[i]
+				let player = game.allplayers[id]
 				let pos = player.position.split(", ")
+				let angle = 0
 				let hasBomb = false
 				let bombActive = false
-				let nadeActive = false
+				let isActive = false
+				let rawAngle = player.forward.split(", ")
+
+				if (parseFloat(rawAngle[0]) > 0) {
+					angle = 90 + parseFloat(rawAngle[1]) * -1 * 90
+				}
+				else {
+					angle = 270 + parseFloat(rawAngle[1]) * 90
+				}
+
+				if (game.player) {
+					if (game.player.observer_slot == player.observer_slot) {
+						isActive = true
+					}
+				}
 
 				for (let t in player.weapons) {
 					if (player.weapons[t].name == "weapon_c4") {
 						hasBomb = true
 						bombActive = player.weapons[t].state == "active"
 					}
-
-					if (player.weapons[t].state == "active" && nadeIDs.includes(player.weapons[t].name)) {
-						nadeActive = true
-					}
 				}
 
 				playerArr.push({
+					id: id,
 					num: player.observer_slot,
 					team: player.team,
 					alive: player.state.health > 0,
+					active: isActive,
 					bomb: hasBomb,
 					bombActive: bombActive,
-					nadeActive: nadeActive,
+					angle: angle,
 					position: {
 						x: parseFloat(pos[0]),
 						y: parseFloat(pos[1]),
@@ -103,7 +107,6 @@ let server = http.createServer(function(req, res) {
 			process.send({
 				type: "players",
 				data: {
-					context: context,
 					players: playerArr
 				}
 			})
@@ -153,6 +156,23 @@ let server = http.createServer(function(req, res) {
 
 				oldPhase = game.round.phase
 			}
+		}
+
+		if (game.bomb) {
+			let pos = game.bomb.position.split(", ")
+
+			process.send({
+				type: "bomb",
+				data: {
+					state: game.bomb.state,
+					player: game.bomb.player,
+					position: {
+						x: parseFloat(pos[0]),
+						y: parseFloat(pos[1]),
+						z: parseFloat(pos[2])
+					}
+				}
+			})
 		}
 	})
 })

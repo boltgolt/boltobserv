@@ -7,7 +7,7 @@
 	// Sends information about the grenades thrown this round to a server
 	// This information in only used to train a model to predict grenade
 	// landings, no personal information is send or logged
-	"nadeCollection": false,
+	"nadeCollection": true,
 
 	// Settings related to the Boltobserv window
 	"window": {
@@ -16,6 +16,9 @@
 
 		// Make the background of the window transparent
 		"transparent": false,
+
+		// Will disable GPU rendering, helps capture the window in programs like OBS
+		"disableGpu": false,
 
 		// The default shape and position of the window
 		"defaultSize": {
@@ -45,14 +48,17 @@
 	// Settings related to the CSGO game
 	"game": {
 		// Seconds of inactivity before considering a connection to the game client as lost
-		// Set to -1 to never timout
+		// Set to -1 to never timeout
 		"connectionTimout": 30,
 
 		// The port GSI will try to connect to
-		"networkPort": 36363
+		"networkPort": 36363,
+
+		// Tries to detect the CSGO game on the machine and prompts to install the CFG file if it hasn't already
+		"installCfg": true
 	},
 
-	// Settings for automatically zomming in on alive players on the map
+	// Settings for automatically zooming in on alive players on the map
 	"autozoom": {
 		// Enable or disable autozoom
 		"enable": false,
@@ -64,7 +70,7 @@
 		"padding": 0.3
 	},
 
-	// Settings that should not be used in normal oparation, but help to find issues
+	// Settings that should not be used in normal operation, but help to find issues
 	"debug": {
 		// Draw red squares over bombsite locations
 		"drawBombsites": false,

@@ -4,11 +4,12 @@ const child_process = require("child_process")
 
 const app = electron.app
 const config = require("./loadconfig")(true)
+const detectcfg = require("./detectcfg")
 
 let hasMap = false
 let connTimeout = false
 
-function createWindow () {
+function createWindow() {
 	let winConfig = {
 		width: config.window.defaultSize.width,
 		height: config.window.defaultSize.height,
@@ -24,7 +25,8 @@ function createWindow () {
 			nodeIntegration: true,
 			webaudio: false,
 			webgl: false,
-			backgroundThrottling: false
+			backgroundThrottling: false,
+			allowEval: false
 		}
 	}
 
@@ -52,6 +54,8 @@ function createWindow () {
 	})
 
 	win.loadFile("html/waiting.html")
+
+	if (config.game.installCfg) detectcfg.search()
 
 	let http = child_process.fork(`${__dirname}/http.js`)
 
@@ -84,6 +88,21 @@ function createWindow () {
 			}, config.game.connectionTimout * 1000)
 		}
 	})
+
+	electron.ipcMain.on("reqInstall", (event) => {
+		event.sender.send("cfgInstall", detectcfg.found)
+	})
+
+	electron.ipcMain.on("install", (event, path) => {
+		detectcfg.install(path)
+	})
+}
+
+if (config.window.disableGpu) {
+	console.info("GPU disabled by config option")
+
+	app.disableHardwareAcceleration()
+	app.commandLine.appendSwitch("disable-gpu")
 }
 
 app.on("ready", createWindow)

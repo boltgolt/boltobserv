@@ -51,13 +51,51 @@ body {
 	display: none;
 }
 
+#bomb {
+	position: absolute;
+	background-image: url("../img/bomb-dropped.png");
+	background-size: contain;
+	height: 12px;
+	width: 12px;
+	bottom: -30%;
+	left: -30%;
+}
+
+#bomb.defused {
+	background-image: url("../img/bomb-defused.png");
+	filter: drop-shadow(0 0 4px rgba(0, 255, 0, .3));
+}
+
+#bomb.planted {
+	background-image: url("../img/bomb-planted.png");
+	animation: beep 1s infinite;
+}
+
+@keyframes beep {
+	0% {
+		filter: drop-shadow(0 0 0px rgba(255, 0, 0, 1));
+		background-color: rgba(255, 0, 0, 0);
+	}
+	10% {
+		filter: drop-shadow(0 0 6px rgba(255, 0, 0, 1));
+		background-color: rgba(255, 0, 0, 0.1);
+	}
+	20% {
+		filter: drop-shadow(0 0 14px rgba(255, 0, 0, 0));
+		background-color: rgba(255, 0, 0, 0);
+	}
+}
+
 div.player {
-	display: none;
 	position: absolute;
 	height: 16px;
 	width: 16px;
+	left: -100vw;
+	bottom: -100vh;
+	display: block;
 	background: #f00;
 	transform: translate(-8px, -8px);
+	transform-origin: center center;
 	text-align: center;
 	line-height: 16px;
 	border-radius: 100%;
@@ -68,16 +106,7 @@ div.player {
 	font-size: 14px;
 	opacity: 1;
 	z-index: 15;
-	transition: bottom .01s linear, left: .01s linear;
 	will-change: bottom, left;
-}
-
-div.player.dead {
-	opacity: .4;
-	color: transparent;
-	text-shadow: none;
-	clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
-	z-index: 13;
 }
 
 div.player.CT {
@@ -98,6 +127,19 @@ div.player.nade {
 div.player.bomb {
 	border-radius: 2px;
 	background: #FF8200;
+}
+
+div.player.active {
+	filter: drop-shadow(0 0 0 #FFF) drop-shadow(0 0 0 #FFF) drop-shadow(0 0 0 #FFF);
+}
+
+div.player.dead {
+	opacity: .4;
+	color: transparent;
+	text-shadow: none;
+	clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
+	z-index: 13;
+	filter: none;
 }
 
 #advisory {
@@ -141,15 +183,11 @@ div.player.bomb {
 	font-weight: bold;
 }
 
-#advisory.holdingbombA::before {
-	background-image: url("../img/adv-bombA.png");
+#advisory.planting::before {
+	background-image: url("../img/adv-plant.png");
 }
 
-#advisory.holdingbombB::before {
-	background-image: url("../img/adv-bombB.png");
-}
-
-#advisory.holdingbombA, #advisory.holdingbombB {
+#advisory.planting {
 	background: linear-gradient(to right, #AD9A3C, #ECCD37);
 	box-shadow: 0 0 .4vmin .3vmin rgba(255,252,0,.2);
 }
@@ -172,7 +210,7 @@ div.player.bomb {
 	box-shadow: 0 0 .4vmin .3vmin rgba(13,255,0,.2);
 }
 
-#advisory.holdingbombA span, #advisory.holdingbombB span, #advisory.defuse span, #advisory.solesurvivor span {
+#advisory.planting span, #advisory.defuse span, #advisory.solesurvivor span {
 	color: #fff;
 }
 

@@ -8,7 +8,12 @@
 		<title>Boltobserv - Waiting for CSGO</title>
 	</head>
 	<body>
-		<div>
+
+		<div id="dragarea"></div>
+
+		<div id="game">
+			<div id="cfgs"></div>
+
 			<img src="../img/icon.svg">
 			<div id="noconnection">
 				Waiting for CSGO to connect...
@@ -17,7 +22,6 @@
 
 		<span id="version">version 0.0.1</span>
 
-		<div id="dragarea"></div>
 
 		<script>
 			require("electron").ipcRenderer.on("connection", (event, data) => {
@@ -44,10 +48,41 @@
 					let newVersion = JSON.parse(data).version
 
 					if (version != newVersion) {
-						document.getElementById("version").innerHTML += ` - A newer version is available on github (${newVersion})`
+						document.getElementById("version").innerHTML += ` - <small onclick="releases()">A newer version is available on github! (${newVersion})</small>`
 					}
 				})
 			})
+
+			function releases() {
+				require("electron").shell.openExternal("https://github.com/boltgolt/boltobserv/releases")
+			}
+
+			let renderIpc = require("electron").ipcRenderer
+
+			renderIpc.send("reqInstall")
+
+			renderIpc.on("cfgInstall", (event, data) => {
+				for (var i = 0; i < data.length && i < 5; i++) {
+					let text = "Outdated config"
+
+					if (data[i].type == "install") {
+						text = "Found game without config"
+					}
+
+					let div = document.createElement("div")
+					div.innerHTML = `
+						<span>${text}</span>
+						<small>in ${data[i].path}</small>
+						<button onclick="install(this,'${data[i].path.replace(/\\/g, "\\\\")}')">${data[i].type}</button>
+					`
+					document.getElementById("cfgs").appendChild(div);
+				}
+			})
+
+			function install(elem, path) {
+				renderIpc.send("install", path)
+				elem.parentNode.parentNode.parentNode.removeChild(elem.parentNode.parentNode)
+			}
 		</script>
 	</body>
 </html>

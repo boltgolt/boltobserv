@@ -2,11 +2,77 @@ body {
 	background: rgba(0, 0, 0, .24);
 }
 
-body > div {
+#game {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+}
+
+#cfgs {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	z-index: 2000;
+	-webkit-app-region: no-drag;
+	cursor: default;
+}
+
+#cfgs > div {
+	display: flex;
+	flex-direction: row;
+	background: #a647c7;
+	padding: 6px;
+	font-size: 13px;
+	margin-bottom: 3px;
+	line-height: 20px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+#cfgs span {
+	font-weight: bold;
+	padding-left: 6px;
+}
+
+#cfgs small {
+	font-size: 13px;
+	flex: 1;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	min-width: 0;
+	padding: 0 .4em 0 .3em;
+}
+
+#cfgs button {
+	background: #FFF;
+	border: 0;
+	color: #a647c7;
+	padding: 3px 0;
+	margin-right: 2px;
+	font-weight: bold;
+	font-size: 12px;
+	cursor: pointer;
+	position: relative;
+	text-align: center;
+	width: 60px;
+	text-transform: uppercase;
+	transform: scale(1);
+	transition: transform .15s;
+}
+
+#cfgs button:hover {
+	transform: scale(1.05);
+}
+
+#cfgs button:active {
+	transform: scale(0.98);
+}
+
+#cfgs button:focus {
+	outline: none;
 }
 
 img {
@@ -29,4 +95,22 @@ img {
 	bottom: 3vmin;
 	font-size: 1.6vmin;
 	text-transform: uppercase;
+}
+
+#version small {
+	font-size: inherit;
+	color: #7E7E7E;
+}
+
+#version small:hover {
+	text-decoration: underline;
+	cursor: pointer;
+	position: relative;
+	z-index: 2000;
+	-webkit-app-region: no-drag;
+}
+
+#dragarea {
+	max-width: initial;
+	max-height: initial;
 }
