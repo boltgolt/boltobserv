@@ -73,7 +73,7 @@
 					div.innerHTML = `
 						<span>${text}</span>
 						<small>in ${data[i].path}</small>
-						<button onclick="install(this,'${data[i].path}')">${data[i].type}</button>
+						<button onclick="install(this,'${data[i].path.replace(/\\/g, "\\\\")}')">${data[i].type}</button>
 					`
 					document.getElementById("cfgs").appendChild(div);
 				}

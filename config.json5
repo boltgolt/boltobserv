@@ -7,7 +7,7 @@
 	// Sends information about the grenades thrown this round to a server
 	// This information in only used to train a model to predict grenade
 	// landings, no personal information is send or logged
-	"nadeCollection": false,
+	"nadeCollection": true,
 
 	// Settings related to the Boltobserv window
 	"window": {

@@ -3,7 +3,7 @@ const path = require("path")
 
 const steamPaths = [
 	// Default Windows install path
-	path.join("C:", "Program Files (x86)", "Steam"),
+	path.join("C:", "Program Files (x86)", "Steam", "steamapps"),
 	// For development
 	path.join(__dirname)
 ]
