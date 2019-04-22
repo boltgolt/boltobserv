@@ -10,6 +10,11 @@ const JSON5 = require("json5")
 
 // Catch map data send by the game
 global.renderer.on("map", (event, map) => {
+	function throwMapError(text) {
+		document.getElementById("unknownMap").style.display = "flex"
+		document.getElementById("unknownMap").children[0].innerHTML = text
+	}
+
 	// If map is unchanged we do not need to do anything
 	if (global.currentMap == map) return
 
@@ -19,9 +24,20 @@ global.renderer.on("map", (event, map) => {
 
 	// If the meta file or radar backdrop does not exist, we don't support the map and need to quit
 	if (!fs.existsSync(metaPath) || !fs.existsSync(radarPath)) {
-		document.getElementById("unknownMap").style.display = "flex"
-		document.getElementById("unknownMap").children[0].innerHTML = "Unsupported map " + map
-		return
+		return throwMapError(`Unsupported map ${map}`)
+	}
+
+	// Save the map metadata as a global attribute so other renderers can use it
+	try {
+		global.mapData = JSON5.parse(fs.readFileSync(metaPath, "utf8"))
+	} catch (e) {
+		// Catch and throw on JSON error
+		return throwMapError(`JSON error in ${map} map file :(`)
+	}
+
+	// Check if the map uses the expected meta format
+	if (global.mapData.version.format != 2) {
+		return throwMapError(`Outdated map file for ${map}`)
 	}
 
 	// Make sure that the "unknown map" message is turned off for valid maps
@@ -33,9 +49,6 @@ global.renderer.on("map", (event, map) => {
 	// Set the map as the current map and in the window title
 	global.currentMap = map
 	document.title = "Boltobserv - " + map
-
-	// Save the map metadata as a global attribute so other renderers can use it
-	global.mapData = JSON5.parse(fs.readFileSync(metaPath, "utf8"))
 
 	// Hide advisories if you've been disabled in the config
 	if (global.config.radar.hideAdvisories) {
