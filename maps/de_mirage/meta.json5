@@ -18,39 +18,6 @@
 	// Contains any special map splits
 	"splits": [],
 
-	// The bombsites, as defined by a bottom left (lower) and top right (upper) point
-	// Defined in in-game units
-	"bombsites": {
-		"a": [
-			// Bottom left point
-			{
-				"x": -650,
-				"y": -2250,
-				"z": 0
-			},
-			// Top right point
-			{
-				"x": -200,
-				"y": -1820,
-				"z": 99999999
-			}
-		],
-		"b": [
-			// Bottom left point
-			{
-				"x": -2240,
-				"y": 120,
-				"z": 0
-			},
-			// Top right point
-			{
-				"x": -1750,
-				"y": 620,
-				"z": 99999999
-			}
-		]
-	},
-
 	// Position in which advisories should be placed, in percentages from the bottom left
 	"advisoryPosition": {
 		"x": 10,

@@ -31,39 +31,6 @@
 		}
 	],
 
-	// The bombsites, as defined by a bottom left (lower) and top right (upper) point
-	// Defined in in-game units
-	"bombsites": {
-		"a": [
-			// Bottom left point
-			{
-				"x": 0,
-				"y": 0,
-				"z": 0
-			},
-			// Top right point
-			{
-				"x": 0,
-				"y": 0,
-				"z": 0
-			}
-		],
-		"b": [
-			// Bottom left point
-			{
-				"x": 0,
-				"y": 0,
-				"z": 0
-			},
-			// Top right point
-			{
-				"x": 0,
-				"y": 0,
-				"z": 0
-			}
-		]
-	},
-
 	// Position in which advisories should be placed, in percentages from the bottom left
 	"advisoryPosition": {
 		"x": 19,
