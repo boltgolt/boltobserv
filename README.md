@@ -56,8 +56,14 @@ Running without window borders enables it to dedicate as much space as possible 
 
 Please report any bugs or feature requests here on Github. 
 
+## Special thanks
+
+Thanks to [Inygon](https://inygon.com/) for supporting open source development on Boltobserv
+
+[![Inygon](https://i.imgur.com/bQjz86D.png)](https://inygon.com/)
+
 ## License
 
 This project is licensed under GPL-3. In short, this means that all changes you make to this project need to be made open source (among other things). Commercial use is encouraged, as is distribution.
 
-The paragraph above is not legally binding. See the LICENSE file for the full license.
+The paragraph above is not legal advice and is not legally binding. See the LICENSE file for the full license.
