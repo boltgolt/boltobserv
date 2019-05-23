@@ -51,16 +51,18 @@ Running without window borders enables it to dedicate as much space as possible 
 ## Installation
 
 1. Download the latest .zip form the [releases](https://github.com/boltgolt/boltobserv/releases) page and unzip it.
-2. Copy the `gamestate_integration_boltobserv.cfg` file from the .zip to your CSGO config folder (the same folder you'd put an `autoexec.cfg`). For most installations this should be found at `C:\Program Files\Steam\steamapps\common\Counter-Strike Global Offensive\csgo\cfg`.
-3. You're done! Start the `Boltobserv.exe` file in the unzipped folder. Boltobserv should now automatically connect to CSGO when it's launched.
+2. Launch `Boltobserv.exe`, it should ask you to automatically install the .cfg file. If it doesn't, copy the `gamestate_integration_boltobserv.cfg` file from the .zip to your CSGO config folder (the same folder you'd put an `autoexec.cfg`).
+3. You're done! (Re)start CSGO and  Boltobserv should automatically connect.
 
-Please report any bugs or feature requests here on Github. 
+Please report any bugs or feature requests here on Github.
 
 ## Special thanks
 
 Thanks to [Inygon](https://inygon.com/) for supporting open source development on Boltobserv
 
 [![Inygon](https://i.imgur.com/bQjz86D.png)](https://inygon.com/)
+
+If you want to support development on specific functionality, don't hesitate to contact me. Sending a onetime donation through [ko-fi](https://ko-fi.com/boltgolt) is also very appreciated.
 
 ## License
 
