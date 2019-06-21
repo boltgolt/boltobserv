@@ -47,7 +47,7 @@
 		"hideAdvisories": false,
 
 		// Frames to smooth out player movement
-		"playerSmoothing": 12,
+		"playerSmoothing": 13,
 
 		// Amount of scaling to apply to player dots on the radar
 		"playerDotScale": 1
