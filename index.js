@@ -13,10 +13,12 @@ function createWindow() {
 	let winConfig = {
 		width: config.window.defaultSize.width,
 		height: config.window.defaultSize.height,
+		fullscreen: config.window.fullscreen,
 		minHeight: 200,
 		minWidth: 200,
 		frame: false,
 		resizable: true,
+		hasShadow: false,
 		enableLargerThanScreen: true,
 		darkTheme: true,
 		title: "Boltobserv",
@@ -46,6 +48,14 @@ function createWindow() {
 
 	if (config.window.alwaysOnTop) {
 		win.setAlwaysOnTop(true, "screen")
+	}
+
+	if (config.window.mousePassthrough) {
+		win.setIgnoreMouseEvents(true)
+	}
+
+	if (config.window.fullscreen) {
+		win.setFullScreen(true)
 	}
 
 	win.on("closed", () => {
