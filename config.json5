@@ -17,8 +17,16 @@
 		// Make the background of the window transparent
 		"transparent": false,
 
+		// Start window as a full screen application
+		// Use ALT + F4 to quit
+		"fullscreen": true,
+
 		// Will disable GPU rendering, helps capture the window in programs like OBS
 		"disableGpu": false,
+
+		// Do not capture mouse events, allowing interaction with the window underneath
+		// Dragging or resizing the window will be disabled if this option is true
+		"mousePassthrough": false,
 
 		// The default shape and position of the window
 		"defaultSize": {
@@ -39,7 +47,7 @@
 		"hideAdvisories": false,
 
 		// Frames to smooth out player movement
-		"playerSmoothing": 12,
+		"playerSmoothing": 13,
 
 		// Amount of scaling to apply to player dots on the radar
 		"playerDotScale": 1

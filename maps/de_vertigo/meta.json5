@@ -11,8 +11,8 @@
 
 	// How many in-game units is the origin (0,0) of the map from the bottom left point of the radar
 	"offset": {
-		"x": 2830,
-		"y": 1660
+		"x": 3690,
+		"y": 3390
 	},
 
 	// Contains any special map splits
@@ -25,15 +25,15 @@
 			},
 			// The radar offset in percentages to apply when player is in the split
 			"offset": {
-				"x": 45.5,
-				"y": 44
+				"x": 0,
+				"y": -39
 			}
 		}
 	],
 
 	// Position in which advisories should be placed, in percentages from the bottom left
 	"advisoryPosition": {
-		"x": 19,
-		"y": 78
+		"x": 68,
+		"y": 84
 	}
 }
