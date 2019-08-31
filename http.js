@@ -6,7 +6,7 @@ const remotenades = require("./remotenades.js")
 const host = "localhost"
 
 let oldPhase = false
-
+let infernosOnMap = [] //initial molotov status
 let server = http.createServer(function(req, res) {
 	if (req.method != "POST") {
 		res.writeHead(405)
@@ -111,11 +111,11 @@ let server = http.createServer(function(req, res) {
 				}
 			})
 		}
-
+		
 		if (game.grenades) {
 			let smokes = []
 			let nades = []
-
+			let infernos = []
 			for (let nadeID in game.grenades) {
 				let nade = game.grenades[nadeID]
 
@@ -131,13 +131,45 @@ let server = http.createServer(function(req, res) {
 						}
 					})
 				}
+				if (nade.type == "inferno") {
+					if (!!nade.flames) {
+						let flamesPos = []
+						let flamesNum = Object.values(nade.flames).length
+						for (var i = 0; i < flamesNum; i++) {
+							flamesPos.push({
+								x: parseFloat(Object.values(nade.flames)[i].split(", ")[0]),
+								y: parseFloat(Object.values(nade.flames)[i].split(", ")[1]),
+								z: parseFloat(Object.values(nade.flames)[i].split(", ")[2]),
+							})
+						}
+						infernos.push({
+							id: nadeID,
+							flamesNum: flamesNum,
+							flamesPosition: flamesPos
+						})
+						if (infernosOnMap.indexOf(nadeID) == -1 ) {infernosOnMap.push(nadeID)}
+					}
+					else{
+						
+					}
+				}
 			}
-
+			for (let infernoOnMap of infernosOnMap) {
+				if (!game.grenades[infernoOnMap]) {
+					process.send({
+						type: "infernoRemove",
+						data: infernoOnMap
+					})
+				}// check if molotov exist in game
+			}
 			process.send({
 				type: "smokes",
 				data: smokes
 			})
-
+			process.send({
+				type: "infernos",
+				data: infernos
+			})
 			if (config.nadeCollection) {
 				remotenades.event(game.grenades)
 			}
@@ -148,7 +180,9 @@ let server = http.createServer(function(req, res) {
 				type: "round",
 				data: game.round.phase
 			})
-
+			if (oldPhase == "over" && game.round.phase == "freezetime") {
+					infernosOnMap = [] //clear molotov status every round
+				}
 			if (oldPhase != game.round.phase && config.nadeCollection) {
 				if (oldPhase == "over" && game.round.phase == "freezetime") {
 					remotenades.send()

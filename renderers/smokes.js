@@ -3,7 +3,6 @@
 // Shows smokes on map an calculates duration.
 
 let global = require("./_global")
-
 // The live position of all smokes
 global.renderer.on("smokes", (event, smokes) => {
 	// Called to show the fade in animation with a delay
@@ -64,7 +63,45 @@ global.renderer.on("smokes", (event, smokes) => {
 	}
 })
 
+//molotov on radar
+global.renderer.on("infernos", (event, infernos) => {
+	// Go through each smoke
+	for (let inferno of infernos) {
+		// Get the molotov element
+		let infernoElement = document.getElementById("inferno" + inferno.id)
+		let flameElementsStr = ""
+		let flameElement = []
+
+		// If the element does not exist yet, add it
+		if (!infernoElement) {
+			// Create a new element
+			infernoElement = document.createElement("div")
+			infernoElement.id = "inferno" + inferno.id
+			infernoElement.className = "inferno"
+			infernoElement.setAttribute('style', 'opacity:1')
+			document.getElementById("infernos").appendChild(infernoElement)
+			
+		}
+			infernoElement = document.getElementById("inferno" + inferno.id)
+			for (var i = 0; i < inferno.flamesNum; i++) {
+				flameElement[i] = document.createElement("div")
+				flameElement[i].style.height = flameElement[i].style.width = 100 / global.mapData.resolution / 1024 * 100 + "%"
+				let percOffset  = parseFloat(flameElement[i].style.height) / 2
+				flameElement[i].style.left = global.positionToPerc(inferno.flamesPosition[i], "x") + "%"
+				flameElement[i].style.bottom = global.positionToPerc(inferno.flamesPosition[i], "y") - percOffset + "%"
+				flameElementsStr = flameElementsStr + flameElement[i].outerHTML
+			}
+			infernoElement.innerHTML = flameElementsStr
+		
+	}
+
+})
+
+global.renderer.on("infernoRemove", (event,infernoRemove) => {
+	document.getElementById("inferno" + infernoRemove).setAttribute('style', 'opacity:0')
+})
 // Clear all smokes on round reset
 global.renderer.on("roundend", (event) => {
 	document.getElementById("smokes").innerHTML = ""
+	document.getElementById("infernos").innerHTML = ""
 })
