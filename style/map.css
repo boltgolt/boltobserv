@@ -44,6 +44,36 @@ body {
 	transition: opacity 1.8s;
 }
 
+#infernos{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	z-index: 2;
+}
+
+.inferno{
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	z-index: 2;
+	transition: opacity .3s;
+}
+
+.inferno > div{
+	position: absolute;
+	border-radius: 100%;
+	opacity: .75;
+	background: #ff4848;
+	box-sizing: border-box;
+	border: #ce3f00 solid 1.5px;
+	transform: translate(-50%, -50%);
+	transition: opacity .3s;
+}
+
 #siteA, #siteB {
 	position: absolute;
 	background: #f00;

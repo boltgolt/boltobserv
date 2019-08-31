@@ -26,7 +26,7 @@
 			// The radar offset in percentages to apply when player is in the split
 			"offset": {
 				"x": 0,
-				"y": -39
+				"y": -43
 			}
 		}
 	],
