@@ -59,7 +59,7 @@ function createWindow() {
 	}
 
 	win.on("closed", () => {
-		http.kill()
+		gsi.kill()
 		app.quit()
 	})
 
@@ -67,9 +67,11 @@ function createWindow() {
 
 	if (config.game.installCfg) detectcfg.search()
 
+	let gsi = child_process.fork(`${__dirname}/gsi.js`)
 	let http = child_process.fork(`${__dirname}/http.js`)
+	let socket = child_process.fork(`${__dirname}/socket.js`)
 
-	http.on("message", (message) => {
+	gsi.on("message", (message) => {
 		win.webContents.send(message.type, message.data)
 
 		if (message.type == "connection") {

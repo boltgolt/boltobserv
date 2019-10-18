@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 	<head>
-		<link rel="stylesheet" href="../style/main.css">
-		<link rel="stylesheet" href="../style/waiting.css">
+		<link rel="stylesheet" href="/style/main.css">
+		<link rel="stylesheet" href="/style/waiting.css">
+		<link rel="stylesheet" href="/style/browser.css">
 
 		<meta charset="utf-8">
 		<title>Boltobserv - Waiting for CSGO</title>
@@ -24,65 +25,101 @@
 
 
 		<script>
-			require("electron").ipcRenderer.on("connection", (event, data) => {
-				let output = "CSGO instance "
+			// require("electron").ipcRenderer.on("connection", (event, data) => {
+			// 	let output = "CSGO instance "
+			//
+			// 	if (data.player) {
+			// 		output += `from ${data.player} `
+			// 	}
+			//
+			// 	output += "connected. <br /> Waiting for map..."
+			//
+			// 	document.getElementById("noconnection").innerHTML = output
+			// })
 
-				if (data.player) {
-					output += `from ${data.player} `
-				}
+			// let version = require("../package.json").version
+			//
+			// document.getElementById("version").innerHTML = "Running version " + version
+			//
+			// require("https").get("https://raw.githubusercontent.com/boltgolt/boltobserv/master/package.json", (resp) => {
+			// 	let data = ""
+			//
+			// 	resp.on("data", (chunk) => {data += chunk})
+			// 	resp.on("end", () => {
+			// 		let newVersion = JSON.parse(data).version
+			//
+			// 		if (version != newVersion) {
+			// 			document.getElementById("version").innerHTML += ` - <small onclick="releases()">A newer version is available on github! (${newVersion})</small>`
+			// 		}
+			// 	})
+			// })
+			//
+			// function releases() {
+			// 	require("electron").shell.openExternal("https://github.com/boltgolt/boltobserv/releases")
+			// }
 
-				output += "connected. <br /> Waiting for map..."
 
-				document.getElementById("noconnection").innerHTML = output
-			})
 
-			let version = require("../package.json").version
 
-			document.getElementById("version").innerHTML = "Running version " + version
+			function connect() {
+				fetch(window.location.origin + "/doorknock")
+				.then(resp => resp.json())
+				.then(data => {
+					let socket = new WebSocket(`ws://${window.location.hostname}:${data.socket}`)
 
-			require("https").get("https://raw.githubusercontent.com/boltgolt/boltobserv/master/package.json", (resp) => {
-				let data = ""
+					socket.onopen = () => {
+						socket.send(JSON.stringify({type: "init"}))
+					}
 
-				resp.on("data", (chunk) => {data += chunk})
-				resp.on("end", () => {
-					let newVersion = JSON.parse(data).version
+					socket.onmessage = event => {
+						console.log('Message:', event.data);
+					}
 
-					if (version != newVersion) {
-						document.getElementById("version").innerHTML += ` - <small onclick="releases()">A newer version is available on github! (${newVersion})</small>`
+					socket.onclose = event => {
+						setTimeout(() => {
+							connect()
+						}, 25)
+					}
+
+					socket.onerror = error => {
+						socket.close()
 					}
 				})
-			})
-
-			function releases() {
-				require("electron").shell.openExternal("https://github.com/boltgolt/boltobserv/releases")
+				.catch(() => {
+					setTimeout(() => {
+						connect()
+					}, 25)
+				})
 			}
 
-			let renderIpc = require("electron").ipcRenderer
+			connect()
 
-			renderIpc.send("reqInstall")
-
-			renderIpc.on("cfgInstall", (event, data) => {
-				for (var i = 0; i < data.length && i < 5; i++) {
-					let text = "Outdated config"
-
-					if (data[i].type == "install") {
-						text = "Found game without config"
-					}
-
-					let div = document.createElement("div")
-					div.innerHTML = `
-						<span>${text}</span>
-						<small>in ${data[i].path}</small>
-						<button onclick="install(this,'${data[i].path.replace(/\\/g, "\\\\")}')">${data[i].type}</button>
-					`
-					document.getElementById("cfgs").appendChild(div);
-				}
-			})
-
-			function install(elem, path) {
-				renderIpc.send("install", path)
-				elem.parentNode.parentNode.parentNode.removeChild(elem.parentNode.parentNode)
-			}
+			// let renderIpc = require("electron").ipcRenderer
+			//
+			// renderIpc.send("reqInstall")
+			//
+			// renderIpc.on("cfgInstall", (event, data) => {
+			// 	for (var i = 0; i < data.length && i < 5; i++) {
+			// 		let text = "Outdated config"
+			//
+			// 		if (data[i].type == "install") {
+			// 			text = "Found game without config"
+			// 		}
+			//
+			// 		let div = document.createElement("div")
+			// 		div.innerHTML = `
+			// 			<span>${text}</span>
+			// 			<small>in ${data[i].path}</small>
+			// 			<button onclick="install(this,'${data[i].path.replace(/\\/g, "\\\\")}')">${data[i].type}</button>
+			// 		`
+			// 		document.getElementById("cfgs").appendChild(div);
+			// 	}
+			// })
+			//
+			// function install(elem, path) {
+			// 	renderIpc.send("install", path)
+			// 	elem.parentNode.parentNode.parentNode.removeChild(elem.parentNode.parentNode)
+			// }
 		</script>
 	</body>
 </html>

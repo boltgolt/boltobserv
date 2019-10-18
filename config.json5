@@ -19,7 +19,7 @@
 
 		// Start window as a full screen application
 		// Use ALT + F4 to quit
-		"fullscreen": true,
+		"fullscreen": false,
 
 		// Will disable GPU rendering, helps capture the window in programs like OBS
 		"disableGpu": false,
@@ -38,6 +38,16 @@
 			// Set to -1 to let the OS pick the best place
 			"top": -1,
 			"left": -1
+		}
+	},
+
+	// Settings related to remote browser access to the radar
+	"browser": {
+		"ports": {
+			// Serves static files, such as HTML. Use this one in your browser
+			"static": 36364,
+			// Dynamic websocket port, used for live data transport
+			"socket": 36365
 		}
 	},
 

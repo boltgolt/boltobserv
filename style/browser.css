@@ -1,0 +1,5 @@
+body {
+	user-select: none;
+	cursor: default;
+	background: #000;
+}
