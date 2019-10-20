@@ -113,11 +113,9 @@ module.exports = {
 				"Content-Length": JSON.stringify(pack).length
 			}
 		}, (res) => {
-			console.info(`statusCode: ${res.statusCode}`)
-
-			res.on("data", (d) => {
-				process.stdout.write(d)
-			})
+			// res.on("data", (d) => {
+			// 	process.stdout.write(d)
+			// })
 		})
 
 		req.on("error", (error) => {

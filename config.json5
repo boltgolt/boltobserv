@@ -6,7 +6,8 @@
 {
 	// Sends information about the grenades thrown this round to a server
 	// This information in only used to train a model to predict grenade
-	// landings, no personal information is send or logged
+	// landings, no personal information is send or logged.
+	// https://github.com/boltgolt/boltobserv/wiki/FAQ:-Automatically-collecting-grenade-data-from-Boltobserv
 	"nadeCollection": true,
 
 	// Settings related to the Boltobserv window
@@ -19,7 +20,7 @@
 
 		// Start window as a full screen application
 		// Use ALT + F4 to quit
-		"fullscreen": true,
+		"fullscreen": false,
 
 		// Will disable GPU rendering, helps capture the window in programs like OBS
 		"disableGpu": false,
@@ -38,6 +39,16 @@
 			// Set to -1 to let the OS pick the best place
 			"top": -1,
 			"left": -1
+		}
+	},
+
+	// Settings related to remote browser access to the radar
+	"browser": {
+		"ports": {
+			// Serves static files, such as HTML. Use this one in your browser
+			"static": 36364,
+			// Dynamic websocket port, used for live data transport
+			"socket": 36365
 		}
 	},
 
@@ -75,14 +86,15 @@
 		"smoothing": 32,
 
 		// Percentage of radar space to try to keep as padding between the outermost players and the edge of the radar
-		"padding": 0.3
+		"padding": 0.3,
+
+		// Only apply autozoom if calculated zoom level would be at least this much
+		// In decimals, where 1.2 would mean 20% more zoomed in than the default radar
+		"minZoom": 1.3
 	},
 
 	// Settings that should not be used in normal operation, but help to find issues
 	"debug": {
-		// Draw red squares over bombsite locations
-		"drawBombsites": false,
-
 		// Print the loaded config into the console
 		"printConfig": false
 	}

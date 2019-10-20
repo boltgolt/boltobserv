@@ -20,7 +20,7 @@
 		{
 			// The top and bottom y height for this split
 			"bounds": {
-				"top": -486,
+				"top": -482,
 				"bottom": -2500
 			},
 			// The radar offset in percentages to apply when player is in the split

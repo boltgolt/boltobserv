@@ -8,6 +8,25 @@
 
 ## Features
 
+### Advanced player dots
+
+Just like in the default CSGO radar, players are represented as dots. Every dot has its observer slot number on top of it.
+
+The type of dots displayed by Boltobserv:
+
+| Dot                                    | Type              | Description                                                                                                          |
+|----------------------------------------|-------------------|----------------------------------------------------------------------------------------------------------------------|
+| ![](https://i.imgur.com/TfzvrAS.png)   | Default           | Player dots as seen on the normal CSGO radar, normally with a slot number on them.                                   |
+| ![](https://i.imgur.com/dEDwuue.png)   | Dead              | Killed players are still faintly visible on the radar as a small cross.                                              |
+| ![](https://i.imgur.com/AT9Ee6y.png)   | Bomb carrier      | For Ts only. Shows the player that has the C4 with them. Easily spottable on the radar because of the color difference.   |
+
+### Clean radar backgrounds
+
+Using radar backgrounds from [simpleradar.com](http://simpleradar.com/) that are even more accurate and clean than those in-game.
+They're also much easier on the eyes.
+
+![](https://i.imgur.com/Pvfi8vx.png)
+
 ### Advisories
 
 Advisories are automatically detected events that the observer might want to switch to.
@@ -23,30 +42,21 @@ All possible advisories are (with increasing priority):
 | ![](https://i.imgur.com/DD2El5N.png)   | Bomb plant    | A terrorist has the bomb in his hands on a bombsite. Chances are that he'll plant it soon.                                     |
 | ![](https://i.imgur.com/Xy1oLON.png)   | Defusing      | A CT is defusing the bomb. Because of a CSGO limitation, which CT is defusing is unclear if multiple CTs are on the bomb site. |
 
-### Advanced player dots
-
-Just like in the default CSGO radar, players are represented as dots. Every dot has its observer slot number on top of it.
-
-The type of dots displayed by Boltobserv:
-
-| Dot                                    | Type              | Description                                                                                                          |
-|----------------------------------------|-------------------|----------------------------------------------------------------------------------------------------------------------|
-| ![](https://i.imgur.com/TfzvrAS.png)   | Default           | Player dots as seen on the normal CSGO radar, normally with a slot number on them.                                   |
-| ![](https://i.imgur.com/4uuaPvv.png)   | Grenade equipped  | These players have any kind of grenade in their hands. Very useful for spotting nade setups on the radar.            |
-| ![](https://i.imgur.com/dEDwuue.png)   | Dead              | Killed players are still faintly visible on the radar as a small cross.                                              |
-| ![](https://i.imgur.com/AT9Ee6y.png)   | Bomb carrier      | For Ts only. Shows the player that has the C4 with them. Easily spottable on the radar because of the color difference.   |
-
-### Clean radar backgrounds
-
-Using radar backgrounds from [simpleradar.com](http://simpleradar.com/) that are even more accurate and clean than those in-game.
-They're also much easier on the eyes.
-
-![](https://i.imgur.com/Pvfi8vx.png)
-
 ### Infinitely scalable
 
 Because Boltobserv runs as an external application, it can be resized to be whatever size you want, and be moved to any display you want.
 Running without window borders enables it to dedicate as much space as possible to the radar.
+
+It can even [run in a browser](https://github.com/boltgolt/boltobserv/wiki/Opening-radar-in-browser), allowing you to view the radar over the network.
+
+### And more
+
+ - Smokes and molotovs
+ - Split maps (nuke & vertigo)
+ - Automatic zoom
+ - Transparent radar background
+ - Etc.
+
 
 ## Installation
 

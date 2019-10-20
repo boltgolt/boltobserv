@@ -2,8 +2,6 @@
 //
 // Determines if an advisory can be shown and prioritizes the most important one.
 
-let global = require("./_global")
-
 let idToNum = {}
 let advisories = {
 	planting: -1,
@@ -28,7 +26,8 @@ function updateAdvisory() {
 	document.getElementById("advisory").className = ""
 }
 
-global.renderer.on("players", (event, data) => {
+socket.element.addEventListener("players", event => {
+	let data = event.data
 	let ctsAlive = []
 	let tsAlive = []
 
@@ -60,7 +59,9 @@ global.renderer.on("players", (event, data) => {
 	updateAdvisory()
 })
 
-global.renderer.on("bomb", (event, data) => {
+socket.element.addEventListener("bomb", event => {
+	let data = event.data
+
 	if (idToNum[trim(data.player)]) {
 		if (data.state == "planting") {
 			advisories.planting = trim(data.player)

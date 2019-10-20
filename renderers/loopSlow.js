@@ -2,8 +2,6 @@
 //
 // Handles radar autozoom every 25ms (40fps)
 
-let global = require("./_global")
-
 // Get the styling for the entire container
 let radarStyle = document.getElementById("container").style
 // Prepare position queues
@@ -15,8 +13,10 @@ let radarQueues = {
 
 // Run the loop every 25ms
 setInterval(() => {
+	// console.log(global.config.autozoom)
 	// Abort if autozoom isn't enabled
 	if (!global.config.autozoom.enable) return
+
 
 	// Bounding rect around all living players
 	// Starts as impossibly small or large bounds so players will always overwrite it
@@ -55,6 +55,12 @@ setInterval(() => {
 	// Calculate the center of the bound
 	let radarX = (((bounds.x.max + bounds.x.min) / 2) - 50) * -1
 	let radarY = ((bounds.y.max + bounds.y.min) / 2) - 50
+
+	// Reset all calculated values to default if min zoom level has not been reached
+	if (radarScale < global.config.autozoom.minZoom) {
+		radarScale = 1
+		radarX = radarY = 0
+	}
 
 	// Add all calculated values to their queues, and limit the queue length
 	radarQueues.scale.unshift(radarScale)
