@@ -4,9 +4,9 @@ body {
 	align-items: center;
 	justify-content: center;
 	font-family: Arial, Helvetica, sans-serif;
+	-moz-user-select: none;
 	user-select: none;
 	cursor: not-allowed;
-	background: #000;
 }
 
 body > div {

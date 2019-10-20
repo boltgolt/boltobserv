@@ -3,11 +3,24 @@ const electron = require("electron")
 const child_process = require("child_process")
 
 const app = electron.app
-const config = require("./loadconfig")(true)
+const config = require("./loadconfig")()
 const detectcfg = require("./detectcfg")
 
 let hasMap = false
 let connTimeout = false
+
+let gsi = child_process.fork(`${__dirname}/gsi.js`)
+let http = child_process.fork(`${__dirname}/http.js`)
+let socket = child_process.fork(`${__dirname}/socket.js`)
+
+function setActivePage(page, win) {
+	win.loadFile(`html/${page}.html`)
+	http.send(page)
+
+	socket.send({
+		type: "pageUpdate"
+	})
+}
 
 function createWindow() {
 	let winConfig = {
@@ -67,12 +80,8 @@ function createWindow() {
 
 	if (config.game.installCfg) detectcfg.search()
 
-	let gsi = child_process.fork(`${__dirname}/gsi.js`)
-	let http = child_process.fork(`${__dirname}/http.js`)
-	let socket = child_process.fork(`${__dirname}/socket.js`)
-
 	gsi.on("message", (message) => {
-		win.webContents.send(message.type, message.data)
+		socket.send(message)
 
 		if (message.type == "connection") {
 			if (message.data.status == "up" && connTimeout === false && config.game.connectionTimout >= 0) {
@@ -81,7 +90,8 @@ function createWindow() {
 		}
 		else if (!hasMap) {
 			if (message.type == "map") {
-				win.loadFile("html/map.html")
+				setActivePage("map", win)
+
 				console.info(`Map ${message.data} selected`)
 
 				win.webContents.on("did-finish-load", () => {
@@ -96,7 +106,7 @@ function createWindow() {
 			clearTimeout(connTimeout)
 			connTimeout = setTimeout(() => {
 				hasMap = false
-				win.loadFile("html/waiting.html")
+				setActivePage("waiting", win)
 			}, config.game.connectionTimout * 1000)
 		}
 	})
@@ -107,6 +117,19 @@ function createWindow() {
 
 	electron.ipcMain.on("install", (event, path) => {
 		detectcfg.install(path)
+	})
+
+	// Capture file requests and redirect them to on-disk paths
+	electron.protocol.interceptFileProtocol("file", (request, callback) => {
+		let loc = request.url.substr(5)
+
+		if (request.url.match(/^.*?\/html\/\w*?.html/)) {
+			loc = request.url.replace(/^.*?\/html\/(\w*?).html/, "html/$1.html")
+		}
+
+		callback({
+			path: path.normalize(path.join(__dirname, loc))
+		})
 	})
 }
 

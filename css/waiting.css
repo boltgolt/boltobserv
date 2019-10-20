@@ -77,14 +77,32 @@ body {
 
 img {
 	height: 20vmin;
-	padding-bottom: 5vmin;
+	animation: beat 2s infinite ease-in-out;
+}
+
+@keyframes beat {
+	40% {
+		transform: rotate(0deg);
+	}
+
+	60% {
+		transform: rotate(190deg);
+	}
+
+	70% {
+		transform: rotate(180deg);
+	}
+
+	100% {
+		transform: rotate(180deg);
+	}
 }
 
 #noconnection {
 	font-size: 4vmin;
 	text-align: center;
 	box-sizing: border-box;
-	padding: 0 10vmin 5vmin 10vmin;
+	padding: 5vmin 10vmin 5vmin 10vmin;
 }
 
 #version {
@@ -93,17 +111,17 @@ img {
 	text-align: center;
 	color: #636363;
 	bottom: 3vmin;
-	font-size: 1.6vmin;
+	font-size: 11px;
 	text-transform: uppercase;
 }
 
 #version small {
 	font-size: inherit;
 	color: #7E7E7E;
+	text-decoration: underline;
 }
 
 #version small:hover {
-	text-decoration: underline;
 	cursor: pointer;
 	position: relative;
 	z-index: 2000;
@@ -113,4 +131,10 @@ img {
 #dragarea {
 	max-width: initial;
 	max-height: initial;
+}
+
+@media (min-height: 800px) and (min-width: 800px) {
+	#version {
+		font-size: 1.6vmin;
+	}
 }

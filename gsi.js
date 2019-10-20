@@ -7,7 +7,7 @@ const host = "localhost"
 
 let oldPhase = false
 let infernosOnMap = [] //initial molotov status
-let server = http.createServer(function(req, res) {
+let server = http.createServer((req, res) => {
 	if (req.method != "POST") {
 		res.writeHead(405)
 		return res.end("Only POST requests are allowed")
@@ -22,8 +22,6 @@ let server = http.createServer(function(req, res) {
 		res.end("")
 
 		let game = JSON.parse(body)
-
-		// console.log(">", game)
 
 		if (game.provider) {
 			let connObject = {

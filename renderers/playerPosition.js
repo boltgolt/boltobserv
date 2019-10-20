@@ -3,9 +3,9 @@
 // Sets player dot style and pushed to player location buffer, but does not set
 // the location.
 
-let global = require("./_global")
+socket.element.addEventListener("players", event => {
+	let data = event.data
 
-global.renderer.on("players", (event, data) => {
 	// Abort if no map has been selected yet
 	if (global.currentMap == "none") return
 
@@ -39,7 +39,9 @@ global.renderer.on("players", (event, data) => {
 })
 
 // On round reset
-global.renderer.on("roundend", (event, phase) => {
+socket.element.addEventListener("roundend", event => {
+	let phase = event.data
+
 	// Go through each player
 	for (let num in global.playerBuffers) {
 		// Empty the location buffer

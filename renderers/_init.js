@@ -2,24 +2,40 @@
 //
 // Starts all other renderers.
 
-let global = require("./_global")
-const fs = require("fs")
-const path = require("path")
+let hasConfig = false
+let hasMap = false
+let hasInited = false
 
-// Get a list of available renderers
-let renderers = fs.readdirSync(__dirname)
+function importScripts() {
+	if (!hasConfig || !hasMap || hasInited) return
+	hasInited = true
 
-for (let renderer of renderers) {
-	// Skip renderers that start with a "_", as they are only helpers
-	if (renderer.slice(0, 1) == "_") continue
-	// Load in the render module
-	require(path.join(__dirname, renderer))
+	for (let script of hasConfig) {
+		let tag = document.createElement("script")
+		tag.setAttribute("src", "/renderers/" + script)
+		document.body.appendChild(tag)
+	}
 }
 
-// Loop through each player dot to apply the scaling config option
-for (let playerElem of document.getElementsByClassName("player")) {
-	playerElem.style.transform = `scale(${global.config.radar.playerDotScale}) translate(-50%, -50%)`
-}
+socket.element.addEventListener("welcome", event => {
+	if (hasConfig) return
+	hasConfig = event.data.scripts
+	global.config = event.data.config
 
-// Do the same for the bomb icon
-document.getElementById("bomb").style.transform = `scale(${global.config.radar.playerDotScale}) translate(-50%, -50%)`
+	importScripts()
+
+	// Loop through each player dot to apply the scaling config option
+	for (let playerElem of document.getElementsByClassName("player")) {
+		playerElem.style.transform = `scale(${event.data.config.radar.playerDotScale}) translate(-50%, -50%)`
+	}
+
+	// Do the same for the bomb icon
+	document.getElementById("bomb").style.transform = `scale(${event.data.config.radar.playerDotScale}) translate(-50%, -50%)`
+
+	// In browser, remove the elements meant to drag the window in electron
+	if (navigator.userAgent.toLowerCase().indexOf(" electron/") <= -1) {
+		document.getElementById("dragarea").style.display = "none"
+		document.body.style.cursor = "default"
+		document.body.style.background = "#000"
+	}
+})

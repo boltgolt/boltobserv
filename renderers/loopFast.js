@@ -2,8 +2,6 @@
 //
 // Sets player position on screen at +/- 60fps
 
-let global = require("./_global")
-
 // Function to be executed before every frame paint
 function step() {
 	// Go though every player location buffer

@@ -44,7 +44,7 @@ body {
 	transition: opacity 1.8s;
 }
 
-#infernos{
+#infernos {
 	position: absolute;
 	height: 100%;
 	width: 100%;
@@ -53,7 +53,7 @@ body {
 	z-index: 2;
 }
 
-.inferno{
+.inferno {
 	position: absolute;
 	height: 100%;
 	width: 100%;
@@ -63,13 +63,13 @@ body {
 	transition: opacity .3s;
 }
 
-.inferno > div{
+.inferno > div {
 	position: absolute;
 	border-radius: 100%;
 	opacity: .75;
 	background: #ff4848;
 	box-sizing: border-box;
-	border: #ce3f00 solid 1.5px;
+	border: #ce3f00 solid 3px;
 	transform: translate(-50%, -50%);
 	transition: opacity .3s;
 }

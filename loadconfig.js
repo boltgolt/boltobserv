@@ -9,10 +9,10 @@ module.exports = () => {
 	if (cachedConfig !== false) return cachedConfig
 
 	let loadedConfig = JSON5.parse(fs.readFileSync(path.join(__dirname, "config.json5"), "utf8"))
-
+	
 	if (fs.existsSync(path.join(__dirname, "config.override.json5"))) {
 		let override = JSON5.parse(fs.readFileSync(path.join(__dirname, "config.override.json5"), "utf8"))
-		Object.assign({}, loadedConfig, override)
+		Object.assign(loadedConfig, override)
 	}
 
 	if (loadedConfig.debug.printConfig) {

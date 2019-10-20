@@ -2,12 +2,12 @@
 //
 // Shows dropped and planted bomb.
 
-let global = require("./_global")
-
 let bombElement = document.getElementById("bomb")
 let bombStyle = bombElement.style
 
-global.renderer.on("bomb", (event, bomb) => {
+socket.element.addEventListener("bomb", event => {
+	let bomb =  event.data
+
 	if (bomb.state == "carried" || bomb.state == "exploded") {
 		bombStyle.display = "none"
 	}

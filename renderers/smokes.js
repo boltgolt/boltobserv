@@ -2,9 +2,10 @@
 //
 // Shows smokes on map an calculates duration.
 
-let global = require("./_global")
 // The live position of all smokes
-global.renderer.on("smokes", (event, smokes) => {
+socket.element.addEventListener("smokes", event => {
+	let smokes = event.data
+
 	// Called to show the fade in animation with a delay
 	function fadeIn(smokeElement) {
 		setTimeout(() => {
@@ -64,7 +65,9 @@ global.renderer.on("smokes", (event, smokes) => {
 })
 
 //molotov on radar
-global.renderer.on("infernos", (event, infernos) => {
+socket.element.addEventListener("infernos", event => {
+	let infernos = event.data
+
 	// Go through each smoke
 	for (let inferno of infernos) {
 		// Get the molotov element
@@ -80,7 +83,7 @@ global.renderer.on("infernos", (event, infernos) => {
 			infernoElement.className = "inferno"
 			infernoElement.setAttribute('style', 'opacity:1')
 			document.getElementById("infernos").appendChild(infernoElement)
-			
+
 		}
 			infernoElement = document.getElementById("inferno" + inferno.id)
 			for (var i = 0; i < inferno.flamesNum; i++) {
@@ -92,16 +95,18 @@ global.renderer.on("infernos", (event, infernos) => {
 				flameElementsStr = flameElementsStr + flameElement[i].outerHTML
 			}
 			infernoElement.innerHTML = flameElementsStr
-		
+
 	}
 
 })
 
-global.renderer.on("infernoRemove", (event,infernoRemove) => {
-	document.getElementById("inferno" + infernoRemove).setAttribute('style', 'opacity:0')
+socket.element.addEventListener("infernoRemove", event => {
+	if (document.getElementById("inferno" + event.data)) {
+		document.getElementById("inferno" + event.data).style.opacity = 0
+	}
 })
 // Clear all smokes on round reset
-global.renderer.on("roundend", (event) => {
+socket.element.addEventListener("roundend", event => {
 	document.getElementById("smokes").innerHTML = ""
 	document.getElementById("infernos").innerHTML = ""
 })
