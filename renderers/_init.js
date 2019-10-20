@@ -31,11 +31,4 @@ socket.element.addEventListener("welcome", event => {
 
 	// Do the same for the bomb icon
 	document.getElementById("bomb").style.transform = `scale(${event.data.config.radar.playerDotScale}) translate(-50%, -50%)`
-
-	// In browser, remove the elements meant to drag the window in electron
-	if (navigator.userAgent.toLowerCase().indexOf(" electron/") <= -1) {
-		document.getElementById("dragarea").style.display = "none"
-		document.body.style.cursor = "default"
-		document.body.style.background = "#000"
-	}
 })

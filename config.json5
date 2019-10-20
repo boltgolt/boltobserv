@@ -90,7 +90,7 @@
 
 		// Only apply autozoom if calculated zoom level would be at least this much
 		// In decimals, where 1.2 would mean 20% more zoomed in than the default radar
-		"minZoom": 1.15
+		"minZoom": 1.3
 	},
 
 	// Settings that should not be used in normal operation, but help to find issues

@@ -35,7 +35,6 @@ let socket = {
 			}
 
 			websocket.onmessage = event => {
-				console.log(event.data)
 				let incom = JSON.parse(event.data)
 				let outev = new Event(incom.type)
 				outev.data = incom.data
@@ -60,10 +59,17 @@ let socket = {
 
 socket.connect()
 
-// If not electron (browser)
-if (navigator.userAgent.toLowerCase().indexOf(" electron/") <= -1) {
-	// Reload the site when a new HTML page has been rendered
-	socket.element.addEventListener("pageUpdate", event => {
-		location.reload()
-	})
-}
+window.addEventListener("DOMContentLoaded", () => {
+	// If not electron (browser)
+	if (navigator.userAgent.toLowerCase().indexOf(" electron/") <= -1) {
+		// Reload the site when a new HTML page has been rendered
+		socket.element.addEventListener("pageUpdate", event => {
+			location.reload()
+		})
+
+		// Remove the elements meant to drag the window in electron
+		document.body.style.cursor = "default"
+		document.body.style.background = "#000"
+		document.getElementById("dragarea").style.display = "none"
+	}	
+})

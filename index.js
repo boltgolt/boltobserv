@@ -122,6 +122,9 @@ function createWindow() {
 	// Capture file requests and redirect them to on-disk paths
 	electron.protocol.interceptFileProtocol("file", (request, callback) => {
 		let loc = request.url.substr(5)
+		
+		// Remove drive letter on windows
+		loc = loc.replace(/\w:\//, "")
 
 		if (request.url.match(/^.*?\/html\/\w*?.html/)) {
 			loc = request.url.replace(/^.*?\/html\/(\w*?).html/, "html/$1.html")
