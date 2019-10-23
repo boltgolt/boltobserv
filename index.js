@@ -1,3 +1,12 @@
+// ==============================================================================
+//
+//                              PLEASE READ:
+// This project is under a GPL-3 license, you are REQUIRED to publish any changes
+// or upgrades you make to the codebase, it strengthens the community.
+// Contact me if you have any questions regarding the license.
+//
+// ==============================================================================
+
 const path = require("path")
 const child_process = require("child_process")
 
