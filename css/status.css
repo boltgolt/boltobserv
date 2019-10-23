@@ -1,0 +1,54 @@
+body {
+	overflow: hidden;
+	cursor: inherit;
+}
+
+#game {
+	width: 100vw;
+	max-width: 100vw;
+}
+
+img {
+	height: 30px;
+	margin-right: 10px;
+	animation: none;
+}
+
+#text {
+	position: absolute;
+	top: 72px;
+	width: 100vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#text > div {
+	display: inline;
+	opacity: .8;
+}
+
+#text span {
+	text-decoration: underline;
+	cursor: pointer;
+	position: relative;
+	z-index: 2000;
+	-webkit-app-region: no-drag;
+}
+
+#text span:hover {
+	cursor: pointer;
+	-webkit-app-region: no-drag;
+}
+
+#dragarea {
+	-webkit-app-region: drag;
+	height: 100vh;
+	width: 100vw;
+	top: 0;
+	left: 0;
+}
+
+#version {
+	bottom: 14px;
+}

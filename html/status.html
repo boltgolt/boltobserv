@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+	<head>
+		<title>Boltobserv</title>
+		<meta charset="utf-8">
+		<link rel="icon" href="/img/icon-64x64.png" sizes="64x64" type="image/png">
+
+		<link rel="stylesheet" href="/css/main.css">
+		<link rel="stylesheet" href="/css/waiting.css">
+		<link rel="stylesheet" href="/css/status.css">
+
+		<script src="/renderers/_socket.js"></script>
+	</head>
+	<body>
+		<div id="dragarea"></div>
+
+		<div id="game">
+			<div id="cfgs"></div>
+
+			<div id="text">
+				<img src="/img/icon.svg">
+				<div>
+					<span id="url" onclick="launch()"></span>
+				</div>
+			</div>
+		</div>
+
+		<span id="version"></span>
+
+		<script>
+			let electron = require("electron")
+			let config = require("../loadconfig")()
+			let localSocket = electron.ipcRenderer
+
+			document.getElementById("url").innerHTML = "http://127.0.0.1:" + config.browser.ports.static
+
+			localSocket.send("reqInstall")
+
+			localSocket.on("cfgInstall", (event, data) => {
+				document.getElementById("cfgs").innerHTML = ""
+
+				for (var i = 0; i < data.length && i < 5; i++) {
+					let text = "Outdated config"
+
+					if (data[i].type == "install") {
+						text = "Found game without config"
+					}
+
+					let div = document.createElement("div")
+					div.innerHTML = `
+						<span>${text}</span>
+						<small>in ${data[i].path}</small>
+						<button onclick="install(this,'${data[i].path.replace(/\\/g, "\\\\")}')">${data[i].type}</button>
+					`
+					document.getElementById("cfgs").appendChild(div);
+				}
+			})
+
+			function install(elem, path) {
+				localSocket.send("install", path)
+				elem.parentNode.parentNode.parentNode.removeChild(elem.parentNode.parentNode)
+			}
+
+			let version = require("../package.json").version
+			document.getElementById("version").innerHTML = "Running version " + version
+
+			require("https").get("https://raw.githubusercontent.com/boltgolt/boltobserv/master/package.json", (resp) => {
+				let data = ""
+
+				resp.on("data", (chunk) => {data += chunk})
+				resp.on("end", () => {
+					let newVersion = JSON.parse(data).version
+
+					if (version != newVersion) {
+						document.getElementById("version").innerHTML += ` - <small onclick="releases()">Version ${newVersion} is available on github!</small>`
+					}
+				})
+			})
+
+			function launch() {
+				electron.shell.openExternal("http://127.0.0.1:" + config.browser.ports.static)
+			}
+
+			function releases() {
+				electron.shell.openExternal("https://github.com/boltgolt/boltobserv/releases")
+			}
+
+		</script>
+	</body>
+</html>

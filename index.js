@@ -1,13 +1,12 @@
 const path = require("path")
-const electron = require("electron")
 const child_process = require("child_process")
 
-const app = electron.app
 const config = require("./loadconfig")()
 const detectcfg = require("./detectcfg")
 
 let hasMap = false
 let connTimeout = false
+var win = false
 
 let gsi = child_process.fork(`${__dirname}/gsi.js`)
 let http = child_process.fork(`${__dirname}/http.js`)
@@ -57,7 +56,14 @@ function createWindow() {
 		winConfig.backgroundColor = "#000"
 	}
 
-	let win = new electron.BrowserWindow(winConfig)
+	if (!config.window.enable) {
+		winConfig.width = 450
+		winConfig.height = 200
+		winConfig.fullscreen = false
+		winConfig.resizable = false
+	}
+
+	win = new electron.BrowserWindow(winConfig)
 
 	if (config.window.alwaysOnTop) {
 		win.setAlwaysOnTop(true, "screen")
@@ -76,40 +82,12 @@ function createWindow() {
 		app.quit()
 	})
 
-	win.loadFile("html/waiting.html")
-
-	if (config.game.installCfg) detectcfg.search()
-
-	gsi.on("message", (message) => {
-		socket.send(message)
-
-		if (message.type == "connection") {
-			if (message.data.status == "up" && connTimeout === false && config.game.connectionTimout >= 0) {
-				console.info("CSGO has pinged server, connection established")
-			}
-		}
-		else if (!hasMap) {
-			if (message.type == "map") {
-				setActivePage("map", win)
-
-				console.info(`Map ${message.data} selected`)
-
-				win.webContents.on("did-finish-load", () => {
-					win.webContents.send(message.type, message.data)
-				})
-
-				hasMap = true
-			}
-		}
-
-		if (config.game.connectionTimout >= 0) {
-			clearTimeout(connTimeout)
-			connTimeout = setTimeout(() => {
-				hasMap = false
-				setActivePage("waiting", win)
-			}, config.game.connectionTimout * 1000)
-		}
-	})
+	if (!config.window.enable) {
+		win.loadFile("html/status.html")
+	}
+	else {
+		win.loadFile("html/waiting.html")
+	}
 
 	electron.ipcMain.on("reqInstall", (event) => {
 		event.sender.send("cfgInstall", detectcfg.found)
@@ -122,7 +100,7 @@ function createWindow() {
 	// Capture file requests and redirect them to on-disk paths
 	electron.protocol.interceptFileProtocol("file", (request, callback) => {
 		let loc = request.url.substr(5)
-		
+
 		// Remove drive letter on windows
 		loc = loc.replace(/\w:\//, "")
 
@@ -136,11 +114,48 @@ function createWindow() {
 	})
 }
 
-if (config.window.disableGpu) {
-	console.info("GPU disabled by config option")
+if (config.game.installCfg) detectcfg.search()
 
-	app.disableHardwareAcceleration()
-	app.commandLine.appendSwitch("disable-gpu")
+gsi.on("message", (message) => {
+	socket.send(message)
+
+	if (message.type == "connection") {
+		if (message.data.status == "up" && connTimeout === false && config.game.connectionTimout >= 0) {
+			console.info("CSGO has pinged server, connection established")
+		}
+	}
+	else if (!hasMap) {
+		if (message.type == "map") {
+			setActivePage("map", win)
+			hasMap = true
+
+			console.info(`Map ${message.data} selected`)
+		}
+	}
+
+	if (config.game.connectionTimout >= 0) {
+		clearTimeout(connTimeout)
+		connTimeout = setTimeout(() => {
+			hasMap = false
+			setActivePage("waiting", win)
+		}, config.game.connectionTimout * 1000)
+	}
+})
+
+if (!config.debug.terminalOnly) {
+	// Needs to be a var so it's inherited by createWindow
+	var electron = require("electron")
+	var app = electron.app
+
+	if (config.window.disableGpu) {
+		console.info("GPU disabled by config option")
+
+		app.disableHardwareAcceleration()
+		app.commandLine.appendSwitch("disable-gpu")
+	}
+
+	app.on("ready", createWindow)
 }
-
-app.on("ready", createWindow)
+else {
+	console.info("Not opening window, terminal only mode is enabled")
+}
