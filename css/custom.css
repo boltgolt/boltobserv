@@ -1,0 +1,31 @@
+/*
+ * Use this file to apply custom styles to the radar image
+ */
+
+/* Any player */
+div.player {}
+
+/* Players that are CT or T */
+div.player.CT {}
+div.player.T {}
+
+/* The player with the bomb */
+div.player.bomb{}
+
+/* The player currently being observed */
+div.player.active {}
+
+/* A dead player */
+div.player.dead {}
+
+/* The dropped or planted bomb on the map */
+#bomb {}
+
+/* Smoke circles on the map */
+#smokes > div {}
+
+/* Inferno circles on the map */
+.inferno > div {}
+
+/* The advisory on screen */
+#advisory {}
