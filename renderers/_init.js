@@ -29,6 +29,21 @@ socket.element.addEventListener("welcome", event => {
 		playerElem.style.transform = `scale(${event.data.config.radar.playerDotScale}) translate(-50%, -50%)`
 	}
 
+	for (let labelElement of document.getElementsByClassName("label")) {
+		labelElement.style.transform = `scale(${global.config.radar.playerDotScale}) translate(-50%, -50%)`
+	}
+
+	if (navigator.userAgent.toLowerCase().indexOf(" electron/") <= -1) {
+		// Remove the elements meant to drag the window in electron
+		document.getElementById("dragarea").style.display = "none"
+		// Set cursor to default, as we don't have a drag area
+		document.body.style.cursor = "default"
+
+		if (!global.config.browser.transparent) {
+			document.body.style.background = "#000"
+		}
+	}
+
 	// Do the same for the bomb icon
 	document.getElementById("bomb").style.transform = `scale(${event.data.config.radar.playerDotScale}) translate(-50%, -50%)`
 })

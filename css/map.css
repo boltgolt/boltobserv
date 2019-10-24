@@ -13,6 +13,11 @@ body {
 	bottom: 0;
 	left: 0;
 	z-index: 1;
+	transform: scale(1) translate(0%, 0%);
+
+	will-change: transform;
+	outline: .1vmin solid transparent
+	-webkit-backface-visibility: hidden;
 }
 
 #smokes, #entities {
@@ -31,7 +36,7 @@ body {
 	opacity: .8;
 	background: #9F9D9D;
 	box-sizing: border-box;
-	border: #D7D7D7 solid 4px;
+	border: #D7D7D7 solid .6vmin;
 	transform: translate(-50%, -50%);
 	transition: opacity .3s;
 }
@@ -69,7 +74,7 @@ body {
 	opacity: .75;
 	background: #ff4848;
 	box-sizing: border-box;
-	border: #ce3f00 solid 3px;
+	border: #ce3f00 solid .2vmin;
 	transform: translate(-50%, -50%);
 	transition: opacity .3s;
 }
@@ -85,15 +90,16 @@ body {
 	position: absolute;
 	background-image: url("../img/bomb-dropped.png");
 	background-size: contain;
-	height: 12px;
-	width: 12px;
+	height: 2.2vmin;
+	width: 2.2vmin;
 	bottom: -30%;
 	left: -30%;
+	transform: translate(-50%, -50%);
 }
 
 #bomb.defused {
 	background-image: url("../img/bomb-defused.png");
-	filter: drop-shadow(0 0 4px rgba(0, 255, 0, .3));
+	filter: drop-shadow(0 0 .4vmin rgba(0, 255, 0, .3));
 }
 
 #bomb.planted {
@@ -103,73 +109,86 @@ body {
 
 @keyframes beep {
 	0% {
-		filter: drop-shadow(0 0 0px rgba(255, 0, 0, 1));
+		filter: drop-shadow(0 0 0 rgba(255, 0, 0, 1));
 		background-color: rgba(255, 0, 0, 0);
 	}
 	10% {
-		filter: drop-shadow(0 0 6px rgba(255, 0, 0, 1));
-		background-color: rgba(255, 0, 0, 0.1);
+		filter: drop-shadow(0 0 1vmin rgba(255, 0, 0, 1));
+		background-color: rgba(255, 0, 0, 0.2);
 	}
 	20% {
-		filter: drop-shadow(0 0 14px rgba(255, 0, 0, 0));
+		filter: drop-shadow(0 0 1.8vmin rgba(255, 0, 0, 0));
 		background-color: rgba(255, 0, 0, 0);
 	}
 }
 
-div.player {
+div.dot, div.label {
 	position: absolute;
-	height: 16px;
-	width: 16px;
+	height: 2.8vmin;
+	width: 2.8vmin;
 	left: -100vw;
 	bottom: -100vh;
 	display: block;
 	background: #f00;
-	transform: translate(-8px, -8px);
-	transform-origin: center center;
-	text-align: center;
-	line-height: 16px;
-	border-radius: 100%;
-	color: black;
-	font-weight: bold;
-	text-shadow: 0px 0px 4px rgba(255,255,255,.2);
-	box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, .2);
-	font-size: 14px;
+	transform: translate(-50%, -50%);
+	transform-origin: top left;
+	border-radius: 100% .2vmin 100% 100%;
+	box-shadow: 0 0 .8vmin .4vmin rgba(0, 0, 0, .2);
 	opacity: 1;
 	z-index: 15;
-	will-change: bottom, left;
+
+	will-change: bottom, left, transform;
+	outline: .1vmin solid transparent;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: initial;
 }
 
-div.player.CT {
+div.dot.CT {
 	background: #5ab8f4;
 }
 
-div.player.T {
+div.dot.T {
 	background: #f0c941;
 }
 
-div.player.nade {
-	padding-top: 2px;
-	transform: translate(-8px, -9px);
-	clip-path: polygon(0 100%, 100% 100%, 100% 38%, 51% 0, 0 37%);
-	border-radius: 2px 2px 12px 12px;;
-}
-
-div.player.bomb {
-	border-radius: 2px;
+div.dot.bomb {
+	border-radius: 1vmin .2vmin 1vmin 1.2vmin;
 	background: #FF8200;
 }
 
-div.player.active {
-	filter: drop-shadow(0 0 0 #FFF) drop-shadow(0 0 0 #FFF) drop-shadow(0 0 0 #FFF);
+div.dot.active {
+	z-index: 16;
+	box-shadow: 0 0 0 .1vmin rgba(0, 0, 0, .9), 0 0 0 .5vmin rgba(255, 255, 255, .9), 0 0 1.2vmin .6vmin rgba(255, 255, 255, .2);
 }
 
-div.player.dead {
+div.dot.dead {
 	opacity: .4;
 	color: transparent;
 	text-shadow: none;
+	border-radius: 0;
 	clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
 	z-index: 13;
 	filter: none;
+}
+
+div.label {
+	background: none;
+	text-align: center;
+	color: black;
+	font-weight: bold;
+	text-shadow: 0 0 .8vmin rgba(255, 255, 255, .2);
+	box-shadow: none;
+	line-height: 2.8vmin;
+	font-size: 2.4vmin;
+}
+
+div.label.active {
+	z-index: 16;
+	font-size: 2.5vmin;
+}
+
+div.label.dead {
+	display: none;
 }
 
 #advisory {

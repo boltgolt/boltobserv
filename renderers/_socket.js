@@ -4,8 +4,8 @@ let socket = {
 	connected: false,
 	connect: () =>  {
 		if (navigator.userAgent.toLowerCase().indexOf(" electron/") > -1) {
-			let config = require("../loadconfig")()
-			let websocket = new WebSocket(`ws://127.0.0.1:${config.browser.ports.socket}`)
+			global.config = require("../loadconfig")()
+			let websocket = new WebSocket(`ws://127.0.0.1:${global.config.browser.ports.socket}`)
 			attachEvents(websocket)
 		}
 		else {
@@ -21,7 +21,9 @@ let socket = {
 
 				console.info(`%cBoltobserv %cv${data.version}%c, at your service ❤ `, "font-weight: bold", "font-weight: bold; color:red", "font-weight: bold", "https://github.com/boltgolt/boltobserv/")
 			})
-			.catch(() => {
+			.catch((err) => {
+				console.error(err)
+
 				socket.connected = false
 				setTimeout(() => {
 					socket.connect()
@@ -66,10 +68,5 @@ window.addEventListener("DOMContentLoaded", () => {
 		socket.element.addEventListener("pageUpdate", event => {
 			location.reload()
 		})
-
-		// Remove the elements meant to drag the window in electron
-		document.body.style.cursor = "default"
-		document.body.style.background = "#000"
-		document.getElementById("dragarea").style.display = "none"
-	}	
+	}
 })

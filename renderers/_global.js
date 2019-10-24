@@ -3,6 +3,7 @@
 // Provides shared variables and functions for all renderers.
 
 global = {
+	config: {},
 	mapData: {},
 	currentMap: "none",
 	// The last known game phase
@@ -11,7 +12,8 @@ global = {
 	playerPos: [],
 	playerBuffers: [],
 	playerSplits: [],
-	playerElements: [],
+	playerDots: [],
+	playerLabels: [],
 
 	/**
 	 * Convert in-game position units to radar percentages
@@ -75,7 +77,8 @@ for (var i = 0; i < 10; i++) {
 
 	global.playerSplits.push(-1)
 	global.playerBuffers.push([])
-	global.playerElements.push(document.getElementById("player" + i))
+	global.playerDots.push(document.getElementById("dot" + i))
+	global.playerLabels.push(document.getElementById("label" + i))
 }
 
 // On a round indicator packet

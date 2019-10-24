@@ -12,8 +12,9 @@ socket.element.addEventListener("players", event => {
 	// Loop though each player
 	for (let player of data.players) {
 		// Get their player element and start building the class
-		let playerElement  = global.playerElements[player.num]
-		let classes = ["player", player.team]
+		let playerDot = global.playerDots[player.num]
+		let playerLabel = global.playerLabels[player.num]
+		let classes = [player.team]
 
 		// Add the classes for dead players and bomb carriers
 		if (!player.alive) classes.push("dead")
@@ -25,13 +26,13 @@ socket.element.addEventListener("players", event => {
 
 		// Check if the new classname is different than the one already applied
 		// This prevents unnecessary className updates and CSS recalculations
-		if (playerElement.className != newClasses) {
-			playerElement.className = newClasses
-		}
+		if (playerDot.className != "dot " + newClasses) playerDot.className = "dot " + newClasses
+		if (playerLabel.className != "label " + newClasses) playerLabel.className = "label " + newClasses
 
 		// Save the position so the main loop can interpolate it
 		global.playerPos[player.num].x = global.positionToPerc(player.position, "x", player.num)
 		global.playerPos[player.num].y = global.positionToPerc(player.position, "y", player.num)
+		global.playerPos[player.num].a = player.angle
 
 		// Set the player alive attribute (used in autozoom)
 		global.playerPos[player.num].alive = player.alive
@@ -50,6 +51,7 @@ socket.element.addEventListener("roundend", event => {
 		global.playerPos[num] = {
 			x: null,
 			y: null,
+			a: null,
 			alive: false
 		}
 	}
