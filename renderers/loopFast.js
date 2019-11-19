@@ -32,6 +32,9 @@ function step() {
 
 			// Limit the size of the buffer to the count specified in the config
 			global.playerBuffers[num] = global.playerBuffers[num].slice(0, global.config.radar.playerSmoothing)
+
+			global.playerDots[num].style.zIndex = Math.round(global.playerPos[num].z)
+			global.playerLabels[num].style.zIndex = Math.round(global.playerPos[num].z)
 		}
 
 		// Take the average of the X, Y and rotation buffers
