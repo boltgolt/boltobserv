@@ -2,14 +2,22 @@
 //
 // Starts all other renderers.
 
+// If a welcome packet has been received
 let hasConfig = false
+// If the map is ready, called by _map.js
 let hasMap = false
+// If importScripts has been run
 let hasInited = false
 
+/**
+ * Add script elements for scripts to import, can also be called from _map.js
+ */
 function importScripts() {
+	// Only do this once, and only if we already have both the map and the config
 	if (!hasConfig || !hasMap || hasInited) return
 	hasInited = true
 
+	// Go through all scripts and append them to the body
 	for (let script of hasConfig) {
 		let tag = document.createElement("script")
 		tag.setAttribute("src", "/renderers/" + script)
@@ -46,4 +54,14 @@ socket.element.addEventListener("welcome", event => {
 
 	// Do the same for the bomb icon
 	document.getElementById("bomb").style.transform = `scale(${event.data.config.radar.playerDotScale}) translate(-50%, -50%)`
+})
+
+window.addEventListener("DOMContentLoaded", () => {
+	// If not electron (browser)
+	if (navigator.userAgent.toLowerCase().indexOf(" electron/") <= -1) {
+		// Reload the site when a new HTML page has been rendered
+		socket.element.addEventListener("pageUpdate", event => {
+			location.reload()
+		})
+	}
 })

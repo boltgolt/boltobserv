@@ -2,21 +2,27 @@
  * Use this file to apply custom styles to the radar image
  */
 
-/* Any player */
-div.player {}
+/* Any player dot */
+div.dot {}
 
 /* Players that are CT or T */
-div.player.CT {}
-div.player.T {}
+div.dot.CT {}
+div.dot.T {}
 
 /* The player with the bomb */
-div.player.bomb{}
+div.dot.bomb{}
 
 /* The player currently being observed */
-div.player.active {}
+div.dot.active {}
 
 /* A dead player */
-div.player.dead {}
+div.dot.dead {}
+
+/* The number on a player dot */
+div.label {}
+
+/* The number on the dot being spectated */
+div.label.active {}
 
 /* The dropped or planted bomb on the map */
 #bomb {}
