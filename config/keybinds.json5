@@ -1,4 +1,5 @@
 {
-	"Control+Alt+O": "radar.autozoom:toggle",
-	"Control+Alt+P": "window.fullscreen:toggle"
+	"Control+Alt+O": ["window.fullscreen:on", "functions.sleep(1)", "window.fullscreen:off"],
+	"Control+Alt+P": "sleep(3)",
+	"Control+Alt+I": ["utilities:sleep(3)", "window.fullscreen:toggle"]
 }
