@@ -13,9 +13,8 @@ let radarQueues = {
 
 // Run the loop every 25ms
 setInterval(() => {
-	// console.log(global.config.autozoom)
 	// Abort if autozoom isn't enabled
-	if (!global.config.autozoom.enable) return
+	if (!global.config.autozoom.enable && typeof global.effects["radar.autozoom"] == "undefined") return
 
 
 	// Bounding rect around all living players
@@ -57,7 +56,7 @@ setInterval(() => {
 	let radarY = ((bounds.y.max + bounds.y.min) / 2) - 50
 
 	// Reset all calculated values to default if min zoom level has not been reached
-	if (radarScale < global.config.autozoom.minZoom) {
+	if (radarScale < global.config.autozoom.minZoom || !global.effects["radar.autozoom"]) {
 		radarScale = 1
 		radarX = radarY = 0
 	}

@@ -3,7 +3,10 @@
 // Provides shared variables and functions for all renderers.
 
 global = {
+	// Config loaded from disk
 	config: {},
+	// Effects triggered by key-binds
+	effects: {},
 	mapData: {},
 	currentMap: "none",
 	// The last known game phase
@@ -97,4 +100,10 @@ socket.element.addEventListener("round", event => {
 
 	// Set the new phase
 	global.gamePhase = phase
+})
+
+// On a round indicator packet
+socket.element.addEventListener("effect", event => {
+	console.log(global.effects)
+	global.effects[event.data.key] = event.data.value
 })

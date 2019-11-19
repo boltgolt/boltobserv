@@ -121,5 +121,8 @@ module.exports = {
 				path: path.normalize(path.join(__dirname, loc))
 			})
 		})
+
+		// Load key-binds and start listening
+		require("./keybinds")(module.exports.socket, module.exports.win)
 	}
 }

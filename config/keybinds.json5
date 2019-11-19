@@ -1,0 +1,4 @@
+{
+	"Control+Alt+O": "radar.autozoom:toggle",
+	"Control+Alt+P": "window.fullscreen:toggle"
+}

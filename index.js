@@ -65,3 +65,14 @@ if (!config.debug.terminalOnly) {
 else {
 	console.info("Not opening window, terminal only mode is enabled")
 }
+
+function cleanup() {
+	gsi.kill()
+	http.kill()
+	socket.kill()
+	window.app.quit()
+}
+
+for (let signal of ["exit", "SIGINT", "SIGUSR1", "SIGUSR2"]) {
+	process.on(signal, cleanup)
+}
