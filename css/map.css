@@ -132,7 +132,7 @@ div.dot, div.label {
 	background: #f00;
 	transform: translate(-50%, -50%);
 	transform-origin: top left;
-	border-radius: 100% .2vmin 100% 100%;
+	border-radius: 100% 100% 100% 100%;
 	box-shadow: 0 0 .8vmin .4vmin rgba(0, 0, 0, .2);
 	opacity: 1;
 	z-index: 15;
@@ -142,6 +142,19 @@ div.dot, div.label {
 	-webkit-backface-visibility: hidden;
 	backface-visibility: initial;
 }
+
+div.dot::before {
+	content: "";
+	position: absolute;
+	top: -0.7vmin;
+	right: -0.7vmin;
+	height: 1.4vmin;
+	width: 1.4vmin;
+	background: #FFF;
+	clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+	transform: rotate(45deg);
+}
+
 
 div.dot.CT {
 	background: #5ab8f4;
