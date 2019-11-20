@@ -15,10 +15,12 @@ function executeAction(subject, command) {
 			break
 
 		case "on":
+		case "true":
 			effects[subject] = true
 			break
 
 		case "off":
+		case "false":
 			effects[subject] = false
 			break
 
@@ -65,9 +67,22 @@ function parseBind(binds) {
 
 		switch (parsed[1]) {
 			case "functions.sleep":
-				setTimeout(function () {
+				setTimeout(() => {
 					if (binds.length > 0) parseBind(binds)
 				}, parsed[2] * 1000)
+				break
+
+			case "functions.reload":
+				// Reload both electron window and browsers
+				win.reload()
+				socket.send({
+					type: "pageUpdate"
+				})
+
+				// Wait a second for everything to load before executing the next action
+				setTimeout(() => {
+					if (binds.length > 0) parseBind(binds)
+				}, 100)
 				break
 
 			default:

@@ -56,7 +56,7 @@ setInterval(() => {
 	let radarY = ((bounds.y.max + bounds.y.min) / 2) - 50
 
 	// Reset all calculated values to default if min zoom level has not been reached
-	if (radarScale < global.config.autozoom.minZoom || !global.effects["radar.autozoom"]) {
+	if (radarScale < global.config.autozoom.minZoom || global.effects["radar.autozoom"] === false) {
 		radarScale = 1
 		radarX = radarY = 0
 	}
