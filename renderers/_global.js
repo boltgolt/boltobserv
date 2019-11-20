@@ -104,6 +104,5 @@ socket.element.addEventListener("round", event => {
 
 // On a round indicator packet
 socket.element.addEventListener("effect", event => {
-	console.log(global.effects)
 	global.effects[event.data.key] = event.data.value
 })

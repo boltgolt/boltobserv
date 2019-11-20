@@ -17,7 +17,12 @@ socket.element.addEventListener("map", event => {
 	// If map is unchanged we do not need to do anything
 	if (global.currentMap == event.data) return
 
-	fetch(window.location.origin + `/maps/${event.data}/meta.json5`)
+	let mapName = event.data
+	if (mapName.indexOf("/") != -1) {
+		mapName = mapName.split("/")[mapName.split("/").length - 1]
+	}
+
+	fetch(window.location.origin + `/maps/${mapName}/meta.json5`)
 	.then(resp => resp.text())
 	.then(data => {
 		data = data.replace(/^\s*?\/\/.*?$/gm, "")
@@ -25,18 +30,18 @@ socket.element.addEventListener("map", event => {
 
 		// Check if the map uses the expected meta format
 		if (global.mapData.version.format != 2) {
-			return throwMapError(`Outdated map file for ${event.data}`)
+			return throwMapError(`Outdated map file for ${mapName}`)
 		}
 
 		// Make sure that the "unknown map" message is turned off for valid maps
 		document.getElementById("unknownMap").style.display = "none"
 
 		// Show the radar backdrop
-		document.getElementById("radar").src = `/maps/${event.data}/radar.png`
+		document.getElementById("radar").src = `/maps/${mapName}/radar.png`
 
 		// Set the map as the current map and in the window title
-		global.currentMap = event.data
-		document.title = "Boltobserv - " + event.data
+		global.currentMap = mapName
+		document.title = "Boltobserv - " + mapName
 
 		// Hide advisories if you've been disabled in the config
 		if (global.config.radar.hideAdvisories) {
@@ -54,6 +59,6 @@ socket.element.addEventListener("map", event => {
 		importScripts()
 	})
 	.catch(() => {
-		return throwMapError(`Error reading the ${event.data} map file :(`)
+		return throwMapError(`Error reading the ${mapName} map file :(`)
 	})
 })
