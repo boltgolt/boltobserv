@@ -41,11 +41,18 @@ function executeAction(subject, command) {
 		case "window.fullscreen":
 			win.setFullScreen(effects[subject])
 			break
+		case "window.mousePassthrough":
+			win.setIgnoreMouseEvents(effects[subject])
+			break
 	}
 }
 
 
 function parseBind(binds) {
+	function nextBind(binds) {
+		if (binds.length > 0) parseBind(binds)
+	}
+
 	let bind = binds
 
 	if (typeof binds == "object") {
@@ -53,7 +60,7 @@ function parseBind(binds) {
 		binds.shift()
 	}
 
-	let actionRegex = /([\w\.]*?)\s?:\s?(\w*)/
+	let actionRegex = /([\w\.]*?)\s?->\s?(\w*)/
 	let functionRegex = /([\w\.]*?)\((.*?)\)/
 
 	if (bind.match(actionRegex)) {
@@ -64,12 +71,13 @@ function parseBind(binds) {
 	}
 	else if (bind.match(functionRegex)) {
 		let parsed = functionRegex.exec(bind)
+		let argument = parsed[2]
 
 		switch (parsed[1]) {
 			case "functions.sleep":
 				setTimeout(() => {
 					if (binds.length > 0) parseBind(binds)
-				}, parsed[2] * 1000)
+				}, argument * 1000)
 				break
 
 			case "functions.reload":
@@ -84,6 +92,20 @@ function parseBind(binds) {
 					if (binds.length > 0) parseBind(binds)
 				}, 100)
 				break
+
+			case "window.width":
+				win.setSize(Math.min(0, argument), win.getSize()[1])
+				return nextBind(binds)
+			case "window.height":
+				win.setSize(win.getSize()[0], Math.min(0, argument))
+				return nextBind(binds)
+
+			case "window.left":
+				win.setBounds({x: parseInt(argument)})
+				return nextBind(binds)
+			case "window.top":
+				win.setBounds({y: parseInt(argument)})
+				return nextBind(binds)
 
 			default:
 				console.warn(`WARNING: Unkown keybind function in keybind "${bind}"`)

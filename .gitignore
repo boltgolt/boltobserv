@@ -1,3 +1,6 @@
 node_modules
+
 config.override.json5
+keybinds.override.json5
+
 libraryfolders.vdf
