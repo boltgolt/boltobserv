@@ -11,13 +11,13 @@ function step() {
 			// We want to check if the angle value has looped around, so we need a previous value
 			if (global.playerBuffers[num][0]) {
 				// If the angle used to be small, but is large now
-				if (global.playerPos[num].a > 285 && global.playerBuffers[num][0].a < 75) {
+				if (global.playerPos[num].a > 270 && global.playerBuffers[num][0].a < 90) {
 					// Move the old value to the other side of the 360 degree circle
 					global.playerBuffers[num].forEach(buffer => {buffer.a += 360})
 				}
 
 				// If the angle used to be large, but is low now
-				if (global.playerPos[num].a < 75  && global.playerBuffers[num][0].a > 285) {
+				if (global.playerPos[num].a < 90 && global.playerBuffers[num][0].a > 270) {
 					// Move the old value to the other side of the 360 degree circle
 					global.playerBuffers[num].forEach(buffer => {buffer.a -= 360})
 				}
@@ -32,9 +32,6 @@ function step() {
 
 			// Limit the size of the buffer to the count specified in the config
 			global.playerBuffers[num] = global.playerBuffers[num].slice(0, global.config.radar.playerSmoothing)
-
-			global.playerDots[num].style.zIndex = Math.round(global.playerPos[num].z)
-			global.playerLabels[num].style.zIndex = Math.round(global.playerPos[num].z)
 		}
 
 		// Take the average of the X, Y and rotation buffers

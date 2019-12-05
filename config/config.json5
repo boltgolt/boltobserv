@@ -4,6 +4,8 @@
 // without making changes here. This makes your config a lot more portable.
 
 {
+	"_version": "0.2.1",
+
 	// Sends information about the grenades thrown this round to a server
 	// This information in only used to train a model to predict grenade
 	// landings, no personal information is send or logged.
@@ -67,7 +69,8 @@
 		"playerSmoothing": 13,
 
 		// Amount of scaling to apply to player dots on the radar
-		"playerDotScale": 1
+		// Values above 1 might be blurry
+		"playerDotScale": 0.7
 	},
 
 	// Settings related to the CSGO game
