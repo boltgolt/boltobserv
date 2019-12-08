@@ -4,6 +4,8 @@
 // without making changes here. This makes your config a lot more portable.
 
 {
+	"_version": "0.2.1",
+
 	// Sends information about the grenades thrown this round to a server
 	// This information in only used to train a model to predict grenade
 	// landings, no personal information is send or logged.
@@ -12,6 +14,9 @@
 
 	// Settings related to the Boltobserv window
 	"window": {
+		// Don't show radar in a window, only a small status window will open
+		"disable": false,
+
 		// Always show the window as the top application
 		"alwaysOnTop": false,
 
@@ -44,6 +49,9 @@
 
 	// Settings related to remote browser access to the radar
 	"browser": {
+		// Prevents a background from being set in the browser, for OBS capture
+		"transparent": false,
+
 		"ports": {
 			// Serves static files, such as HTML. Use this one in your browser
 			"static": 36364,
@@ -61,7 +69,8 @@
 		"playerSmoothing": 13,
 
 		// Amount of scaling to apply to player dots on the radar
-		"playerDotScale": 1
+		// Values above 1 might be blurry
+		"playerDotScale": 0.7
 	},
 
 	// Settings related to the CSGO game
@@ -96,6 +105,10 @@
 	// Settings that should not be used in normal operation, but help to find issues
 	"debug": {
 		// Print the loaded config into the console
-		"printConfig": false
+		"printConfig": false,
+
+		// Don't open any electron window, just start the server
+		// Do NOT execute Boltobserv outside a terminal with this enabled, could become a zombie process
+		"terminalOnly": false
 	}
 }

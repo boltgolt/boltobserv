@@ -72,7 +72,7 @@ Thanks to [Inygon](https://inygon.com/) for supporting open source development o
 
 [![Inygon](https://i.imgur.com/bQjz86D.png)](https://inygon.com/)
 
-If you want to support development on specific functionality, don't hesitate to contact me. Sending a onetime donation through [ko-fi](https://ko-fi.com/boltgolt) is also very appreciated.
+If you want to support development on specific functionality, don't hesitate to contact me. Supporting me through [Github Sponsors](https://github.com/sponsors/boltgolt/) is also very appreciated.
 
 ## License
 

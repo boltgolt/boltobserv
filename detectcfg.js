@@ -60,10 +60,9 @@ module.exports = {
 		}
 	},
 
-	install: (path) => {
-		// Need to reimport path because of electron shenanigans
-		let template = require("path").join(__dirname, "gamestate_integration_boltobserv.cfg")
-		let dest = require("path").join(path, "csgo", "cfg", "gamestate_integration_boltobserv.cfg")
+	install: (target) => {
+		let template = path.join(__dirname, "gamestate_integration_boltobserv.cfg")
+		let dest = path.join(target, "csgo", "cfg", "gamestate_integration_boltobserv.cfg")
 		fs.copyFileSync(template, dest)
 
 		console.info("Installed config file as", dest)
