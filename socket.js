@@ -22,17 +22,21 @@ for (let renderer of renderers) {
 // When a new connection is established
 wss.on("connection", ws => {
 	// Send a packet so the client has a config and knows what scripts to load
-	ws.send(JSON.stringify({
-		type: "welcome",
-		data: {
-			scripts: scripts,
-			config: {
-				browser: config.browser,
-				radar: config.radar,
-				autozoom: config.autozoom
-			}
+	ws.on("message", message => {
+		if(message === "requestWelcome"){
+			ws.send(JSON.stringify({
+				type: "welcome",
+				data: {
+					scripts: scripts,
+					config: {
+						browser: config.browser,
+						radar: config.radar,
+						autozoom: config.autozoom
+					}
+				}
+			}))
 		}
-	}))
+	})
 })
 
 // When a packet needs to be sent
