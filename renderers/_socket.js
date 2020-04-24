@@ -4,6 +4,7 @@
 // listen for.
 
 let socket = {
+	native: null,
 	connected: false,
 	connect: () =>  {
 		// Check if we're in electron
@@ -45,8 +46,10 @@ let socket = {
 
 		function attachEvents(websocket) {
 			// Called when the socket is started
+			socket.native = websocket;
 			websocket.onopen = () => {
 				socket.connected = true
+				websocket.send("requestWelcome")
 			}
 
 			// Called when the server has pushed a message to us

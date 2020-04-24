@@ -55,6 +55,9 @@ socket.element.addEventListener("welcome", event => {
 	// Do the same for the bomb icon
 	document.getElementById("bomb").style.transform = `scale(${event.data.config.radar.playerDotScale}) translate(-50%, -50%)`
 })
+if(socket.native && socket.native.readyNumber === 1){
+	socket.native.send("requestWelcome");
+}
 
 window.addEventListener("DOMContentLoaded", () => {
 	// If not electron (browser)
