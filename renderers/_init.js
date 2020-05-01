@@ -53,7 +53,7 @@ socket.element.addEventListener("welcome", event => {
 	}
 
 	// Do the same for the bomb icon
-	document.getElementById("bomb").style.transform = `scale(${event.data.config.radar.playerDotScale}) translate(-50%, -50%)`
+	document.getElementById("bomb").style.transform = `scale(${event.data.config.radar.bombDotScale}) translate(-50%, -50%)`
 })
 
 window.addEventListener("DOMContentLoaded", () => {

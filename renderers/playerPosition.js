@@ -56,5 +56,11 @@ socket.element.addEventListener("roundend", event => {
 			a: null,
 			alive: false
 		}
+
+		// Force a re-render on the dot and label, can sometimes bug out in electron
+		global.playerDots[num].style.display = "none"
+		global.playerDots[num].style.display = "block"
+		global.playerLabels[num].style.display = "none"
+		global.playerLabels[num].style.display = "block"
 	}
 })
