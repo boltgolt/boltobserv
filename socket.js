@@ -2,7 +2,7 @@ const fs = require("fs")
 const path = require("path")
 const WebSocket = require("ws")
 
-const config = require("./loadconfig")()
+const config = require("./loadconfig")
 const wss = new WebSocket.Server({
 	port: config.browser.ports.socket
 })

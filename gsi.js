@@ -1,6 +1,6 @@
 const http = require("http")
 
-const config = require("./loadconfig")()
+const config = require("./loadconfig")
 const remotenades = require("./remotenades.js")
 
 const host = "localhost"

@@ -3,7 +3,7 @@ const path = require("path")
 const fs = require("fs")
 
 const version = require("./package.json").version
-const config = require("./loadconfig")()
+const config = require("./loadconfig")
 
 const host = "localhost"
 
