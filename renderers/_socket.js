@@ -10,7 +10,7 @@ let socket = {
 		// Check if we're in electron
 		if (navigator.userAgent.toLowerCase().indexOf(" electron/") > -1) {
 			// If we are, we can just import the config directly
-			global.config = require("../loadconfig")()
+			global.config = require("../loadconfig")
 
 			// Start the websocket and attach the event listeners
 			let websocket = new WebSocket(`ws://127.0.0.1:${global.config.browser.ports.socket}`)

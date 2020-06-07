@@ -34,11 +34,11 @@ socket.element.addEventListener("welcome", event => {
 
 	// Loop through each player dot to apply the scaling config option
 	for (let playerElem of document.getElementsByClassName("player")) {
-		playerElem.style.transform = `scale(${event.data.config.radar.playerDotScale}) translate(-50%, -50%)`
+		playerElem.style.transform = `scale(${event.data.config.radar.playerDotScale}) translate(-50%, 50%)`
 	}
 
 	for (let labelElement of document.getElementsByClassName("label")) {
-		labelElement.style.transform = `scale(${global.config.radar.playerDotScale}) translate(-50%, -50%)`
+		labelElement.style.transform = `scale(${global.config.radar.playerDotScale}) translate(-50%, 50%)`
 	}
 
 	if (navigator.userAgent.toLowerCase().indexOf(" electron/") <= -1) {
@@ -53,7 +53,7 @@ socket.element.addEventListener("welcome", event => {
 	}
 
 	// Do the same for the bomb icon
-	document.getElementById("bomb").style.transform = `scale(${event.data.config.radar.playerDotScale}) translate(-50%, -50%)`
+	document.getElementById("bomb").style.transform = `scale(${event.data.config.radar.bombDotScale}) translate(-50%, 50%)`
 })
 if(socket.native && socket.native.readyNumber === 1){
 	socket.native.send("requestWelcome");

@@ -10,7 +10,7 @@
 const path = require("path")
 const child_process = require("child_process")
 
-const config = require("./loadconfig")()
+const config = require("./loadconfig")
 const window = require("./window")
 
 let hasMap = false
@@ -22,7 +22,10 @@ let http = child_process.fork(`${__dirname}/http.js`)
 let socket = child_process.fork(`${__dirname}/socket.js`)
 
 function setActivePage(page, win) {
-	if (window.win !== false) window.win.loadFile(`html/${page}.html`)
+	if (window.win !== false && !config.window.disable) {
+		window.win.loadFile(`html/${page}.html`)
+	}
+
 	http.send(page)
 
 	socket.send({

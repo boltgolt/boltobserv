@@ -46,10 +46,10 @@ function step() {
 		global.playerLabels[num].style.bottom = bufferPercY + "%"
 
 		if (global.playerPos[num].alive) {
-			global.playerDots[num].style.transform = `rotate(${bufferAngle - 45}deg) scale(${global.config.radar.playerDotScale}) translate(-50%, -50%)`
+			global.playerDots[num].style.transform = `rotate(${bufferAngle - 45}deg) scale(${global.config.radar.playerDotScale}) translate(-50%, 50%)`
 		}
 		else {
-			global.playerDots[num].style.transform = `rotate(0deg) scale(${global.config.radar.playerDotScale}) translate(-50%, -50%)`
+			global.playerDots[num].style.transform = `rotate(0deg) scale(${global.config.radar.playerDotScale}) translate(-50%, 50%)`
 		}
 	}
 

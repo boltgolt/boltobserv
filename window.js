@@ -1,5 +1,5 @@
 const path = require("path")
-const config = require("./loadconfig")()
+const config = require("./loadconfig")
 
 const detectcfg = require("./detectcfg")
 
@@ -89,6 +89,7 @@ module.exports = {
 			module.exports.http.kill()
 			module.exports.socket.kill()
 			module.exports.app.quit()
+			process.exit()
 		})
 
 		if (config.window.disable) {
