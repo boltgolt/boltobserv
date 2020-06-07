@@ -11,8 +11,8 @@
 
 	// How many in-game units is the origin (0,0) of the map from the bottom left point of the radar
 	"offset": {
-		"x": 2520,
-		"y": 2290
+		"x": 2510,
+		"y": 2440
 	},
 
 	// Contains any special map splits
