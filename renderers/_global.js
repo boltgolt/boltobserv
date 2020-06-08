@@ -63,6 +63,7 @@ global = {
 
 			// Save this split as the last split id seen
 			global.playerSplits[playerNum] = currentSplit
+			global.playerPos[playerNum].split = currentSplit
 		}
 
 		// Return the position relative to the radar image

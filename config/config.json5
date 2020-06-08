@@ -4,7 +4,7 @@
 // without making changes here. This makes your config a lot more portable.
 
 {
-	"_version": "0.2.1",
+	"_version": "0.2.2",
 
 	// Sends information about the grenades thrown this round to a server
 	// This information in only used to train a model to predict grenade
@@ -72,7 +72,9 @@
 		// Values above 1 might be blurry
 		"playerDotScale": 0.7,
 		// Same as the above, but for the bomb
-		"bombDotScale": 0.7
+		"bombDotScale": 0.7,
+
+		"verticalIndicator": ["13,255,0", "255,255,255", "255,0,199"]
 	},
 
 	// Settings related to the CSGO game

@@ -32,6 +32,33 @@ function step() {
 
 			// Limit the size of the buffer to the count specified in the config
 			global.playerBuffers[num] = global.playerBuffers[num].slice(0, global.config.radar.playerSmoothing)
+
+			// Experimental color coding
+			if (global.mapData.zRange) {
+				let zRange = global.mapData.zRange
+
+				if (typeof global.playerPos[num].split == "number") {
+					if (global.playerPos[num].split >= 0) {
+						zRange = global.mapData.splits[global.playerPos[num].split].zRange
+					}
+				}
+
+				let color = global.config.radar.verticalIndicator[0]
+				let perc = Math.abs(global.playerPos[num].z - zRange.min) / Math.abs(zRange.max - zRange.min)
+				perc = Math.min(1, Math.max(0, perc))
+
+				if (perc > 0.5) {
+					color = global.config.radar.verticalIndicator[2]
+					perc = (perc - 0.5)
+				}
+				else {
+					perc = 0.5 - perc
+				}
+				document.getElementById("height" + num).style.background = `rgb(${global.config.radar.verticalIndicator[1]})`
+				document.getElementById("height" + num).style.boxShadow = `inset 0 0 0 1.5vmin rgba(${color},${perc*2})`
+				console.log(zRange)
+			}
+
 		}
 
 		// Take the average of the X, Y and rotation buffers
