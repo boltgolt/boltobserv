@@ -189,7 +189,7 @@ div.label.active {
 }
 
 div.label.dead {
-	display: none;
+	display: none !important;
 }
 
 #advisory {
