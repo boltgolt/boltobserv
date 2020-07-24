@@ -23,6 +23,11 @@
 		// Make the background of the window transparent
 		"transparent": false,
 
+		// Change the background color of the window even with transparency
+		// The color should be in hexadecimal color code
+		// like #FFF or #FFFFFF to normal color and #80FFFFFF to color with transparency
+		// "backgroundColor": "#FF0000",
+
 		// Start window as a full screen application
 		// Use ALT + F4 to quit
 		"fullscreen": false,

@@ -61,6 +61,10 @@ module.exports = {
 		else {
 			winConfig.backgroundColor = "#000"
 		}
+		
+		if (config.window.backgroundColor && !config.window.transparent) {
+			winConfig.backgroundColor = config.window.backgroundColor
+		}
 
 		if (config.window.disable) {
 			winConfig.width = 450
