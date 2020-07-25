@@ -20,6 +20,7 @@ socket.element.addEventListener("players", event => {
 		if (!player.alive) classes.push("dead")
 		if (player.bomb) classes.push("bomb")
 		if (player.active) classes.push("active")
+		if (player.flashed > 31) classes.push("flashed")
 
 		// Add all classes as a class string
 		let newClasses = classes.join(" ")

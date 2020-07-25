@@ -91,6 +91,7 @@ let server = http.createServer((req, res) => {
 					team: player.team,
 					alive: player.state.health > 0,
 					active: isActive,
+					flashed: player.state.flashed,
 					bomb: hasBomb,
 					bombActive: bombActive,
 					angle: angle,
