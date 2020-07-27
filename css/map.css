@@ -20,7 +20,7 @@ body {
 	-webkit-backface-visibility: hidden;
 }
 
-#smokes, #entities {
+#smokes, #entities, #flashbangs {
 	position: absolute;
 	height: 100%;
 	width: 100%;
@@ -47,6 +47,18 @@ body {
 
 #smokes > div.fading {
 	transition: opacity 1.8s;
+}
+
+#flashbangs > div {
+	position: absolute;
+	opacity: .8;
+	background: #FFFFE0;
+	box-sizing: border-box;
+	transform-origin: center;
+	transform: translate(-50%, 50%);
+	transition: opacity .3s;
+	clip-path: polygon(20% 8%, 43% 25%, 55% 0%, 60% 27%, 86% 16%, 72% 40%, 100% 48%, 73% 58%, 89% 81%, 62% 72%, 60% 100%, 45% 75%, 25% 95%, 30% 67%, 2% 70%, 23% 52%, 0% 36%, 29% 35%);
+	box-shadow: inset 0 0 3vmin 0 #FFFF00, inset 0 0 5vmin 0 #FFFF33;
 }
 
 #infernos {
