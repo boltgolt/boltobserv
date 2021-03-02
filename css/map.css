@@ -85,7 +85,7 @@ div.dot > div {
 	left: 1.3vmin;
 	width: 3vmin;
 	height: 3vmin;
-	background: #FFF;
+	background: #0000;
 	box-shadow: inset 0 0 0 1.5vmin rgba(255,255,255,0);
 	box-sizing: border-box;
 	border-radius: 60vmin;

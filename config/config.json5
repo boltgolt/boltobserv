@@ -72,9 +72,18 @@
 		// Values above 1 might be blurry
 		"playerDotScale": 0.7,
 		// Same as the above, but for the bomb
-		"bombDotScale": 0.7,
+		"bombDotScale": 0.7
+	},
 
-		"verticalIndicator": ["13,255,0", "255,255,255", "255,0,199"]
+	// Show a vertical indicator on every player dot, indicating how high the player is on the map
+	"vertIndicator": {
+		// Indicator type, can either be "none", "color" or "scale"
+		"type": "scale",
+
+		// RGB values for the color indicator, from lowest to highest
+		"colorRange": [[13, 255, 0], [255, 255, 255], [255, 0, 199]],
+		// Controls by how much dots should scale, works in combination with playerDotScale
+		"scaleDelta": 0.3
 	},
 
 	// Settings related to the CSGO game

@@ -23,7 +23,7 @@ for (let renderer of renderers) {
 wss.on("connection", ws => {
 	// Send a packet so the client has a config and knows what scripts to load
 	ws.on("message", message => {
-		if(message === "requestWelcome"){
+		if (message === "requestWelcome") {
 			ws.send(JSON.stringify({
 				type: "welcome",
 				data: {
@@ -31,7 +31,8 @@ wss.on("connection", ws => {
 					config: {
 						browser: config.browser,
 						radar: config.radar,
-						autozoom: config.autozoom
+						autozoom: config.autozoom,
+						vertIndicator: config.vertIndicator,
 					}
 				}
 			}))
