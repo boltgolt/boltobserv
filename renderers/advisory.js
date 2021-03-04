@@ -32,7 +32,7 @@ socket.element.addEventListener("players", event => {
 	let tsAlive = []
 
 	for (let player of data.players) {
-		if (player.alive) {
+		if (player.health > 0) {
 			if (player.team == "CT") {
 				ctsAlive.push(player.id)
 			}

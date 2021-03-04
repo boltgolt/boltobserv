@@ -17,6 +17,8 @@ global = {
 	playerSplits: [],
 	playerDots: [],
 	playerLabels: [],
+	playerAmmos: [],
+	playerHealths: [],
 
 	/**
 	 * Convert in-game position units to radar percentages
@@ -63,6 +65,7 @@ global = {
 
 			// Save this split as the last split id seen
 			global.playerSplits[playerNum] = currentSplit
+			global.playerPos[playerNum].split = currentSplit
 		}
 
 		// Return the position relative to the radar image
@@ -82,6 +85,8 @@ for (var i = 0; i < 10; i++) {
 	global.playerBuffers.push([])
 	global.playerDots.push(document.getElementById("dot" + i))
 	global.playerLabels.push(document.getElementById("label" + i))
+	global.playerAmmos.push({})
+	global.playerHealths.push(0)
 }
 
 // On a round indicator packet

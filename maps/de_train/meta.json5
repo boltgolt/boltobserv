@@ -22,5 +22,10 @@
 	"advisoryPosition": {
 		"x": 10,
 		"y": 56
+	},
+
+	"zRange": {
+		"min": -320,
+		"max": 15
 	}
 }
