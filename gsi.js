@@ -7,6 +7,7 @@ const host = "localhost"
 
 let oldPhase = false
 let infernosOnMap = [] //initial molotov status
+let flashbangsOnMap = []
 let server = http.createServer((req, res) => {
 	if (req.method != "POST") {
 		res.writeHead(405)
@@ -99,6 +100,7 @@ let server = http.createServer((req, res) => {
 					team: player.team,
 					health: player.state.health,
 					active: isActive,
+					flashed: player.state.flashed,
 					bomb: hasBomb,
 					bombActive: bombActive,
 					angle: angle,
@@ -123,6 +125,7 @@ let server = http.createServer((req, res) => {
 			let smokes = []
 			let nades = []
 			let infernos = []
+			let flashbangs = []
 			for (let nadeID in game.grenades) {
 				let nade = game.grenades[nadeID]
 
@@ -137,6 +140,18 @@ let server = http.createServer((req, res) => {
 							z: parseFloat(pos[2])
 						}
 					})
+				}
+				if (nade.type == "flashbang" && parseFloat(nade.lifetime) >= 1.4) {
+					let pos = nade.position.split(", ")
+					flashbangs.push({
+						id: nadeID,
+						position: {
+							x: parseFloat(pos[0]),
+							y: parseFloat(pos[1]),
+							z: parseFloat(pos[2])
+						}
+					})
+					if (flashbangsOnMap.indexOf(nadeID) == -1) {flashbangsOnMap.push(nadeID)}
 				}
 				if (nade.type == "inferno") {
 					if (!!nade.flames) {
@@ -169,6 +184,14 @@ let server = http.createServer((req, res) => {
 					})
 				}// check if molotov exist in game
 			}
+			for (let flashbangOnMap of flashbangsOnMap) {
+				if (!game.grenades[flashbangOnMap]) {
+					process.send({
+						type: "flashbangRemove",
+						data: flashbangOnMap
+					})
+				}
+			}
 			process.send({
 				type: "smokes",
 				data: smokes
@@ -176,6 +199,10 @@ let server = http.createServer((req, res) => {
 			process.send({
 				type: "infernos",
 				data: infernos
+			})
+			process.send({
+				type: "flashbangs",
+				data: flashbangs
 			})
 			if (config.nadeCollection) {
 				remotenades.event(game.grenades)

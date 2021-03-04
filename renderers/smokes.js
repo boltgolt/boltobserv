@@ -109,8 +109,54 @@ socket.element.addEventListener("infernoRemove", event => {
 	}
 })
 
+// The live position of all flashbangs
+socket.element.addEventListener("flashbangs", event => {
+	let flashbangs = event.data
+
+	// Called to show the fade in animation with a delay
+	function fadeIn(flashbangElement) {
+		setTimeout(() => {
+			flashbangElement.className = "flashbangEntity show"
+		}, 25)
+	}
+
+	// Go through each flashbang
+	for (let flashbang of flashbangs) {
+		// Get the flashbang element
+		let flashbangElement = document.getElementById("flashbang" + flashbang.id)
+
+		// If the element does not exist yet, add it
+		if (!flashbangElement) {
+			// Create a new element
+			flashbangElement = document.createElement("div")
+			flashbangElement.id = "flashbang" + flashbang.id
+			flashbangElement.className = "flashbangEntity hide"
+
+			// Calculate the height and width based on the map resolution
+			flashbangElement.style.height = flashbangElement.style.width = 290 / global.mapData.resolution / 1024 * 100 + "%"
+
+			// Add it to the DOM
+			document.getElementById("flashbangs").appendChild(flashbangElement)
+
+			// Play the fade in animation
+			fadeIn(flashbangElement)
+
+			// Set the location of the flashbang
+			flashbangElement.style.left = global.positionToPerc(flashbang.position, "x") + "%"
+			flashbangElement.style.bottom = global.positionToPerc(flashbang.position, "y") + "%"
+		}
+	}
+})
+
+socket.element.addEventListener("flashbangRemove", event => {
+	if (document.getElementById("flashbang" + event.data)) {
+		document.getElementById("flashbang" + event.data).style.opacity = 0
+	}
+})
+
 // Clear all smokes and inmernos on round reset
 socket.element.addEventListener("roundend", event => {
 	document.getElementById("smokes").innerHTML = ""
 	document.getElementById("infernos").innerHTML = ""
+	document.getElementById("flashbangs").innerHTML = ""
 })
