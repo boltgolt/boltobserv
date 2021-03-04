@@ -24,6 +24,12 @@ div.label {}
 /* The number on the dot being spectated */
 div.label.active {}
 
+/* Damage indecator behind the player dot */
+div.dot::before {}
+
+/* Muzzle flash in fromt of the the player dot */
+div.dot::after {}
+
 /* The dropped or planted bomb on the map */
 #bomb {}
 

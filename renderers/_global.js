@@ -17,6 +17,8 @@ global = {
 	playerSplits: [],
 	playerDots: [],
 	playerLabels: [],
+	playerAmmos: [],
+	playerHealths: [],
 
 	/**
 	 * Convert in-game position units to radar percentages
@@ -83,6 +85,8 @@ for (var i = 0; i < 10; i++) {
 	global.playerBuffers.push([])
 	global.playerDots.push(document.getElementById("dot" + i))
 	global.playerLabels.push(document.getElementById("label" + i))
+	global.playerAmmos.push({})
+	global.playerHealths.push(0)
 }
 
 // On a round indicator packet

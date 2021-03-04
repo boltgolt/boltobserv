@@ -64,6 +64,7 @@ let server = http.createServer((req, res) => {
 				let bombActive = false
 				let isActive = false
 				let rawAngle = player.forward.split(", ")
+				let ammo = {}
 
 				if (parseFloat(rawAngle[0]) > 0) {
 					angle = 90 + parseFloat(rawAngle[1]) * -1 * 90
@@ -78,10 +79,17 @@ let server = http.createServer((req, res) => {
 					}
 				}
 
-				for (let t in player.weapons) {
-					if (player.weapons[t].name == "weapon_c4") {
+				for (let id in player.weapons) {
+					// The player has the bomb in their inventory
+					if (player.weapons[id].name == "weapon_c4") {
 						hasBomb = true
-						bombActive = player.weapons[t].state == "active"
+						// The player has the bomb in their hands
+						bombActive = player.weapons[id].state == "active"
+					}
+
+					// Save the amma in each gun to know when the player is shooting
+					else if (player.weapons[id].ammo_clip) {
+						ammo[player.weapons[id].name] = player.weapons[id].ammo_clip
 					}
 				}
 
@@ -89,11 +97,12 @@ let server = http.createServer((req, res) => {
 					id: id,
 					num: player.observer_slot,
 					team: player.team,
-					alive: player.state.health > 0,
+					health: player.state.health,
 					active: isActive,
 					bomb: hasBomb,
 					bombActive: bombActive,
 					angle: angle,
+					ammo: ammo,
 					position: {
 						x: parseFloat(pos[0]),
 						y: parseFloat(pos[1]),

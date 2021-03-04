@@ -43,12 +43,35 @@ div.dot, div.label {
 	box-shadow: 0 0 1.6vmin .8vmin rgba(0, 0, 0, .2);
 	opacity: 1;
 	z-index: 15;
-	overflow: hidden;
 
 	will-change: bottom, left, transform;
 	outline: .1vmin solid transparent;
 	-webkit-backface-visibility: hidden;
 	backface-visibility: initial;
+}
+
+div.dot::before, div.dot::after {
+	content: '';
+	position: absolute;
+	z-index: 14;
+	opacity: 0;
+	transition: opacity .02s;
+}
+
+div.dot::before {
+  height: 4vmin;
+  width: 4vmin;
+  background: radial-gradient(circle at right top, #0000 0 45%, #BE2C2C 0 70%, #0000 0);
+  left: -1.3vmin;
+  bottom: -1.3vmin;
+}
+
+div.dot::after {
+	height: 6.6vmin;
+	width: 6.6vmin;
+	background: linear-gradient(180deg, #888 1vmin, #0000 0), linear-gradient(270deg, #888 1vmin, #0000 0), linear-gradient(180deg, #bbb 2vmin, #0000 0), linear-gradient(270deg, #bbb 2vmin, #0000 0), linear-gradient(180deg, #fff 3vmin, #0000 0), linear-gradient(270deg, #fff 3vmin, #0000 0);
+	left: 2vmin;
+	bottom: 2vmin;
 }
 
 div.dot.CT {
@@ -67,6 +90,14 @@ div.dot.bomb {
 div.dot.active {
 	z-index: 16;
 	box-shadow: 0 0 0 .2vmin rgba(0, 0, 0, .9), 0 0 0 1vmin rgba(255, 255, 255, .9), 0 0 2.4vmin 1.2vmin rgba(255, 255, 255, .2);
+}
+
+div.dot.hurting::before {
+	opacity: .8;
+}
+
+div.dot.shooting::after {
+	opacity: .75;
 }
 
 div.dot.dead {
