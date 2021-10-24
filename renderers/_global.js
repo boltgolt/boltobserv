@@ -88,26 +88,3 @@ for (var i = 0; i < 10; i++) {
 	global.playerAmmos.push({})
 	global.playerHealths.push(0)
 }
-
-// On a round indicator packet
-socket.element.addEventListener("round", event => {
-	let phase = event.data
-
-	// Abort if there's no change in phase
-	if (global.gamePhase == phase) return
-
-	// If the round has ended
-	if ((phase == "freezetime" && global.gamePhase == "over") || (phase == "live" && global.gamePhase == "over")) {
-		// Emit a custom event
-		let roundend = new Event("roundend")
-		socket.element.dispatchEvent(roundend)
-	}
-
-	// Set the new phase
-	global.gamePhase = phase
-})
-
-// On a round indicator packet
-socket.element.addEventListener("effect", event => {
-	global.effects[event.data.key] = event.data.value
-})

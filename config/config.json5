@@ -4,7 +4,7 @@
 // without making changes here. This makes your config a lot more portable.
 
 {
-	"_version": "0.3.0",
+	"_version": "1.0.0",
 
 	// Settings related to the Boltobserv window
 	"window": {
