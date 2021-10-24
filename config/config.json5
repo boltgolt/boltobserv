@@ -6,12 +6,6 @@
 {
 	"_version": "0.3.0",
 
-	// Sends information about the grenades thrown this round to a server
-	// This information in only used to train a model to predict grenade
-	// landings, no personal information is send or logged.
-	// https://github.com/boltgolt/boltobserv/wiki/FAQ:-Automatically-collecting-grenade-data-from-Boltobserv
-	"nadeCollection": true,
-
 	// Settings related to the Boltobserv window
 	"window": {
 		// Don't show radar in a window, only a small status window will open

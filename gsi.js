@@ -1,8 +1,6 @@
 const http = require("http")
 
 const config = require("./loadconfig")
-const remotenades = require("./remotenades.js")
-
 const host = "localhost"
 
 let oldPhase = false
@@ -46,10 +44,6 @@ let server = http.createServer((req, res) => {
 				type: "map",
 				data: game.map.name
 			})
-
-			if (config.nadeCollection) {
-				remotenades.setMap(game.map.name)
-			}
 		}
 
 		if (game.allplayers) {
@@ -204,9 +198,6 @@ let server = http.createServer((req, res) => {
 				type: "flashbangs",
 				data: flashbangs
 			})
-			if (config.nadeCollection) {
-				remotenades.event(game.grenades)
-			}
 		}
 
 		if (game.round) {
@@ -218,10 +209,6 @@ let server = http.createServer((req, res) => {
 					infernosOnMap = [] //clear molotov status every round
 				}
 			if (oldPhase != game.round.phase && config.nadeCollection) {
-				if (oldPhase == "over" && game.round.phase == "freezetime") {
-					remotenades.send()
-				}
-
 				oldPhase = game.round.phase
 			}
 		}
