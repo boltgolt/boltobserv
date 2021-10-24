@@ -29,6 +29,7 @@
 				"y": -46
 			},
 
+			// The minimum and maximum height a player can be within this split
 			"zRange": {
 				"min": -770,
 				"max": -480
@@ -42,6 +43,7 @@
 		"y": 30
 	},
 
+	// The minimum and maximum height a player can be on the map
 	"zRange": {
 		"min": -480,
 		"max": -20

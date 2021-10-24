@@ -1,9 +1,9 @@
 {
 	"version": {
 		// The version of this meta file
-		"radar": 2,
+		"radar": 3,
 		// The object format version this file is using
-		"format": 2
+		"format": 3
 	},
 
 	// The amount of in-game units per pixel of the 1024px radar image
@@ -27,6 +27,12 @@
 			"offset": {
 				"x": 0.2,
 				"y": -42.6
+			},
+
+			// The minimum and maximum height a player can be within this split
+			"zRange": {
+				"min": 11550,
+				"max": 11680
 			}
 		}
 	],
@@ -35,5 +41,11 @@
 	"advisoryPosition": {
 		"x": 68,
 		"y": 84
+	},
+
+	// The minimum and maximum height a player can be on the map
+	"zRange": {
+		"min": 11680,
+		"max": 11920
 	}
 }

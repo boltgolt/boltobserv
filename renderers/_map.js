@@ -29,7 +29,7 @@ socket.element.addEventListener("map", event => {
 		global.mapData = JSON.parse(data)
 
 		// Check if the map uses the expected meta format
-		if (global.mapData.version.format != 2) {
+		if (global.mapData.version.format != 3) {
 			return throwMapError(`Outdated map file for ${mapName}`)
 		}
 
