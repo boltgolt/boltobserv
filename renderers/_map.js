@@ -37,7 +37,14 @@ socket.element.addEventListener("map", event => {
 		document.getElementById("unknownMap").style.display = "none"
 
 		// Show the radar backdrop
-		document.getElementById("radar").src = `/maps/${mapName}/radar.png`
+		document.getElementById("radarBackground").src = `/maps/${mapName}/radar.png`
+
+		if (global.config.radar.showLogos) {
+			document.getElementById("radarLogos").src = `/maps/${mapName}/overlay_logos.png`
+		}
+		if (global.config.radar.showBuyzones != "never") {
+			document.getElementById("radarBuyZones").src = `/maps/${mapName}/overlay_buyzones.png`
+		}
 
 		// Set the map as the current map and in the window title
 		global.currentMap = mapName
@@ -62,3 +69,9 @@ socket.element.addEventListener("map", event => {
 		return throwMapError(`Error reading the ${mapName} map file :(`)
 	})
 })
+
+if (global.config.radar.showBuyzones == "buytime") {
+	socket.element.addEventListener("canbuy", event => {
+		document.getElementById("radarBuyZones").style.opacity = event.data ? 1 : 0
+	})
+}

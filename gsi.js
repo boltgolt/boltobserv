@@ -205,12 +205,20 @@ let server = http.createServer((req, res) => {
 				type: "round",
 				data: game.round.phase
 			})
+
 			if (oldPhase == "over" && game.round.phase == "freezetime") {
 					infernosOnMap = [] //clear molotov status every round
 				}
 			if (oldPhase != game.round.phase && config.nadeCollection) {
 				oldPhase = game.round.phase
 			}
+		}
+
+		if (game.phase_countdowns) {
+			process.send({
+				type: "canbuy",
+				data: !((['live', 'bomb', 'defuse', 'over'].includes(game.phase_countdowns.phase)) && parseFloat(game.phase_countdowns.phase_ends_in) < 95)
+			})
 		}
 
 		if (game.bomb) {

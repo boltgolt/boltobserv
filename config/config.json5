@@ -20,7 +20,7 @@
 		// Change the background color of the window even with transparency
 		// The color should be in hexadecimal color code
 		// like #FFF or #FFFFFF to normal color and #80FFFFFF to color with transparency
-		// "backgroundColor": "#FF0000",
+		"backgroundColor": "#FF0000",
 
 		// Start window as a full screen application
 		// Use ALT + F4 to quit
@@ -63,12 +63,17 @@
 	"radar": {
 		// Hide advisories on the radar
 		"hideAdvisories": false,
+		// Show the buyzones on the map, or only when players can buy
+		// Can either be "never", "buytime" or "always"
+		"showBuyzones": "always",
+		// Show Boltobserv and Simple Radar logos
+		"showLogos": true,
 
 		// Show muzzle flashes for players shooting
 		"shooting": true,
 		// Show red indicators on player dots when their health gets lower
 		"damage": true,
-		// Show flashed players
+		// Show flashed players in a lighter color
 		"flashes": true,
 
 		// Frames to smooth out player movement

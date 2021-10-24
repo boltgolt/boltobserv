@@ -20,8 +20,8 @@
 
 	// Position in which advisories should be placed, in percentages from the bottom left
 	"advisoryPosition": {
-		"x": 80,
-		"y": 8.9
+		"x": 76.6,
+		"y": 17
 	},
 
 	// The minimum and maximum height a player can be on the map
