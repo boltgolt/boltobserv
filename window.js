@@ -60,7 +60,7 @@ module.exports = {
 			winConfig.transparent = true
 		}
 		else {
-			winConfig.backgroundColor = "#000"
+			winConfig.backgroundColor = config.window.backgroundColor
 		}
 
 		if (config.window.backgroundColor && !config.window.transparent) {

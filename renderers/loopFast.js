@@ -48,7 +48,7 @@ function step() {
 					}
 				}
 
-				// Calculate how heigh a player is in the range on a scale of 0 to 1
+				// Calculate player z-height in the given range on a scale of 0 to 1
 				let perc = Math.abs(global.playerPos[num].z - zRange.min) / Math.abs(zRange.max - zRange.min)
 				if (global.playerPos[num].z < zRange.min) perc = 0
 				perc = Math.min(1, Math.max(0, perc))
@@ -80,8 +80,9 @@ function step() {
 
 				// If the scale indicator is enabled
 				else if (global.config.vertIndicator.type == "scale") {
-					// Scale the dot by height multoplied by the configured delta
-					scale *= (perc + 0.5) * global.config.vertIndicator.scaleDelta
+					// Scale the dot by height multiplied by the configured delta
+					// scale *= (perc + 0.5) * global.config.vertIndicator.scaleDelta
+					scale *= ((perc - 0.5) / 2 + 1) * global.config.vertIndicator.scaleDelta
 					global.playerLabels[num].style.transform = `scale(${scale}) translate(-50%, 50%)`
 				}
 			}

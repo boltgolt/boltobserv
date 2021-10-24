@@ -20,7 +20,7 @@
 		// Change the background color of the window even with transparency
 		// The color should be in hexadecimal color code
 		// like #FFF or #FFFFFF to normal color and #80FFFFFF to color with transparency
-		"backgroundColor": "#FF0000",
+		"backgroundColor": "#000000",
 
 		// Start window as a full screen application
 		// Use ALT + F4 to quit
@@ -93,14 +93,15 @@
 
 		// RGB values for the color indicator, from lowest to highest
 		"colorRange": [[13, 255, 0], [255, 255, 255], [255, 0, 199]],
-		// Controls by how much dots should scale, works in combination with playerDotScale
-		"scaleDelta": 0.3
+		// Controls by how much dots should scale depending on height, works in combination with playerDotScale
+		// 0.5 halves the amount of scaling, 1 keeps it the default, 1.5 makes player dots scale more
+		"scaleDelta": 1
 	},
 
 	// Settings for automatically zooming in on alive players on the map
 	"autozoom": {
 		// Enable or disable autozoom
-		"enable": false,
+		"enable": true,
 
 		// Frames to smooth out zoom movement
 		"smoothing": 32,
