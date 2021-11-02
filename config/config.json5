@@ -65,7 +65,7 @@
 		"hideAdvisories": false,
 		// Show the buyzones on the map, or only when players can buy
 		// Can either be "never", "buytime" or "always"
-		"showBuyzones": "always",
+		"showBuyzones": "buytime",
 		// Show Boltobserv and Simple Radar logos
 		"showLogos": true,
 
