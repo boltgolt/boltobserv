@@ -45,6 +45,7 @@ module.exports = {
 				nodeIntegration: true,
 				webaudio: false,
 				webgl: false,
+				contextIsolation: false,
 				backgroundThrottling: false,
 				allowEval: false
 			}
@@ -59,7 +60,11 @@ module.exports = {
 			winConfig.transparent = true
 		}
 		else {
-			winConfig.backgroundColor = "#000"
+			winConfig.backgroundColor = config.window.backgroundColor
+		}
+
+		if (config.window.backgroundColor && !config.window.transparent) {
+			winConfig.backgroundColor = config.window.backgroundColor
 		}
 
 		if (config.window.disable) {

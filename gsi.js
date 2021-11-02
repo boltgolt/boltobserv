@@ -1,12 +1,11 @@
 const http = require("http")
 
 const config = require("./loadconfig")
-const remotenades = require("./remotenades.js")
-
 const host = "localhost"
 
 let oldPhase = false
 let infernosOnMap = [] //initial molotov status
+let flashbangsOnMap = []
 let server = http.createServer((req, res) => {
 	if (req.method != "POST") {
 		res.writeHead(405)
@@ -45,10 +44,6 @@ let server = http.createServer((req, res) => {
 				type: "map",
 				data: game.map.name
 			})
-
-			if (config.nadeCollection) {
-				remotenades.setMap(game.map.name)
-			}
 		}
 
 		if (game.allplayers) {
@@ -64,6 +59,7 @@ let server = http.createServer((req, res) => {
 				let bombActive = false
 				let isActive = false
 				let rawAngle = player.forward.split(", ")
+				let ammo = {}
 
 				if (parseFloat(rawAngle[0]) > 0) {
 					angle = 90 + parseFloat(rawAngle[1]) * -1 * 90
@@ -78,10 +74,17 @@ let server = http.createServer((req, res) => {
 					}
 				}
 
-				for (let t in player.weapons) {
-					if (player.weapons[t].name == "weapon_c4") {
+				for (let id in player.weapons) {
+					// The player has the bomb in their inventory
+					if (player.weapons[id].name == "weapon_c4") {
 						hasBomb = true
-						bombActive = player.weapons[t].state == "active"
+						// The player has the bomb in their hands
+						bombActive = player.weapons[id].state == "active"
+					}
+
+					// Save the amma in each gun to know when the player is shooting
+					else if (player.weapons[id].ammo_clip) {
+						ammo[player.weapons[id].name] = player.weapons[id].ammo_clip
 					}
 				}
 
@@ -89,11 +92,13 @@ let server = http.createServer((req, res) => {
 					id: id,
 					num: player.observer_slot,
 					team: player.team,
-					alive: player.state.health > 0,
+					health: player.state.health,
 					active: isActive,
+					flashed: player.state.flashed,
 					bomb: hasBomb,
 					bombActive: bombActive,
 					angle: angle,
+					ammo: ammo,
 					position: {
 						x: parseFloat(pos[0]),
 						y: parseFloat(pos[1]),
@@ -114,6 +119,7 @@ let server = http.createServer((req, res) => {
 			let smokes = []
 			let nades = []
 			let infernos = []
+			let flashbangs = []
 			for (let nadeID in game.grenades) {
 				let nade = game.grenades[nadeID]
 
@@ -128,6 +134,18 @@ let server = http.createServer((req, res) => {
 							z: parseFloat(pos[2])
 						}
 					})
+				}
+				if (nade.type == "flashbang" && parseFloat(nade.lifetime) >= 1.4) {
+					let pos = nade.position.split(", ")
+					flashbangs.push({
+						id: nadeID,
+						position: {
+							x: parseFloat(pos[0]),
+							y: parseFloat(pos[1]),
+							z: parseFloat(pos[2])
+						}
+					})
+					if (flashbangsOnMap.indexOf(nadeID) == -1) {flashbangsOnMap.push(nadeID)}
 				}
 				if (nade.type == "inferno") {
 					if (!!nade.flames) {
@@ -160,6 +178,14 @@ let server = http.createServer((req, res) => {
 					})
 				}// check if molotov exist in game
 			}
+			for (let flashbangOnMap of flashbangsOnMap) {
+				if (!game.grenades[flashbangOnMap]) {
+					process.send({
+						type: "flashbangRemove",
+						data: flashbangOnMap
+					})
+				}
+			}
 			process.send({
 				type: "smokes",
 				data: smokes
@@ -168,9 +194,10 @@ let server = http.createServer((req, res) => {
 				type: "infernos",
 				data: infernos
 			})
-			if (config.nadeCollection) {
-				remotenades.event(game.grenades)
-			}
+			process.send({
+				type: "flashbangs",
+				data: flashbangs
+			})
 		}
 
 		if (game.round) {
@@ -178,16 +205,20 @@ let server = http.createServer((req, res) => {
 				type: "round",
 				data: game.round.phase
 			})
+
 			if (oldPhase == "over" && game.round.phase == "freezetime") {
 					infernosOnMap = [] //clear molotov status every round
 				}
 			if (oldPhase != game.round.phase && config.nadeCollection) {
-				if (oldPhase == "over" && game.round.phase == "freezetime") {
-					remotenades.send()
-				}
-
 				oldPhase = game.round.phase
 			}
+		}
+
+		if (game.phase_countdowns) {
+			process.send({
+				type: "canbuy",
+				data: !((['live', 'bomb', 'defuse', 'over'].includes(game.phase_countdowns.phase)) && parseFloat(game.phase_countdowns.phase_ends_in) < 95)
+			})
 		}
 
 		if (game.bomb) {

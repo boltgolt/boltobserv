@@ -8,6 +8,7 @@
 		<link rel="stylesheet" href="/css/main.css">
 		<link rel="stylesheet" href="/css/waiting.css">
 
+		<script src="/renderers/_global.js"></script>
 		<script src="/renderers/_socket.js"></script>
 	</head>
 	<body>
@@ -75,6 +76,17 @@
 				function releases() {
 					electron.shell.openExternal("https://github.com/boltgolt/boltobserv/releases")
 				}
+
+				// Catch for missed GSI event, will check if we should actually be seeing map
+				setTimeout(() =>  {
+					fetch(`http://127.0.0.1:${config.browser.ports.static}/doorknock`)
+					.then(resp => resp.json())
+					.then(data => {
+						if (data.activePage != "waiting") {
+							window.location.href = `${data.activePage}.html`
+						}
+					})
+				}, 500)
 			}
 
 			socket.element.addEventListener("connection", event => {

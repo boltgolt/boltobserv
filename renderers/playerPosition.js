@@ -16,10 +16,43 @@ socket.element.addEventListener("players", event => {
 		let playerLabel = global.playerLabels[player.num]
 		let classes = [player.team]
 
-		// Add the classes for dead players and bomb carriers
-		if (!player.alive) classes.push("dead")
-		if (player.bomb) classes.push("bomb")
-		if (player.active) classes.push("active")
+		// Mark dead players with a cross
+		if (player.health <= 0) {
+			classes.push("dead")
+		}
+		else {
+			// Make the bomb carrier orange and and a line around the spectated player
+			if (player.bomb) classes.push("bomb")
+			if (player.active) classes.push("active")
+      if (player.flashed > 31) classes.push("flashed")
+
+			// If drawing muzzle flashes is enabled
+			if (global.config.radar.shooting) {
+				// Go through each weapon the player has
+				for (let weapon in player.ammo) {
+					if (global.playerAmmos[player.num][weapon]) {
+						// They are shooting if there's less ammo in the clip than the packet before
+						if (global.playerAmmos[player.num][weapon] > player.ammo[weapon]) {
+								classes.push("shooting")
+						}
+					}
+				}
+
+				// Save the last ammo stats for the next packet
+				global.playerAmmos[player.num] = player.ammo
+			}
+
+			// If damage indicators are enabled
+			if (global.config.radar.damage) {
+				// If we have less health than last packet we are hurtin'
+				if (player.health < global.playerHealths[player.num]) {
+					classes.push("hurting")
+				}
+
+				// Save the health value for next time
+				global.playerHealths[player.num] = player.health
+			}
+		}
 
 		// Add all classes as a class string
 		let newClasses = classes.join(" ")
@@ -36,7 +69,7 @@ socket.element.addEventListener("players", event => {
 		global.playerPos[player.num].z = player.position.z
 
 		// Set the player alive attribute (used in autozoom)
-		global.playerPos[player.num].alive = player.alive
+		global.playerPos[player.num].alive = player.health > 0
 	}
 })
 
@@ -61,6 +94,6 @@ socket.element.addEventListener("roundend", event => {
 		global.playerDots[num].style.display = "none"
 		global.playerDots[num].style.display = "block"
 		global.playerLabels[num].style.display = "none"
-		global.playerLabels[num].style.display = "block"
+		global.playerLabels[num].style.display = ""
 	}
 })

@@ -27,7 +27,6 @@ process.on("message", data => {
 })
 
 app.get("/", (req, res) => {
-
 	res.sendFile(path.join(__dirname, "html", activePage + ".html"))
 })
 
@@ -38,7 +37,8 @@ function handleCheck(req, res) {
 	res.json({
 		"type": "boltgolt/boltobserv",
 		"version": version,
-		"socket": config.browser.ports.socket
+		"socket": config.browser.ports.socket,
+		"activePage": activePage
 	})
 }
 

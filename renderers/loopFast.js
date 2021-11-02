@@ -6,6 +6,9 @@
 function step() {
 	// Go though every player location buffer
 	for (let num in global.playerBuffers) {
+		// Scale that can be changed by the vertical indicator
+		let scale = global.config.radar.playerDotScale
+
 		// If a new player position is available
 		if (global.playerPos[num].x != null) {
 			// We want to check if the angle value has looped around, so we need a previous value
@@ -32,6 +35,57 @@ function step() {
 
 			// Limit the size of the buffer to the count specified in the config
 			global.playerBuffers[num] = global.playerBuffers[num].slice(0, global.config.radar.playerSmoothing)
+
+			// If the map and config support vertical indicator
+			if (global.mapData.zRange && global.config.vertIndicator && global.config.vertIndicator.type != "none") {
+				// Get the z range from the config
+				let zRange = global.mapData.zRange
+
+				// If the player is in a split, get that z range
+				if (typeof global.playerPos[num].split == "number") {
+					if (global.playerPos[num].split >= 0) {
+						zRange = global.mapData.splits[global.playerPos[num].split].zRange
+					}
+				}
+
+				// Calculate player z-height in the given range on a scale of 0 to 1
+				let perc = Math.abs(global.playerPos[num].z - zRange.min) / Math.abs(zRange.max - zRange.min)
+				if (global.playerPos[num].z < zRange.min) perc = 0
+				perc = Math.min(1, Math.max(0, perc))
+
+				// If the color indicator is enabled
+				if (global.config.vertIndicator.type == "color") {
+					// Get all colors and make them RGB values
+					let bottomColor = global.config.vertIndicator.colorRange[0].join(",")
+					let mediumColor = global.config.vertIndicator.colorRange[1].join(",")
+					let topColor = global.config.vertIndicator.colorRange[2].join(",")
+
+					// By default we show the bottom color
+					let color = bottomColor
+
+					// If we're over half of the range we show the top color
+					if (perc > 0.5) {
+						color = topColor
+						perc = (perc - 0.5)
+					}
+					else {
+						perc = 0.5 - perc
+					}
+
+					// Show the chosen color as a background color
+					document.getElementById("height" + num).style.background = `rgb(${mediumColor})`
+					// Overlay the middle color with a transparency to blend the colors
+					document.getElementById("height" + num).style.boxShadow = `inset 0 0 0 1.5vmin rgba(${color},${perc * 2})`
+				}
+
+				// If the scale indicator is enabled
+				else if (global.config.vertIndicator.type == "scale") {
+					// Scale the dot by height multiplied by the configured delta
+					// scale *= (perc + 0.5) * global.config.vertIndicator.scaleDelta
+					scale *= ((perc - 0.5) / 2 + 1) * global.config.vertIndicator.scaleDelta
+					global.playerLabels[num].style.transform = `scale(${scale}) translate(-50%, 50%)`
+				}
+			}
 		}
 
 		// Take the average of the X, Y and rotation buffers
@@ -45,8 +99,9 @@ function step() {
 		global.playerLabels[num].style.left = bufferPercX + "%"
 		global.playerLabels[num].style.bottom = bufferPercY + "%"
 
+		// Apply the transformations to the dots
 		if (global.playerPos[num].alive) {
-			global.playerDots[num].style.transform = `rotate(${bufferAngle - 45}deg) scale(${global.config.radar.playerDotScale}) translate(-50%, 50%)`
+			global.playerDots[num].style.transform = `rotate(${bufferAngle - 45}deg) scale(${scale}) translate(-50%, 50%)`
 		}
 		else {
 			global.playerDots[num].style.transform = `rotate(0deg) scale(${global.config.radar.playerDotScale}) translate(-50%, 50%)`
