@@ -17,7 +17,7 @@ body {
 	transform: scale(1) translate(0%, 0%);
 
 	will-change: transform;
-	outline: .1vmin solid transparent
+	outline: .1vmin solid transparent;
 	-webkit-backface-visibility: hidden;
 }
 
