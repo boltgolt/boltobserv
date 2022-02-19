@@ -64,8 +64,9 @@ It can even [run in a browser](https://github.com/boltgolt/boltobserv/wiki/Openi
  - Any radar background color, including full transparency
  - Always-on-top and fixed on-screen positioning
  - Player dot z-height indicators, either by color dot or scale
- - Custom OS-level keybinds configurable
+ - [Custom configurable OS-level keybinds](https://github.com/boltgolt/boltobserv/wiki/How-to-use-keybinds)
  - Automatic .cfg file installation
+ - Show radar as an application window, in [the browser](https://github.com/boltgolt/boltobserv/wiki/Opening-radar-in-browser) or [capture it directly in OBS](https://github.com/boltgolt/boltobserv/wiki/How-to-capture-Boltobserv-in-OBS)
 
 
 ## Installation
