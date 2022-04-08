@@ -22,7 +22,7 @@ socket.element.addEventListener("map", event => {
 		mapName = mapName.split("/")[mapName.split("/").length - 1]
 	}
 
-	fetch(window.location.origin + `/maps/${mapName}/meta.json5`)
+	fetch(`../maps/${mapName}/meta.json5`)
 	.then(resp => resp.text())
 	.then(data => {
 		data = data.replace(/^\s*?\/\/.*?$/gm, "")
@@ -37,13 +37,13 @@ socket.element.addEventListener("map", event => {
 		document.getElementById("unknownMap").style.display = "none"
 
 		// Show the radar backdrop
-		document.getElementById("radarBackground").src = `/maps/${mapName}/radar.png`
+		document.getElementById("radarBackground").src = `../maps/${mapName}/radar.png`
 
 		if (global.config.radar.showLogos) {
-			document.getElementById("radarLogos").src = `/maps/${mapName}/overlay_logos.png`
+			document.getElementById("radarLogos").src = `../maps/${mapName}/overlay_logos.png`
 		}
 		if (global.config.radar.showBuyzones != "never") {
-			document.getElementById("radarBuyZones").src = `/maps/${mapName}/overlay_buyzones.png`
+			document.getElementById("radarBuyZones").src = `../maps/${mapName}/overlay_buyzones.png`
 		}
 
 		// Set the map as the current map and in the window title

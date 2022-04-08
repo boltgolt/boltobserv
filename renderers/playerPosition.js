@@ -10,7 +10,7 @@ socket.element.addEventListener("players", event => {
 	if (global.currentMap == "none") return
 
 	// Loop though each player
-	for (let player of data.players) {
+	for (let player of data) {
 		// Get their player element and start building the class
 		let playerDot = global.playerDots[player.num]
 		let playerLabel = global.playerLabels[player.num]
@@ -26,20 +26,11 @@ socket.element.addEventListener("players", event => {
 			if (player.active) classes.push("active")
       if (player.flashed > 31) classes.push("flashed")
 
-			// If drawing muzzle flashes is enabled
+			// // If drawing muzzle flashes is enabled
 			if (global.config.radar.shooting) {
-				// Go through each weapon the player has
-				for (let weapon in player.ammo) {
-					if (global.playerAmmos[player.num][weapon]) {
-						// They are shooting if there's less ammo in the clip than the packet before
-						if (global.playerAmmos[player.num][weapon] > player.ammo[weapon]) {
-								classes.push("shooting")
-						}
-					}
+				if (player.shooting) {
+					classes.push("shooting")
 				}
-
-				// Save the last ammo stats for the next packet
-				global.playerAmmos[player.num] = player.ammo
 			}
 
 			// If damage indicators are enabled

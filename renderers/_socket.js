@@ -7,42 +7,7 @@ let socket = {
 	native: null,
 	connected: false,
 	connect: () =>  {
-		// Check if we're in electron
-		if (navigator.userAgent.toLowerCase().indexOf(" electron/") > -1) {
-			// If we are, we can just import the config directly
-			global.config = require("../loadconfig")
-
-			// Start the websocket and attach the event listeners
-			let websocket = new WebSocket(`ws://127.0.0.1:${global.config.browser.ports.socket}`)
-			attachEvents(websocket)
-		}
-		else {
-			// We need to fetch the doorknock to get the socket port if we're in a browser
-			fetch(window.location.origin + "/doorknock")
-			.then(resp => resp.json())
-			.then(data => {
-				// Start a socket to the port we got from the doorknock
-				let websocket = new WebSocket(`ws://${window.location.hostname}:${data.socket}`)
-				attachEvents(websocket)
-
-				// If we're on the waiting screen with a version element, insert the version we got
-				if (document.getElementById("version") && document.getElementById("version").innerHTML == "") {
-					document.getElementById("version").innerHTML = "version " + data.version
-				}
-
-				// Add a nice line in the console <3
-				console.info(`%cBoltobserv %cv${data.version}%c, at your service ❤ `, "font-weight: bold", "font-weight: bold; color:red", "font-weight: bold", "https://github.com/boltgolt/boltobserv/")
-			})
-			.catch((err) => {
-				console.error(err)
-
-				// If something went wrong in the doorknock, try it again in 25ms
-				socket.connected = false
-				setTimeout(() => {
-					socket.connect()
-				}, 25)
-			})
-		}
+		console.log('running');
 
 		function attachEvents(websocket) {
 			// Called when the socket is started
@@ -84,8 +49,20 @@ let socket = {
 	element: document.createElement("div")
 }
 
-// Start the socket
-socket.connect()
+const serverAddress = 'http://localhost:4400/?client='
+// client can named 'main', 'second' or 'delay'
+const client = 'main'
+
+iosocket = io(`${serverAddress}${client}`)
+
+iosocket.on('connect', () => {
+	socket.connect()
+	iosocket.emit(`subscribe`, `main_OverlayRadar`)
+
+	iosocket.on('main_OverlayRadar', (data) => {
+		translateData(data)
+	})
+})
 
 // On a round indicator packet
 socket.element.addEventListener("round", event => {

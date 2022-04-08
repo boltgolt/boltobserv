@@ -20,21 +20,20 @@ function importScripts() {
 	// Go through all scripts and append them to the body
 	for (let script of hasConfig) {
 		let tag = document.createElement("script")
-		tag.setAttribute("src", "/renderers/" + script)
+		tag.setAttribute("src", "../renderers/" + script)
 		document.body.appendChild(tag)
 	}
 }
 
-socket.element.addEventListener("welcome", event => {
+function triggerWelcome()	{
 	if (hasConfig) return
-	hasConfig = event.data.scripts
-	global.config = event.data.config
+	hasConfig = ['bomb.js', 'loopFast.js', 'loopSlow.js', 'playerPosition.js', 'smokes.js']
 
 	importScripts()
 
 	// Loop through each player dot to apply the scaling config option
 	for (let playerElem of document.getElementsByClassName("player")) {
-		playerElem.style.transform = `scale(${event.data.config.radar.playerDotScale}) translate(-50%, 50%)`
+		playerElem.style.transform = `scale(${global.config.radar.playerDotScale}) translate(-50%, 50%)`
 	}
 
 	for (let labelElement of document.getElementsByClassName("label")) {
@@ -53,18 +52,7 @@ socket.element.addEventListener("welcome", event => {
 	}
 
 	// Do the same for the bomb icon
-	document.getElementById("bomb").style.transform = `scale(${event.data.config.radar.bombDotScale}) translate(-50%, 50%)`
-})
-if(socket.native && socket.native.readyNumber === 1){
-	socket.native.send("requestWelcome");
+	document.getElementById("bomb").style.transform = `scale(${global.config.radar.bombDotScale}) translate(-50%, 50%)`
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-	// If not electron (browser)
-	if (navigator.userAgent.toLowerCase().indexOf(" electron/") <= -1) {
-		// Reload the site when a new HTML page has been rendered
-		socket.element.addEventListener("pageUpdate", event => {
-			location.reload()
-		})
-	}
-})
+triggerWelcome()

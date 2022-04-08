@@ -4,7 +4,98 @@
 
 global = {
 	// Config loaded from disk
-	config: {},
+	config: {
+		// Settings related to remote browser access to the radar
+		"browser": {
+			// Prevents a background from being set in the browser, for OBS capture
+			"transparent": false,
+
+			"ports": {
+				// Serves static files, such as HTML. Use this one in your browser
+				"static": 36364,
+				// Dynamic websocket port, used for live data transport
+				"socket": 36365
+			}
+		},
+
+		// Settings that will change the way the radar will be displayed
+		"radar": {
+			// Hide advisories on the radar
+			"hideAdvisories": true,
+			// Show the buyzones on the map, or only when players can buy
+			// Can either be "never", "buytime" or "always"
+			"showBuyzones": "buytime",
+			// Show Boltobserv and Simple Radar logos
+			"showLogos": false,
+
+			// Show muzzle flashes for players shooting
+			"shooting": true,
+			// Show red indicators on player dots when their health gets lower
+			"damage": true,
+			// Show flashed players in a lighter color
+			"flashes": true,
+
+			// Frames to smooth out player movement
+			"playerSmoothing": 13,
+
+			// Amount of scaling to apply to player dots on the radar
+			// Values above 1 might be blurry
+			"playerDotScale": 0.7,
+			// Same as the above, but for the bomb
+			"bombDotScale": 0.7
+		},
+
+		// Show a vertical indicator on every player dot, indicating how high the player is on the map
+		"vertIndicator": {
+			// Indicator type, can either be "none", "color" or "scale"
+			"type": "none",
+
+			// RGB values for the color indicator, from lowest to highest
+			"colorRange": [[13, 255, 0], [255, 255, 255], [255, 0, 199]],
+			// Controls by how much dots should scale depending on height, works in combination with playerDotScale
+			// 0.5 halves the amount of scaling, 1 keeps it the default, 1.5 makes player dots scale more
+			"scaleDelta": 1
+		},
+
+		// Settings for automatically zooming in on alive players on the map
+		"autozoom": {
+			// Enable or disable autozoom
+			"enable": false,
+
+			// Frames to smooth out zoom movement
+			"smoothing": 32,
+
+			// Percentage of radar space to try to keep as padding between the outermost players and the edge of the radar
+			"padding": 0.3,
+
+			// Only apply autozoom if calculated zoom level would be at least this much
+			// In decimals, where 1.2 would mean 20% more zoomed in than the default radar
+			"minZoom": 1.3
+		},
+
+		// Settings related to the CSGO game
+		"game": {
+			// Seconds of inactivity before considering a connection to the game client as lost
+			// Set to -1 to never timeout
+			"connectionTimout": 30,
+
+			// The port GSI will try to connect to
+			"networkPort": 36363,
+
+			// Tries to detect the CSGO game on the machine and prompts to install the CFG file if it hasn't already
+			"installCfg": true
+		},
+
+		// Settings that should not be used in normal operation, but help to find issues
+		"debug": {
+			// Print the loaded config into the console
+			"printConfig": false,
+
+			// Don't open any electron window, just start the server
+			// Do NOT execute Boltobserv outside a terminal with this enabled, could become a zombie process
+			"terminalOnly": false
+		}
+	},
 	// Effects triggered by key-binds
 	effects: {},
 	mapData: {},
