@@ -12,7 +12,10 @@ function translateData(data) {
 		sendEvent('map', data.map.name)
 	}
 
+	sendEvent('round', data.map.phase)
+
 	let players = []
+	let grenades = []
 
 	for (let playerid in data.players) {
 		let player = data.players[playerid]
@@ -43,8 +46,23 @@ function translateData(data) {
 			}
 		})
 
-		// if (player.gameData.observer_slot == 1) console.log(player);
+		for (let nadeid in player.deployedGrenades) {
+			player.deployedGrenades[nadeid].id = parseInt(nadeid)
+			grenades.push(player.deployedGrenades[nadeid])
+		}
 	}
 
 	sendEvent('players', players)
+
+	let bombPos = data.bomb.position.split(", ")
+
+	sendEvent('bomb', {
+		bomb: data.bomb.state,
+		position: {
+			x: parseFloat(bombPos[0]),
+			y: parseFloat(bombPos[1])
+		}
+	})
+
+	console.log(grenades);
 }

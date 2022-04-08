@@ -36,7 +36,7 @@ global = {
 			"flashes": true,
 
 			// Frames to smooth out player movement
-			"playerSmoothing": 13,
+			"playerSmoothing": 15,
 
 			// Amount of scaling to apply to player dots on the radar
 			// Values above 1 might be blurry
