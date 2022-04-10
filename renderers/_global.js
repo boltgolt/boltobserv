@@ -8,7 +8,7 @@ global = {
 		// Settings related to remote browser access to the radar
 		"browser": {
 			// Prevents a background from being set in the browser, for OBS capture
-			"transparent": false,
+			"transparent": true,
 
 			"ports": {
 				// Serves static files, such as HTML. Use this one in your browser
@@ -36,13 +36,13 @@ global = {
 			"flashes": true,
 
 			// Frames to smooth out player movement
-			"playerSmoothing": 15,
+			"playerSmoothing": 1,
 
 			// Amount of scaling to apply to player dots on the radar
 			// Values above 1 might be blurry
 			"playerDotScale": 0.7,
 			// Same as the above, but for the bomb
-			"bombDotScale": 0.7
+			"bombDotScale": 2
 		},
 
 		// Show a vertical indicator on every player dot, indicating how high the player is on the map

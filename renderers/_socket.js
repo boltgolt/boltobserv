@@ -49,11 +49,10 @@ let socket = {
 	element: document.createElement("div")
 }
 
-const serverAddress = 'http://localhost:4400/?client='
-// client can named 'main', 'second' or 'delay'
-const client = 'main'
+let serverAddress = 'http://localhost:4400/?client=main'
+if (window.location.hash) serverAddress = 'http://' + window.location.hash.substr(1)
 
-iosocket = io(`${serverAddress}${client}`)
+iosocket = io(serverAddress)
 
 iosocket.on('connect', () => {
 	socket.connect()

@@ -31,7 +31,7 @@ function translateData(data) {
 		}
 
 		players.push({
-			team: player.gameData.team,
+			team: player.gameData.teamSide,
 			num: player.gameData.observer_slot,
 			health: player.gameData.state.health,
 			bomb: data.bomb.state == 'carried' && playerid == data.bomb.player,
@@ -54,6 +54,58 @@ function translateData(data) {
 
 	sendEvent('players', players)
 
+	let smokes = []
+	let infernos = []
+	let flashbangs = []
+
+	for (let nade of grenades) {
+		if (nade.type == "smoke" && nade.velocity == "0.00000, 0.00000, 0.00000") {
+			let pos = nade.position.split(", ")
+			smokes.push({
+				id: nade.id,
+				time: nade.effecttime,
+				position: {
+					x: parseFloat(pos[0]),
+					y: parseFloat(pos[1]),
+					z: parseFloat(pos[2])
+				}
+			})
+		}
+		if (nade.type == "flashbang" && parseFloat(nade.lifetime) >= 1.4) {
+			let pos = nade.position.split(", ")
+			flashbangs.push({
+				id: nade.id,
+				position: {
+					x: parseFloat(pos[0]),
+					y: parseFloat(pos[1]),
+					z: parseFloat(pos[2])
+				}
+			})
+		}
+		else if (nade.type == "inferno") {
+			if (nade.flames) {
+				let flamesPos = []
+				let flamesNum = Object.values(nade.flames).length
+				for (var i = 0; i < flamesNum; i++) {
+					flamesPos.push({
+						x: parseFloat(Object.values(nade.flames)[i].split(", ")[0]),
+						y: parseFloat(Object.values(nade.flames)[i].split(", ")[1]),
+						z: parseFloat(Object.values(nade.flames)[i].split(", ")[2]),
+					})
+				}
+				infernos.push({
+					id: nade.id,
+					flamesNum: flamesNum,
+					flamesPosition: flamesPos
+				})
+			}
+		}
+	}
+
+	sendEvent('smokes', smokes)
+	sendEvent('flashbangs', flashbangs)
+	sendEvent('infernos', infernos)
+
 	let bombPos = data.bomb.position.split(", ")
 
 	sendEvent('bomb', {
@@ -63,6 +115,4 @@ function translateData(data) {
 			y: parseFloat(bombPos[1])
 		}
 	})
-
-	console.log(grenades);
 }
