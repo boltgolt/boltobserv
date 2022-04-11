@@ -112,7 +112,8 @@ function translateData(data) {
 		bomb: data.bomb.state,
 		position: {
 			x: parseFloat(bombPos[0]),
-			y: parseFloat(bombPos[1])
+			y: parseFloat(bombPos[1]),
+			z: parseFloat(bombPos[2])
 		}
 	})
 }
