@@ -31,7 +31,7 @@ function translateData(data) {
 		}
 
 		players.push({
-			team: player.gameData.team,
+			team: player.gameData.side,
 			num: player.gameData.observer_slot,
 			health: player.gameData.state.health,
 			bomb: data.bomb.state == 'carried' && playerid == data.bomb.player,
