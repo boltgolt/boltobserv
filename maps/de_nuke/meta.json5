@@ -3,7 +3,7 @@
 		// The version of this meta file
 		"radar": 2,
 		// The object format version this file is using
-		"format": 3
+		"format": 2
 	},
 
 	// The amount of in-game units per pixel of the 1024px radar image
@@ -27,25 +27,7 @@
 			"offset": {
 				"x": 0,
 				"y": -46
-			},
-
-			// The minimum and maximum height a player can be within this split
-			"zRange": {
-				"min": -770,
-				"max": -480
 			}
 		}
-	],
-
-	// Position in which advisories should be placed, in percentages from the bottom left
-	"advisoryPosition": {
-		"x": 20,
-		"y": 30
-	},
-
-	// The minimum and maximum height a player can be on the map
-	"zRange": {
-		"min": -480,
-		"max": -20
-	}
+	]
 }

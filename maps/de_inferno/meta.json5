@@ -1,9 +1,9 @@
 {
 	"version": {
 		// The version of this meta file
-		"radar": 3,
+		"radar": 2,
 		// The object format version this file is using
-		"format": 3
+		"format": 2
 	},
 
 	// The amount of in-game units per pixel of the 1024px radar image
@@ -16,16 +16,5 @@
 	},
 
 	// Contains any special map splits
-	"splits": [],
-
-	// Position in which advisories should be placed, in percentages from the bottom left
-	"advisoryPosition": {
-		"x": 16,
-		"y": 56
-	},
-
-	"zRange": {
-		"min": 73,
-		"max": 310
-	}
+	"splits": []
 }

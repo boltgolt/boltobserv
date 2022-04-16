@@ -31,7 +31,7 @@ function translateData(data) {
 		}
 
 		players.push({
-			team: player.gameData.teamSide,
+			team: player.gameData.team,
 			num: player.gameData.observer_slot,
 			health: player.gameData.state.health,
 			bomb: data.bomb.state == 'carried' && playerid == data.bomb.player,
@@ -48,6 +48,7 @@ function translateData(data) {
 
 		for (let nadeid in player.deployedGrenades) {
 			player.deployedGrenades[nadeid].id = parseInt(nadeid)
+			player.deployedGrenades[nadeid].team = player.gameData.team
 			grenades.push(player.deployedGrenades[nadeid])
 		}
 	}
@@ -57,6 +58,8 @@ function translateData(data) {
 	let smokes = []
 	let infernos = []
 	let flashbangs = []
+	let frags = []
+	let projectiles = []
 
 	for (let nade of grenades) {
 		if (nade.type == "smoke" && nade.velocity == "0.00000, 0.00000, 0.00000") {
@@ -64,6 +67,7 @@ function translateData(data) {
 			smokes.push({
 				id: nade.id,
 				time: nade.effecttime,
+				team: nade.team,
 				position: {
 					x: parseFloat(pos[0]),
 					y: parseFloat(pos[1]),
@@ -71,9 +75,20 @@ function translateData(data) {
 				}
 			})
 		}
-		if (nade.type == "flashbang" && parseFloat(nade.lifetime) >= 1.4) {
+		else if (nade.type == "flashbang" && parseFloat(nade.lifetime) >= 1.4) {
 			let pos = nade.position.split(", ")
 			flashbangs.push({
+				id: nade.id,
+				position: {
+					x: parseFloat(pos[0]),
+					y: parseFloat(pos[1]),
+					z: parseFloat(pos[2])
+				}
+			})
+		}
+		else if (nade.type == "frag" && nade.velocity == "0.00000, 0.00000, 0.00000") {
+			let pos = nade.position.split(", ")
+			frags.push({
 				id: nade.id,
 				position: {
 					x: parseFloat(pos[0]),
@@ -100,11 +115,25 @@ function translateData(data) {
 				})
 			}
 		}
+		else if (nade.type != "decoy") {
+			let pos = nade.position.split(", ")
+			projectiles.push({
+				id: nade.type + nade.id,
+				type: nade.type,
+				team: nade.team,
+				position: {
+					x: parseFloat(pos[0]),
+					y: parseFloat(pos[1]),
+					z: parseFloat(pos[2])
+				}
+			})
+		}
 	}
 
 	sendEvent('smokes', smokes)
 	sendEvent('flashbangs', flashbangs)
 	sendEvent('infernos', infernos)
+	sendEvent('projectiles', projectiles)
 
 	let bombPos = data.bomb.position.split(", ")
 

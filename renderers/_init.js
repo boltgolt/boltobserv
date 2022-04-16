@@ -27,7 +27,7 @@ function importScripts() {
 
 function triggerWelcome()	{
 	if (hasConfig) return
-	hasConfig = ['bomb.js', 'loopFast.js', 'loopSlow.js', 'playerPosition.js', 'smokes.js']
+	hasConfig = ['bomb.js', 'loopFast.js', 'loopSlow.js', 'playerPosition.js', 'smokes.js', 'projectiles.js']
 
 	importScripts()
 

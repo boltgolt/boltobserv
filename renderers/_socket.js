@@ -70,7 +70,7 @@ socket.element.addEventListener("round", event => {
 	// Abort if there's no change in phase
 	if (global.gamePhase == phase) return
 
-	console.log(phase);
+	console.log('New phase:', phase);
 
 	// If the round has ended
 	if ((phase == "freezetime" && global.gamePhase == "over") || (phase == "live" && global.gamePhase == "over")) {

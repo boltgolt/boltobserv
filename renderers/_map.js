@@ -28,23 +28,11 @@ socket.element.addEventListener("map", event => {
 		data = data.replace(/^\s*?\/\/.*?$/gm, "")
 		global.mapData = JSON.parse(data)
 
-		// Check if the map uses the expected meta format
-		if (global.mapData.version.format != 3) {
-			return throwMapError(`Outdated map file for ${mapName}`)
-		}
-
 		// Make sure that the "unknown map" message is turned off for valid maps
 		document.getElementById("unknownMap").style.display = "none"
 
 		// Show the radar backdrop
-		document.getElementById("radarBackground").src = `../maps/${mapName}/radar.png`
-
-		if (global.config.radar.showLogos) {
-			document.getElementById("radarLogos").src = `../maps/${mapName}/overlay_logos.png`
-		}
-		if (global.config.radar.showBuyzones != "never") {
-			document.getElementById("radarBuyZones").src = `../maps/${mapName}/overlay_buyzones.png`
-		}
+		document.getElementById("radarBackground").src = `../maps/${mapName}/radar.webp`
 
 		// Set the map as the current map and in the window title
 		global.currentMap = mapName

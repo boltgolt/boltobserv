@@ -7,9 +7,9 @@ socket.element.addEventListener("smokes", event => {
 	let smokes = event.data
 
 	// Called to show the fade in animation with a delay
-	function fadeIn(smokeElement) {
+	function fadeIn(smokeElement, team) {
 		setTimeout(() => {
-			smokeElement.className = "smokeEntity show"
+			smokeElement.className = "smokeEntity show " + team
 		}, 25)
 	}
 
@@ -30,7 +30,7 @@ socket.element.addEventListener("smokes", event => {
 			// Create a new element
 			smokeElement = document.createElement("div")
 			smokeElement.id = "smoke" + smoke.id
-			smokeElement.className = "smokeEntity hide"
+			smokeElement.className = "smokeEntity hide " + smoke.team
 
 			// Calculate the height and width based on the map resolution
 			smokeElement.style.height = smokeElement.style.width = 290 / global.mapData.resolution / 1024 * 100 + "%"
@@ -39,7 +39,7 @@ socket.element.addEventListener("smokes", event => {
 			document.getElementById("smokes").appendChild(smokeElement)
 
 			// Play the fade in animation
-			fadeIn(smokeElement)
+			fadeIn(smokeElement, smoke.team)
 
 			// Set the location of the smoke
 			smokeElement.style.left = global.positionToPerc(smoke.position, "x") + "%"
@@ -48,13 +48,13 @@ socket.element.addEventListener("smokes", event => {
 
 		// If the smoke has been here for over 15 seconds, ready the smoke element for the fade away
 		// Setting the fading class will set the opacity transition to another value
-		if (smoke.time > 15 && smoke.time <= 16.4 && smokeElement.className != "smokeEntity fading") {
-			smokeElement.className = "smokeEntity fading"
+		if (smoke.time > 15 && smoke.time <= 16.4 && smokeElement.className != "smokeEntity fading " + smoke.team) {
+			smokeElement.className = "smokeEntity fading " + smoke.team
 		}
 
 		// Trigger the fade away
-		if (smoke.time > 16.4 && smokeElement.className != "smokeEntity fading hide") {
-			smokeElement.className = "smokeEntity fading hide"
+		if (smoke.time > 16.4 && smokeElement.className != "smokeEntity fading hide " + smoke.team) {
+			smokeElement.className = "smokeEntity fading hide " + smoke.team
 			remove(smokeElement)
 		}
 	}
