@@ -290,19 +290,18 @@ div.label.dead {
 #flashbangs > div {
 	position: absolute;
 	opacity: .8;
-	background: #FFF;
 	box-sizing: border-box;
 	transform-origin: center;
-	border-radius: 100%;
 	transform: translate(-50%, 50%);
-	clip-path: polygon(15% 8%, 40% 25%, 50% 0%, 60% 25%, 85% 8%, 74% 35%, 100% 36%, 78% 50%, 100% 70%, 72.5% 67%, 77.5% 92.5%, 60% 75%, 50% 100%, 40% 75%, 22.5% 92.5%, 27.5% 67%, 0% 70%, 22% 50%, 0% 36%, 26% 35%);
-	box-shadow: inset 0 0 0vmin 1vmin #E2CBCB, inset 0 0 5vmin 0 #FEA130;
 	transition: opacity 1s, box-shadow .2s;
+	background-image: url('../img/flash.png');
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
 }
 
 #flashbangs > div.full {
 	opacity: .8;
-	box-shadow: inset 0 0 0vmin 1.7vmin #FC9F2D, inset 0 0 5vmin 0 #FEA130;
 }
 
 #flashbangs > div.hide {
