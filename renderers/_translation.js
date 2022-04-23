@@ -38,7 +38,7 @@ function translateData(data) {
 			active: player.observed,
 			flashed: player.gameData.state.flashed,
 			angle: angle,
-			shooting: player.shoot ? true : false,
+			shooting: !!player.shoot,
 			position: {
 				x: parseFloat(pos[0]),
 				y: parseFloat(pos[1]),

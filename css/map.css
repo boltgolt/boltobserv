@@ -31,7 +31,7 @@ body {
 	transition: opacity .4s;
 }
 
-#smokes, #entities, #flashbangs, #projectiles {
+#smokes, #entities, #flashbangs, #trails, #projectiles {
 	position: absolute;
 	height: 100%;
 	width: 100%;
@@ -94,16 +94,16 @@ div.dot::after {
 }
 
 div.dot.CT {
-	background-image: linear-gradient(45deg, #144662, #3E2112), linear-gradient(45deg, #4d4d4d, #004CB3);
+	background-image: linear-gradient(45deg, #144662, #121F3E), linear-gradient(45deg, #4d4d4d, #004CB3);
 }
 
 div.dot.T {
-	background-image: linear-gradient(45deg, #654819, #3E2E12), linear-gradient(45deg, #4d4d4d, #FF5700);
+	background-image: linear-gradient(45deg, #8E621E, #704E19), linear-gradient(45deg, #4d4d4d, #F90);
 }
 
 div.dot.bomb {
 	border-radius: 3vmin 1vmin 3vmin 3vmin;
-	background-image: linear-gradient(45deg, #8E621E, #704E19), linear-gradient(45deg, #4d4d4d, #F90);
+	background-image: linear-gradient(45deg, #654819, #3E2E12), linear-gradient(45deg, #4d4d4d, #FF5700);
 }
 
 div.dot.active {
