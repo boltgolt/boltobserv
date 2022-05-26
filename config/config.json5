@@ -4,7 +4,7 @@
 // without making changes here. This makes your config a lot more portable.
 
 {
-	"_version": "1.0.2",
+	"_version": "1.1.0",
 
 	// Settings related to the Boltobserv window
 	"window": {
@@ -124,7 +124,10 @@
 		"networkPort": 36363,
 
 		// Tries to detect the CSGO game on the machine and prompts to install the CFG file if it hasn't already
-		"installCfg": true
+		"installCfg": true,
+
+		// The hostname for the GSI server to listen on
+		"host": "0.0.0.0"
 	},
 
 	// Settings that should not be used in normal operation, but help to find issues
