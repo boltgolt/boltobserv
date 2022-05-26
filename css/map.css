@@ -206,12 +206,22 @@ div.label.dead {
 	position: absolute;
 	border-radius: 100%;
 	opacity: .8;
-	background: #9F9D9D;
 	box-sizing: border-box;
 	transform-origin: center;
+	background: #9F9D9D;
 	border: #D7D7D7 solid .6vmin;
 	transform: translate(-50%, 50%);
 	transition: opacity .3s;
+}
+
+#smokes > div.CT {
+	background: #678FAA;
+	border: #77C5F6 solid .6vmin;
+}
+
+#smokes > div.T {
+	background: #CCBA7D;
+	border: #F1D369 solid .6vmin;
 }
 
 #smokes > div.hide {

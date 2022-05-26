@@ -75,6 +75,8 @@
 		"damage": true,
 		// Show flashed players in a lighter color
 		"flashes": true,
+		// Give active smokes the color of the team that threw it
+		"smokeColors": true,
 
 		// Frames to smooth out player movement
 		"playerSmoothing": 13,

@@ -1,10 +1,6 @@
 const http = require("http")
 const config = require("./loadconfig")
 
-let oldPhase = false
-let infernosOnMap = []
-let flashbangsOnMap = []
-
 let server = http.createServer(handleRequest)
 
 server.on("error", err => {
@@ -26,11 +22,15 @@ function handleRequest(req, res) {
 		// Append incomming data to body
 		req.on("data", data => body += data)
 
+
 		// On end if packet data
 		req.on("end", () => {
 			// Send back empty response immediatly
 			res.end("")
 
+			// Patch incomming JSON to convert large integers to strings
+			body = body.replace(/"owner": ([0-9]{15,})/g, '"owner": "$1"')
+			// Parse JSON packet
 			let game = JSON.parse(body)
 
 			if (game.provider) {
@@ -128,17 +128,24 @@ function handleRequest(req, res) {
 
 			if (game.grenades) {
 				let smokes = []
-				let nades = []
 				let infernos = []
 				let flashbangs = []
+
 				for (let nadeID in game.grenades) {
 					let nade = game.grenades[nadeID]
 
 					if (nade.type == "smoke" && nade.velocity == "0.00, 0.00, 0.00") {
 						let pos = nade.position.split(", ")
+						let team = ""
+
+						if (game.allplayers[nade.owner.toString()]) {
+							team = game.allplayers[nade.owner.toString()].team
+						}
+
 						smokes.push({
 							id: nadeID,
 							time: nade.effecttime,
+							team: team,
 							position: {
 								x: parseFloat(pos[0]),
 								y: parseFloat(pos[1]),
@@ -146,7 +153,8 @@ function handleRequest(req, res) {
 							}
 						})
 					}
-					if (nade.type == "flashbang" && parseFloat(nade.lifetime) >= 1.4) {
+
+					else if (nade.type == "flashbang" && parseFloat(nade.lifetime) >= 1.4) {
 						let pos = nade.position.split(", ")
 						flashbangs.push({
 							id: nadeID,
@@ -156,45 +164,28 @@ function handleRequest(req, res) {
 								z: parseFloat(pos[2])
 							}
 						})
-						if (flashbangsOnMap.indexOf(nadeID) == -1) {flashbangsOnMap.push(nadeID)}
 					}
-					if (nade.type == "inferno") {
+
+					else if (nade.type == "inferno") {
 						if (!!nade.flames) {
 							let flamesPos = []
 							let flamesNum = Object.values(nade.flames).length
+
 							for (var i = 0; i < flamesNum; i++) {
+								let pos = Object.values(nade.flames)[i].split(", ")
 								flamesPos.push({
-									x: parseFloat(Object.values(nade.flames)[i].split(", ")[0]),
-									y: parseFloat(Object.values(nade.flames)[i].split(", ")[1]),
-									z: parseFloat(Object.values(nade.flames)[i].split(", ")[2]),
+									x: parseFloat(pos[0]),
+									y: parseFloat(pos[1]),
+									z: parseFloat(pos[2])
 								})
 							}
+
 							infernos.push({
 								id: nadeID,
 								flamesNum: flamesNum,
 								flamesPosition: flamesPos
 							})
-							if (infernosOnMap.indexOf(nadeID) == -1 ) {infernosOnMap.push(nadeID)}
 						}
-						else{
-
-						}
-					}
-				}
-				for (let infernoOnMap of infernosOnMap) {
-					if (!game.grenades[infernoOnMap]) {
-						process.send({
-							type: "infernoRemove",
-							data: infernoOnMap
-						})
-					}// check if molotov exist in game
-				}
-				for (let flashbangOnMap of flashbangsOnMap) {
-					if (!game.grenades[flashbangOnMap]) {
-						process.send({
-							type: "flashbangRemove",
-							data: flashbangOnMap
-						})
 					}
 				}
 				process.send({
@@ -216,13 +207,6 @@ function handleRequest(req, res) {
 					type: "round",
 					data: game.round.phase
 				})
-
-				if (oldPhase == "over" && game.round.phase == "freezetime") {
-						infernosOnMap = [] //clear molotov status every round
-					}
-				if (oldPhase != game.round.phase && config.nadeCollection) {
-					oldPhase = game.round.phase
-				}
 			}
 
 			if (game.phase_countdowns) {
