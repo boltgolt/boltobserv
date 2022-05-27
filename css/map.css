@@ -275,6 +275,14 @@ div.label.dead {
 	transition: opacity .3s;
 }
 
+#flashbangs > div.full {
+	opacity: .8;
+}
+
+#flashbangs > div.hide {
+	opacity: 0;
+}
+
 #advisory {
 	position: absolute;
 	width: 14%;

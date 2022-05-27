@@ -29,7 +29,7 @@ function handleRequest(req, res) {
 			res.end("")
 
 			// Patch incomming JSON to convert large integers to strings
-			body = body.replace(/"owner": ([0-9]{15,})/g, '"owner": "$1"')
+			body = body.replace(/"owner": ([0-9]{10,})/g, '"owner": "$1"')
 			// Parse JSON packet
 			let game = JSON.parse(body)
 
@@ -167,7 +167,7 @@ function handleRequest(req, res) {
 					}
 
 					else if (nade.type == "inferno") {
-						if (!!nade.flames) {
+						if (nade.flames) {
 							let flamesPos = []
 							let flamesNum = Object.values(nade.flames).length
 
