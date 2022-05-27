@@ -75,11 +75,16 @@
 		"damage": true,
 		// Show flashed players in a lighter color
 		"flashes": true,
+		// Show flying projectiles on the map
+		"projectiles": true,
+
 		// Give active smokes the color of the team that threw it
 		"smokeColors": true,
 
 		// Frames to smooth out player movement
 		"playerSmoothing": 13,
+		// Frames to smooth out flying projectile movement
+		"projectileSmoothing": 5,
 
 		// Amount of scaling to apply to player dots on the radar
 		// Values above 1 might be blurry

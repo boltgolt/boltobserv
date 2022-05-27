@@ -31,7 +31,7 @@ body {
 	transition: opacity .4s;
 }
 
-#smokes, #entities, #flashbangs {
+#smokes, #entities, #flashbangs, #projectiles, #trails {
 	position: absolute;
 	height: 100%;
 	width: 100%;
@@ -281,6 +281,23 @@ div.label.dead {
 
 #flashbangs > div.hide {
 	opacity: 0;
+}
+
+#trails path {
+	stroke-linejoin: round;
+	fill: none;
+}
+
+#projectiles > div {
+	position: absolute;
+	box-sizing: border-box;
+	transform-origin: center;
+	transform: translate(-50%, 50%);
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+	height: 4vmin;
+	width: 4vmin;
 }
 
 #advisory {

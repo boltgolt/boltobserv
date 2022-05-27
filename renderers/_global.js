@@ -20,6 +20,9 @@ global = {
 	playerAmmos: [],
 	playerHealths: [],
 
+	projectilePos: {},
+	projectileBuffer: {},
+
 	/**
 	 * Convert in-game position units to radar percentages
 	 * @param  {Array}  positionObj In-game position object with X and Y, and an optional Z

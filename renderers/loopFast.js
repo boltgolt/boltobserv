@@ -108,6 +108,23 @@ function step() {
 		}
 	}
 
+	// Go through each active projectile
+	for (let id in global.projectilePos) {
+		// Add the newest location to the start of the buffer
+		global.projectileBuffer[id].unshift(global.projectilePos[id])
+
+		// Limit the size of the buffer to the count specified in the config
+		global.projectileBuffer[id] = global.projectileBuffer[id].slice(0, global.config.radar.projectileSmoothing)
+
+		// Calculate the avarage position over the active buffer
+		let bufferPercX = (global.projectileBuffer[id].reduce((prev, curr) => prev + curr.x, 0) / (global.projectileBuffer[id].length))
+		let bufferPercY = (global.projectileBuffer[id].reduce((prev, curr) => prev + curr.y, 0) / (global.projectileBuffer[id].length))
+
+		// Set the location of the projectile
+		global.projectilePos[id].elem.style.left = bufferPercX + "%"
+		global.projectilePos[id].elem.style.bottom = bufferPercY + "%"
+	}
+
 	// Wait for next repaint
 	window.requestAnimationFrame(step)
 }

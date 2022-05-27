@@ -127,22 +127,24 @@ function handleRequest(req, res) {
 			}
 
 			if (game.grenades) {
-				let smokes = []
-				let infernos = []
-				let flashbangs = []
+				let grenades = {
+					smokes: [],
+					infernos: [],
+					flashbangs: [],
+					projectiles: []
+				}
 
 				for (let nadeID in game.grenades) {
 					let nade = game.grenades[nadeID]
 
-					if (nade.type == "smoke" && nade.velocity == "0.00, 0.00, 0.00") {
+					if (nade.type == "smoke" && nade.velocity == "0.00000, 0.00000, 0.00000") {
 						let pos = nade.position.split(", ")
-						let team = ""
+						let owner = game.allplayers[nade.owner]
 
-						if (game.allplayers[nade.owner.toString()]) {
-							team = game.allplayers[nade.owner.toString()].team
-						}
+						if (!owner) continue
+						let team = owner.team ? owner.team : ""
 
-						smokes.push({
+						grenades.smokes.push({
 							id: nadeID,
 							time: nade.effecttime,
 							team: team,
@@ -156,7 +158,7 @@ function handleRequest(req, res) {
 
 					else if (nade.type == "flashbang" && parseFloat(nade.lifetime) >= 1.4) {
 						let pos = nade.position.split(", ")
-						flashbangs.push({
+						grenades.flashbangs.push({
 							id: nadeID,
 							position: {
 								x: parseFloat(pos[0]),
@@ -180,26 +182,41 @@ function handleRequest(req, res) {
 								})
 							}
 
-							infernos.push({
+							grenades.infernos.push({
 								id: nadeID,
 								flamesNum: flamesNum,
 								flamesPosition: flamesPos
 							})
 						}
 					}
+
+					else if (nade.type != "decoy" && nade.velocity != "0.00000, 0.00000, 0.00000") {
+						let pos = nade.position.split(", ")
+						let owner = game.allplayers[nade.owner]
+
+						if (!owner) continue
+						let team = owner.team ? owner.team : ""
+
+						grenades.projectiles.push({
+							id: nade.type + nadeID,
+							type: nade.type,
+							team: team,
+							position: {
+								x: parseFloat(pos[0]),
+								y: parseFloat(pos[1]),
+								z: parseFloat(pos[2])
+							}
+						})
+					}
 				}
-				process.send({
-					type: "smokes",
-					data: smokes
-				})
-				process.send({
-					type: "infernos",
-					data: infernos
-				})
-				process.send({
-					type: "flashbangs",
-					data: flashbangs
-				})
+
+				// Emit an event for every type of grenade
+				for (let type in grenades) {
+					process.send({
+						type: type,
+						data: grenades[type]
+					})
+				}
 			}
 
 			if (game.round) {
