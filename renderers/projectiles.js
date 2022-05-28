@@ -8,6 +8,7 @@ socket.element.addEventListener("projectiles", event => {
 
 	let projectiles = event.data
 	let activeProjectiles = []
+	let type = global.config.radar.plainProjectiles ? 'hc' : 'img'
 
 	// For each projectile in the packet
 	for (let projectile of projectiles) {
@@ -29,7 +30,7 @@ socket.element.addEventListener("projectiles", event => {
 			projectileElement.id = "projectile" + projectile.id
 			projectileElement.className = projectile.team
 
-			projectileElement.style.backgroundImage = "url('/img/projectile-" + projectile.type + "-" + projectile.team + ".webp')"
+			projectileElement.style.backgroundImage = `url('/img/projectile-${type}-${projectile.type}-${projectile.team}.webp')`
 
 			// Add it to the DOM
 			document.getElementById("projectiles").appendChild(projectileElement)

@@ -80,6 +80,8 @@
 
 		// Give active smokes the color of the team that threw it
 		"smokeColors": true,
+		// Show projectiles as very plain and clear letter combinations
+		"plainProjectiles": true,
 
 		// Frames to smooth out player movement
 		"playerSmoothing": 13,
