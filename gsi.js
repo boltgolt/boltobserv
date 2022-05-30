@@ -137,7 +137,7 @@ function handleRequest(req, res) {
 			for (let nadeID in game.grenades) {
 				let nade = game.grenades[nadeID]
 
-				if (nade.type == "smoke" && nade.velocity == "0.00000, 0.00000, 0.00000") {
+				if (nade.type == "smoke" && nade.velocity == "0.000, 0.000, 0.000") {
 					let pos = nade.position.split(", ")
 					let owner = game.allplayers[nade.owner]
 
@@ -190,7 +190,7 @@ function handleRequest(req, res) {
 					}
 				}
 
-				else if (nade.type != "decoy" && nade.velocity != "0.00000, 0.00000, 0.00000") {
+				else if (nade.type != "decoy" && nade.velocity != "0.000, 0.000, 0.000") {
 					let pos = nade.position.split(", ")
 					let owner = game.allplayers[nade.owner]
 
