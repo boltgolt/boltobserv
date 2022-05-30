@@ -1,15 +1,15 @@
 // Smoke rendering
 //
-// Shows smokes on map an calculates duration.
+// Shows smokes/infernos/flashbangs on map and calculates duration.
 
 // The live position of all smokes
 socket.element.addEventListener("smokes", event => {
 	let smokes = event.data
 
 	// Called to show the fade in animation with a delay
-	function fadeIn(smokeElement) {
+	function fadeIn(smokeElement, team) {
 		setTimeout(() => {
-			smokeElement.className = "smokeEntity show"
+			smokeElement.className = "smokeEntity show " + team
 		}, 25)
 	}
 
@@ -25,12 +25,15 @@ socket.element.addEventListener("smokes", event => {
 		// Get the smoke element
 		let smokeElement = document.getElementById("smoke" + smoke.id)
 
+		let team = "U"
+		if (global.config.radar.smokeColors) team = smoke.team
+
 		// If the element does not exist yet, add it
 		if (!smokeElement) {
 			// Create a new element
 			smokeElement = document.createElement("div")
 			smokeElement.id = "smoke" + smoke.id
-			smokeElement.className = "smokeEntity hide"
+			smokeElement.className = "smokeEntity hide" + team
 
 			// Calculate the height and width based on the map resolution
 			smokeElement.style.height = smokeElement.style.width = 290 / global.mapData.resolution / 1024 * 100 + "%"
@@ -39,7 +42,7 @@ socket.element.addEventListener("smokes", event => {
 			document.getElementById("smokes").appendChild(smokeElement)
 
 			// Play the fade in animation
-			fadeIn(smokeElement)
+			fadeIn(smokeElement, team)
 
 			// Set the location of the smoke
 			smokeElement.style.left = global.positionToPerc(smoke.position, "x") + "%"
@@ -48,13 +51,13 @@ socket.element.addEventListener("smokes", event => {
 
 		// If the smoke has been here for over 15 seconds, ready the smoke element for the fade away
 		// Setting the fading class will set the opacity transition to another value
-		if (smoke.time > 15 && smoke.time <= 16.4 && smokeElement.className != "smokeEntity fading") {
-			smokeElement.className = "smokeEntity fading"
+		if (smoke.time > 15 && smoke.time <= 16.4 && smokeElement.className != "smokeEntity fading " + team) {
+			smokeElement.className = "smokeEntity fading " + team
 		}
 
 		// Trigger the fade away
-		if (smoke.time > 16.4 && smokeElement.className != "smokeEntity fading hide") {
-			smokeElement.className = "smokeEntity fading hide"
+		if (smoke.time > 16.4 && smokeElement.className != "smokeEntity fading hide " + team) {
+			smokeElement.className = "smokeEntity fading hide " + team
 			remove(smokeElement)
 		}
 	}
@@ -63,6 +66,8 @@ socket.element.addEventListener("smokes", event => {
 // The position of all infernos
 socket.element.addEventListener("infernos", event => {
 	let infernos = event.data
+	// List of all infernos that are currently still in the game
+	let activeInfernos = []
 
 	// Go through each inferno
 	for (let inferno of infernos) {
@@ -70,6 +75,9 @@ socket.element.addEventListener("infernos", event => {
 		let infernoElement = document.getElementById("inferno" + inferno.id)
 		let flameElementsStr = ""
 		let flameElement = []
+
+		// Mark inferno as currently active in the game
+		activeInfernos.push("inferno" + inferno.id)
 
 		// If the element does not exist yet, add it
 		if (!infernoElement) {
@@ -100,25 +108,23 @@ socket.element.addEventListener("infernos", event => {
 		// SHow the new inferno elements
 		infernoElement.innerHTML = flameElementsStr
 	}
-})
 
-// Remove inferno when burned out
-socket.element.addEventListener("infernoRemove", event => {
-	if (document.getElementById("inferno" + event.data)) {
-		document.getElementById("inferno" + event.data).style.opacity = 0
+	// Go through inferno elements on the radar
+	for (let infernoElem of document.getElementsByClassName('inferno')) {
+		// If the inferno is on the radar but no longer in the game, fade it out
+		if (!activeInfernos.includes(infernoElem.id)) {
+			infernoElem.style.opacity = 0
+
+			setTimeout(() => {
+				infernoElem.remove()
+			}, 400)
+		}
 	}
 })
 
 // The live position of all flashbangs
 socket.element.addEventListener("flashbangs", event => {
 	let flashbangs = event.data
-
-	// Called to show the fade in animation with a delay
-	function fadeIn(flashbangElement) {
-		setTimeout(() => {
-			flashbangElement.className = "flashbangEntity show"
-		}, 25)
-	}
 
 	// Go through each flashbang
 	for (let flashbang of flashbangs) {
@@ -130,7 +136,7 @@ socket.element.addEventListener("flashbangs", event => {
 			// Create a new element
 			flashbangElement = document.createElement("div")
 			flashbangElement.id = "flashbang" + flashbang.id
-			flashbangElement.className = "flashbangEntity hide"
+			flashbangElement.className = "flashbangEntity"
 
 			// Calculate the height and width based on the map resolution
 			flashbangElement.style.height = flashbangElement.style.width = 290 / global.mapData.resolution / 1024 * 100 + "%"
@@ -138,23 +144,29 @@ socket.element.addEventListener("flashbangs", event => {
 			// Add it to the DOM
 			document.getElementById("flashbangs").appendChild(flashbangElement)
 
-			// Play the fade in animation
-			fadeIn(flashbangElement)
-
 			// Set the location of the flashbang
 			flashbangElement.style.left = global.positionToPerc(flashbang.position, "x") + "%"
 			flashbangElement.style.bottom = global.positionToPerc(flashbang.position, "y") + "%"
+
+			// Play a "pop" animation after adding
+			setTimeout(() => {
+				flashbangElement.className = "flashbangEntity full"
+			}, 100)
+
+			// Fade out slowly
+			setTimeout(() => {
+				flashbangElement.className = "flashbangEntity full hide"
+			}, 1200)
+
+			// Remove element when invisible
+			setTimeout(() => {
+				flashbangElement.remove()
+			}, 2200)
 		}
 	}
 })
 
-socket.element.addEventListener("flashbangRemove", event => {
-	if (document.getElementById("flashbang" + event.data)) {
-		document.getElementById("flashbang" + event.data).style.opacity = 0
-	}
-})
-
-// Clear all smokes and inmernos on round reset
+// Clear all smokes and infernos on round reset
 socket.element.addEventListener("roundend", event => {
 	document.getElementById("smokes").innerHTML = ""
 	document.getElementById("infernos").innerHTML = ""

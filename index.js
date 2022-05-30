@@ -31,6 +31,13 @@ function setActivePage(page, win) {
 	socket.send({
 		type: "pageUpdate"
 	})
+
+	// Make sure no race condition occured
+	setTimeout(() => {
+		socket.send({
+			type: "pageUpdate"
+		})
+	}, 200)
 }
 
 gsi.on("message", (message) => {

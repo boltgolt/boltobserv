@@ -1,25 +1,36 @@
 const http = require("http")
-
 const config = require("./loadconfig")
-const host = "localhost"
 
-let oldPhase = false
-let infernosOnMap = [] //initial molotov status
-let flashbangsOnMap = []
-let server = http.createServer((req, res) => {
+let server = http.createServer(handleRequest)
+
+server.on("error", err => {
+	console.error("GSI server error:", err)
+})
+
+server.listen(config.game.networkPort, config.game.host, () => {
+	console.info(`GSI input expected at http://${config.game.host}:${config.game.networkPort}`)
+})
+
+function handleRequest(req, res) {
 	if (req.method != "POST") {
 		res.writeHead(405)
-		return res.end("Only POST requests are allowed")
+		return res.end("Boltobserv running\nPlease POST GSI data here")
 	}
+
+	// Start with an enpty body
 	let body = ""
+	// Append incomming data to body
+	req.on("data", data => body += data)
 
-	req.on("data", data => {
-		body += data
-	})
 
+	// On end if packet data
 	req.on("end", () => {
+		// Send back empty response immediatly
 		res.end("")
 
+		// Patch incomming JSON to convert large integers to strings
+		body = body.replace(/"owner": ([0-9]{10,})/g, '"owner": "$1"')
+		// Parse JSON packet
 		let game = JSON.parse(body)
 
 		if (game.provider) {
@@ -116,18 +127,27 @@ let server = http.createServer((req, res) => {
 		}
 
 		if (game.grenades) {
-			let smokes = []
-			let nades = []
-			let infernos = []
-			let flashbangs = []
+			let grenades = {
+				smokes: [],
+				infernos: [],
+				flashbangs: [],
+				projectiles: []
+			}
+
 			for (let nadeID in game.grenades) {
 				let nade = game.grenades[nadeID]
 
-				if (nade.type == "smoke" && nade.velocity == "0.00, 0.00, 0.00") {
+				if (nade.type == "smoke" && nade.velocity == "0.000, 0.000, 0.000") {
 					let pos = nade.position.split(", ")
-					smokes.push({
+					let owner = game.allplayers[nade.owner]
+
+					if (!owner) continue
+					let team = owner.team ? owner.team : ""
+
+					grenades.smokes.push({
 						id: nadeID,
 						time: nade.effecttime,
+						team: team,
 						position: {
 							x: parseFloat(pos[0]),
 							y: parseFloat(pos[1]),
@@ -135,9 +155,10 @@ let server = http.createServer((req, res) => {
 						}
 					})
 				}
-				if (nade.type == "flashbang" && parseFloat(nade.lifetime) >= 1.4) {
+
+				else if (nade.type == "flashbang" && parseFloat(nade.lifetime) >= 1.4) {
 					let pos = nade.position.split(", ")
-					flashbangs.push({
+					grenades.flashbangs.push({
 						id: nadeID,
 						position: {
 							x: parseFloat(pos[0]),
@@ -145,59 +166,57 @@ let server = http.createServer((req, res) => {
 							z: parseFloat(pos[2])
 						}
 					})
-					if (flashbangsOnMap.indexOf(nadeID) == -1) {flashbangsOnMap.push(nadeID)}
 				}
-				if (nade.type == "inferno") {
-					if (!!nade.flames) {
+
+				else if (nade.type == "inferno") {
+					if (nade.flames) {
 						let flamesPos = []
 						let flamesNum = Object.values(nade.flames).length
+
 						for (var i = 0; i < flamesNum; i++) {
+							let pos = Object.values(nade.flames)[i].split(", ")
 							flamesPos.push({
-								x: parseFloat(Object.values(nade.flames)[i].split(", ")[0]),
-								y: parseFloat(Object.values(nade.flames)[i].split(", ")[1]),
-								z: parseFloat(Object.values(nade.flames)[i].split(", ")[2]),
+								x: parseFloat(pos[0]),
+								y: parseFloat(pos[1]),
+								z: parseFloat(pos[2])
 							})
 						}
-						infernos.push({
+
+						grenades.infernos.push({
 							id: nadeID,
 							flamesNum: flamesNum,
 							flamesPosition: flamesPos
 						})
-						if (infernosOnMap.indexOf(nadeID) == -1 ) {infernosOnMap.push(nadeID)}
 					}
-					else{
+				}
 
-					}
+				else if (nade.type != "decoy" && nade.velocity != "0.000, 0.000, 0.000") {
+					let pos = nade.position.split(", ")
+					let owner = game.allplayers[nade.owner]
+
+					if (!owner) continue
+					let team = owner.team ? owner.team : ""
+
+					grenades.projectiles.push({
+						id: nade.type + nadeID,
+						type: nade.type,
+						team: team,
+						position: {
+							x: parseFloat(pos[0]),
+							y: parseFloat(pos[1]),
+							z: parseFloat(pos[2])
+						}
+					})
 				}
 			}
-			for (let infernoOnMap of infernosOnMap) {
-				if (!game.grenades[infernoOnMap]) {
-					process.send({
-						type: "infernoRemove",
-						data: infernoOnMap
-					})
-				}// check if molotov exist in game
+
+			// Emit an event for every type of grenade
+			for (let type in grenades) {
+				process.send({
+					type: type,
+					data: grenades[type]
+				})
 			}
-			for (let flashbangOnMap of flashbangsOnMap) {
-				if (!game.grenades[flashbangOnMap]) {
-					process.send({
-						type: "flashbangRemove",
-						data: flashbangOnMap
-					})
-				}
-			}
-			process.send({
-				type: "smokes",
-				data: smokes
-			})
-			process.send({
-				type: "infernos",
-				data: infernos
-			})
-			process.send({
-				type: "flashbangs",
-				data: flashbangs
-			})
 		}
 
 		if (game.round) {
@@ -205,13 +224,6 @@ let server = http.createServer((req, res) => {
 				type: "round",
 				data: game.round.phase
 			})
-
-			if (oldPhase == "over" && game.round.phase == "freezetime") {
-					infernosOnMap = [] //clear molotov status every round
-				}
-			if (oldPhase != game.round.phase && config.nadeCollection) {
-				oldPhase = game.round.phase
-			}
 		}
 
 		if (game.phase_countdowns) {
@@ -238,7 +250,4 @@ let server = http.createServer((req, res) => {
 			})
 		}
 	})
-})
-
-server.listen(config.game.networkPort, host)
-console.info(`GSI input expected at http://${host}:${config.game.networkPort}`)
+}

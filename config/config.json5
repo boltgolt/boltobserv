@@ -4,7 +4,7 @@
 // without making changes here. This makes your config a lot more portable.
 
 {
-	"_version": "1.0.2",
+	"_version": "1.1.0",
 
 	// Settings related to the Boltobserv window
 	"window": {
@@ -75,9 +75,18 @@
 		"damage": true,
 		// Show flashed players in a lighter color
 		"flashes": true,
+		// Show flying projectiles on the map
+		"projectiles": true,
+
+		// Give active smokes the color of the team that threw it
+		"smokeColors": true,
+		// Show projectiles as very plain and clear letter combinations
+		"plainProjectiles": true,
 
 		// Frames to smooth out player movement
 		"playerSmoothing": 13,
+		// Frames to smooth out flying projectile movement
+		"projectileSmoothing": 5,
 
 		// Amount of scaling to apply to player dots on the radar
 		// Values above 1 might be blurry
@@ -124,7 +133,10 @@
 		"networkPort": 36363,
 
 		// Tries to detect the CSGO game on the machine and prompts to install the CFG file if it hasn't already
-		"installCfg": true
+		"installCfg": true,
+
+		// The hostname for the GSI server to listen on
+		"host": "0.0.0.0"
 	},
 
 	// Settings that should not be used in normal operation, but help to find issues

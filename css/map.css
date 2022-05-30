@@ -31,7 +31,7 @@ body {
 	transition: opacity .4s;
 }
 
-#smokes, #entities, #flashbangs {
+#smokes, #entities, #flashbangs, #projectiles, #trails {
 	position: absolute;
 	height: 100%;
 	width: 100%;
@@ -167,7 +167,7 @@ div.label.dead {
 
 #bomb {
 	position: absolute;
-	background-image: url("../img/bomb-dropped.png");
+	background-image: url("../img/bomb-dropped.webp");
 	background-size: contain;
 	height: 2.2vmin;
 	width: 2.2vmin;
@@ -178,12 +178,12 @@ div.label.dead {
 }
 
 #bomb.defused {
-	background-image: url("../img/bomb-defused.png");
+	background-image: url("../img/bomb-defused.webp");
 	filter: drop-shadow(0 0 .4vmin rgba(0, 255, 0, .3));
 }
 
 #bomb.planted {
-	background-image: url("../img/bomb-planted.png");
+	background-image: url("../img/bomb-planted.webp");
 	animation: beep 1s infinite;
 }
 
@@ -206,12 +206,22 @@ div.label.dead {
 	position: absolute;
 	border-radius: 100%;
 	opacity: .8;
-	background: #9F9D9D;
 	box-sizing: border-box;
 	transform-origin: center;
+	background: #9F9D9D;
 	border: #D7D7D7 solid .6vmin;
 	transform: translate(-50%, 50%);
 	transition: opacity .3s;
+}
+
+#smokes > div.CT {
+	background: #678FAA;
+	border: #77C5F6 solid .6vmin;
+}
+
+#smokes > div.T {
+	background: #CCBA7D;
+	border: #F1D369 solid .6vmin;
 }
 
 #smokes > div.hide {
@@ -265,6 +275,31 @@ div.label.dead {
 	transition: opacity .3s;
 }
 
+#flashbangs > div.full {
+	opacity: .8;
+}
+
+#flashbangs > div.hide {
+	opacity: 0;
+}
+
+#trails path {
+	stroke-linejoin: round;
+	fill: none;
+}
+
+#projectiles > div {
+	position: absolute;
+	box-sizing: border-box;
+	transform-origin: center;
+	transform: translate(-50%, 50%);
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center;
+	height: 4vmin;
+	width: 4vmin;
+}
+
 #advisory {
 	position: absolute;
 	width: 14%;
@@ -307,7 +342,7 @@ div.label.dead {
 }
 
 #advisory.planting::before {
-	background-image: url("../img/adv-plant.png");
+	background-image: url("../img/adv-plant.webp");
 }
 
 #advisory.planting {
@@ -316,7 +351,7 @@ div.label.dead {
 }
 
 #advisory.defuse::before {
-	background-image: url("../img/adv-defuse.png");
+	background-image: url("../img/adv-defuse.webp");
 }
 
 #advisory.defuse {
@@ -325,7 +360,7 @@ div.label.dead {
 }
 
 #advisory.solesurvivor::before {
-	background-image: url("../img/adv-solesurvivor.png");
+	background-image: url("../img/adv-solesurvivor.webp");
 }
 
 #advisory.solesurvivor {
