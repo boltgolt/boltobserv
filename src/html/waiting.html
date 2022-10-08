@@ -139,14 +139,17 @@
 
 			// Listen for a GSI packet coming in and update status
 			socket.element.addEventListener("connection", event => {
+				let playername = event.data.player
+				if (!playername) playername = "Observer"
+
 				let connectgame = document.getElementById("connectgame")
 				connectgame.classList.add("connected")
 				connectgame.querySelector("span").innerHTML = "Connected"
-				connectgame.querySelector("div").innerHTML = `<span>${event.data.player}</span> choosing server`
+				connectgame.querySelector("div").innerHTML = `<span>${playername}</span> choosing server`
 
 				document.getElementById("connectgameline").classList.add("connected")
 				document.getElementById("connectbolt").querySelector("div").innerHTML = "Receiving GSI packets"
-				document.getElementById("connectserver").querySelector("div").innerHTML = "Waiting for CSGO to connect"
+				document.getElementById("connectserver").querySelector("div").innerHTML = "Waiting for game to connect"
 			})
 		</script>
 	</body>
