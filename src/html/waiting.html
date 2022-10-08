@@ -93,7 +93,7 @@
 				let version = require("../package.json").version
 				document.getElementById("version").innerHTML = version
 
-				require("https").get("https://raw.githubusercontent.com/boltgolt/boltobserv/master/package.json", (resp) => {
+				require("https").get("https://raw.githubusercontent.com/boltgolt/boltobserv/master/src/package.json", (resp) => {
 					let data = ""
 
 					resp.on("data", (chunk) => {data += chunk})
