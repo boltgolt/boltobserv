@@ -4,7 +4,7 @@
 // without making changes here. This makes your config a lot more portable.
 
 {
-	"_version": "1.1.0",
+	"_version": "1.2.0",
 
 	// Settings related to the Boltobserv window
 	"window": {
@@ -81,7 +81,7 @@
 		// Give active smokes the color of the team that threw it
 		"smokeColors": true,
 		// Show projectiles as very plain and clear letter combinations
-		"plainProjectiles": true,
+		"plainProjectiles": false,
 
 		// Frames to smooth out player movement
 		"playerSmoothing": 13,

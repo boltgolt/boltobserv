@@ -38,7 +38,8 @@ function handleCheck(req, res) {
 		"type": "boltgolt/boltobserv",
 		"version": version,
 		"socket": config.browser.ports.socket,
-		"activePage": activePage
+		"activePage": activePage,
+		"configPath": path.join(__dirname, "config")
 	})
 }
 

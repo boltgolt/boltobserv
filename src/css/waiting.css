@@ -1,0 +1,246 @@
+body {
+	background: rgba(0, 0, 0, .24);
+}
+
+#container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	width: 100vw;
+	max-width: 100vw;
+	height: 100vh;
+	max-height: 100vh;
+	overflow: visible;
+}
+
+#container > div:first-child {
+	background: #222;
+	width: 100%;
+	padding: .8rem 1rem;
+	font-size: .9rem;
+	color: #fff;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: space-between;
+}
+
+#container > div:first-child img {
+	height: 1.6rem;
+	margin-right: .7rem;
+	vertical-align: middle;
+	animation: beat 3s infinite ease-in-out;
+}
+
+@keyframes beat {
+	40% {
+		transform: scale(1) rotate(0deg);
+	}
+
+	60% {
+		transform: scale(1.1) rotate(190deg);
+	}
+
+	70% {
+		transform: scale(1) rotate(180deg);
+	}
+
+	100% {
+		transform: scale(1) rotate(180deg);
+	}
+}
+
+#container > div:first-child a {
+	color: #a647c7;
+	margin-left: .7rem;
+	text-decoration: underline;
+	cursor: pointer;
+	position: relative;
+	z-index: 2000;
+	-webkit-app-region: no-drag;
+}
+
+#container > div:first-child button {
+	color: #000;
+	background: #a647c7;
+}
+
+#container > div:first-child section {
+	position: absolute;
+	width: 80%;
+	left: 10%;
+	top: 4.4rem;
+	text-align: center;
+	font-size: .8rem;
+	cursor: pointer;
+	z-index: 2000;
+	-webkit-app-region: no-drag;
+	color: #333;
+}
+
+#container > div:first-child section a {
+	display: block;
+	color: inherit;
+}
+
+#openconfig {
+	display: none;
+}
+
+#container > div:nth-child(2) {
+	display: flex;
+	align-items: center;
+}
+
+.statusbox {
+	background: #333;
+	color: #AAA;
+	border-radius: .8vmin;
+	text-align: center;
+	font-size: 2.4vmin;
+	width: 20vmin;
+	overflow: hidden;
+}
+
+.statusbox strong {
+	display: block;
+	padding: 2vmin 0 .2vmin;
+}
+
+.statusbox > span {
+	display: block;
+	font-size: 1.8vmin;
+	text-transform: uppercase;
+	padding-bottom: 2vmin;
+}
+
+.statusbox div {
+	font-size: 2vmin;
+	padding: 2vmin;
+	background: #222;
+}
+
+.statusbox div span {
+	display: block;
+	max-width: 100%;
+	text-overflow: ellipsis;
+	overflow: hidden;
+}
+
+.statusbox.connected {
+	color: #fff;
+	background: #a647c7;
+}
+
+.statusbox.connected div {
+	color: #fff;
+	background: #7E3498;
+}
+
+.statusline {
+	color: #333;
+	width: 6vmin;
+	padding-bottom: .4vmin;
+	text-align: center;
+	font-size: 6vmin;
+	font-weight: bold;
+}
+
+.statusline.connected {
+	color: #a647c7;
+}
+
+#cfgs {
+	width: 100vw;
+	box-sizing: border-box;
+	padding: 1rem;
+	cursor: default;
+	font-size: .8rem;
+}
+
+#cfgs > div {
+	display: flex;
+	flex-direction: row;
+	background: #a647c7;
+	padding: .6rem .8rem;
+	margin-bottom: .2rem;
+	line-height: 1.2rem;
+	width: 100%;
+	box-sizing: border-box;
+	max-width: 65rem;
+	margin: auto;
+	border-radius: .1rem;
+}
+
+#cfgs span {
+	font-weight: bold;
+}
+
+#cfgs small {
+	font-size: inherit;
+	flex: 1;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	min-width: 0;
+	padding: 0 .4rem 0 .3rem;
+}
+
+button {
+	background: #FFF;
+	border: 0;
+	color: #a647c7;
+	padding: .2rem 1rem;
+	font-weight: bold;
+	cursor: pointer;
+	position: relative;
+	z-index: 2000;
+	-webkit-app-region: no-drag;
+	text-align: center;
+	text-transform: uppercase;
+	border-radius: .1rem;
+	transform: scale(1);
+	transition: transform .15s;
+}
+
+button:hover {
+	transform: scale(1.05);
+}
+
+button:active {
+	transform: scale(0.98);
+}
+
+button:focus {
+	outline: none;
+}
+
+#noconnection {
+	font-size: 4vmin;
+	text-align: center;
+	box-sizing: border-box;
+	padding: 5vmin 10vmin 5vmin 10vmin;
+}
+
+#dragarea {
+	max-width: initial;
+	max-height: initial;
+}
+
+@media (max-width: 500px) {
+	#container > div:first-child a,
+	#container > div:first-child button,
+	#container > div:first-child section {
+		display: none !important;
+	}
+
+	#cfgs {
+		visibility: hidden;
+	}
+}
+
+@media (max-height: 350px) {
+	#container > div:first-child section {
+		display: none;
+	}
+}
