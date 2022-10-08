@@ -2,7 +2,6 @@ const path = require("path")
 const config = require("./loadconfig")
 
 const detectcfg = require("./detectcfg")
-
 if (config.game.installCfg && !config.debug.terminalOnly) detectcfg.search()
 
 module.exports = {

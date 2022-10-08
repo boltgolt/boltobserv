@@ -87,7 +87,7 @@
 
 				function install(elem, path) {
 					localSocket.send("install", path)
-					elem.parentNode.parentNode.parentNode.removeChild(elem.parentNode.parentNode)
+					elem.parentNode.parentNode.removeChild(elem.parentNode)
 				}
 
 				let version = require("../package.json").version

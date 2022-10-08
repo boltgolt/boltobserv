@@ -50,7 +50,7 @@ let socket = {
 				connectbox.classList.add("connected")
 				connectbox.querySelector("span").innerHTML = "Connected"
 				connectbox.querySelector("div").innerHTML = "Listening and ready"
-				document.getElementById("connectgame").querySelector("div").innerHTML = "Not sending GSI packets yet"
+				document.getElementById("connectgame").querySelector("div").innerHTML = "Not sending GSI packets"
 			}
 		})
 
