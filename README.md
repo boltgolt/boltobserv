@@ -88,7 +88,7 @@ Thanks to [PGL](https://www.pglesports.com/) and [Inygon](https://inygon.com/) f
 [![PGL](https://i.imgur.com/0LaJULP.png)](https://www.pglesports.com/)
 [![Inygon](https://i.imgur.com/bQjz86D.png)](https://inygon.com/)
 
-If you want to support development on specific functionality, don't hesitate to contact me. Supporting me through [Github Sponsors](https://github.com/sponsors/boltgolt/) is also very appreciated.
+If you want to support development on specific functionality, don't hesitate to contact me. Supporting me by [sending a small donation](https://ko-fi.com/boltgolt) is also very appreciated.
 
 ## License
 
