@@ -14,16 +14,49 @@
 	<body>
 		<div id="dragarea"></div>
 
-		<div id="game">
-			<div id="cfgs"></div>
+		<div id="container">
 
-			<img src="/img/icon.svg">
-			<div id="noconnection">
-				Waiting for CSGO to connect...
+			<div id="topbar">
+				<span>
+					<img src="/img/icon.svg">
+					Boltobserv
+					<span id="version"></span>
+				</span>
+				<button id="openconfig">open config</button>
+
+				<section id="donate">
+					Has Boltobserv been useful to you?
+					<a href="https://ko-fi.com/boltgolt" target="_blank">Please consider donating towards continued development, thank you!</a>
+				</section>
 			</div>
+
+			<div>
+				<div id="connectbolt" class="statusbox">
+					<strong>Boltobserv</strong>
+					<span>Disconnected</span>
+					<div>Connecting to socket</div>
+				</div>
+
+				<div id="connectgameline" class="statusline">&rsaquo;</div>
+
+				<div id="connectgame" class="statusbox">
+					<strong>CSGO</strong>
+					<span>Disconnected</span>
+					<div>Still waiting for Boltobserv</div>
+				</div>
+
+				<div id="connectserverline" class="statusline">&rsaquo;</div>
+
+				<div id="connectserver" class="statusbox">
+					<strong>Match server</strong>
+					<span>Disconnected</span>
+					<div>Waiting for CSGO to connect first</div>
+				</div>
+			</div>
+
+			<div id="cfgs"></div>
 		</div>
 
-		<span id="version"></span>
 
 		<script>
 			if (navigator.userAgent.toLowerCase().indexOf(" electron/") > -1) {
@@ -58,7 +91,7 @@
 				}
 
 				let version = require("../package.json").version
-				document.getElementById("version").innerHTML = "Running version " + version
+				document.getElementById("version").innerHTML = version
 
 				require("https").get("https://raw.githubusercontent.com/boltgolt/boltobserv/master/package.json", (resp) => {
 					let data = ""
@@ -68,7 +101,7 @@
 						let newVersion = JSON.parse(data).version
 
 						if (version != newVersion) {
-							document.getElementById("version").innerHTML += ` - <small onclick="releases()">Version ${newVersion} is available on github!</small>`
+							document.getElementById("version").innerHTML += ` <a onclick="releases()">Version ${newVersion} available!</a>`
 						}
 					})
 				})
@@ -78,27 +111,42 @@
 				}
 
 				// Catch for missed GSI event, will check if we should actually be seeing map
-				setTimeout(() =>  {
-					fetch(`http://127.0.0.1:${config.browser.ports.static}/doorknock`)
+				setInterval(() =>  {
+					fetch(`http://127.0.0.1:${global.config.browser.ports.static}/doorknock`)
 					.then(resp => resp.json())
 					.then(data => {
 						if (data.activePage != "waiting") {
 							window.location.href = `${data.activePage}.html`
 						}
+
+						let openButton = document.getElementById("openconfig")
+						if (data.configPath && openButton.style.display != "block") {
+							openButton.style.display = "block"
+							openButton.addEventListener("click", () => {
+								electron.shell.openPath(data.configPath)
+							})
+						}
 					})
 				}, 500)
+
+				// If electron, make the donate button open a browser tab and not a window
+				document.getElementById("donate").querySelector("a").href = ""
+				document.getElementById("donate").querySelector("a").target = ""
+				document.getElementById("donate").addEventListener("click", () => {
+					electron.shell.openExternal("https://ko-fi.com/boltgolt")
+				})
 			}
 
+			// Listen for a GSI packet coming in and update status
 			socket.element.addEventListener("connection", event => {
-				let output = "CSGO instance "
+				let connectgame = document.getElementById("connectgame")
+				connectgame.classList.add("connected")
+				connectgame.querySelector("span").innerHTML = "Connected"
+				connectgame.querySelector("div").innerHTML = `<span>${event.data.player}</span> choosing server`
 
-				if (event.data.player) {
-					output += `from ${event.data.player} `
-				}
-
-				output += "connected. <br /> Waiting for map..."
-
-				document.getElementById("noconnection").innerHTML = output
+				document.getElementById("connectgameline").classList.add("connected")
+				document.getElementById("connectbolt").querySelector("div").innerHTML = "Receiving GSI packets"
+				document.getElementById("connectserver").querySelector("div").innerHTML = "Waiting for CSGO to connect"
 			})
 		</script>
 	</body>
