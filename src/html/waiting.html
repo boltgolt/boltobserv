@@ -26,7 +26,8 @@
 
 				<section id="donate">
 					Has Boltobserv been useful to you?
-					<a href="https://ko-fi.com/boltgolt" target="_blank">Please consider donating towards continued development, thank you!</a>
+					<a href="https://ko-fi.com/boltgolt" target="_blank">Please consider donating towards continued development at ko-fi.com/boltgolt</a>
+					Thank you!
 				</section>
 			</div>
 
@@ -132,7 +133,8 @@
 				// If electron, make the donate button open a browser tab and not a window
 				document.getElementById("donate").querySelector("a").href = ""
 				document.getElementById("donate").querySelector("a").target = ""
-				document.getElementById("donate").addEventListener("click", () => {
+				document.getElementById("donate").addEventListener("click", event => {
+					event.preventDefault()
 					electron.shell.openExternal("https://ko-fi.com/boltgolt")
 				})
 			}

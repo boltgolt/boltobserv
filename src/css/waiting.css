@@ -67,15 +67,15 @@ body {
 
 #container > div:first-child section {
 	position: absolute;
-	width: 80%;
-	left: 10%;
+	width: 90%;
+	left: 5%;
 	top: 4.4rem;
 	text-align: center;
 	font-size: .8rem;
 	cursor: pointer;
 	z-index: 2000;
 	-webkit-app-region: no-drag;
-	color: #333;
+	color: #555;
 }
 
 #container > div:first-child section a {

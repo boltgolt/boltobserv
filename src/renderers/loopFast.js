@@ -81,9 +81,13 @@ function step() {
 				// If the scale indicator is enabled
 				else if (global.config.vertIndicator.type == "scale") {
 					// Scale the dot by height multiplied by the configured delta
-					// scale *= (perc + 0.5) * global.config.vertIndicator.scaleDelta
 					scale *= ((perc - 0.5) / 2 + 1) * global.config.vertIndicator.scaleDelta
 					global.playerLabels[num].style.transform = `scale(${scale}) translate(-50%, 50%)`
+				}
+
+				if (global.config.radar.highestPlayerOnTop) {
+					global.playerDots[num].style.zIndex = Math.round(global.playerPos[num].z + 2500)
+					global.playerLabels[num].style.zIndex = Math.round(global.playerPos[num].z + 2500)
 				}
 			}
 		}

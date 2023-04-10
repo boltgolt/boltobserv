@@ -99,7 +99,7 @@ div.dot.bomb {
 }
 
 div.dot.active {
-	z-index: 16;
+	z-index: 7000 !important;
 	box-shadow: 0 0 0 .2vmin rgba(0, 0, 0, .9), 0 0 0 1vmin rgba(255, 255, 255, .9), 0 0 2.4vmin 1.2vmin rgba(255, 255, 255, .2);
 }
 
@@ -125,7 +125,7 @@ div.dot.dead {
 	text-shadow: none;
 	border-radius: 0;
 	clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
-	z-index: 13;
+	z-index: 13 !important;
 	filter: none;
 }
 
@@ -157,7 +157,7 @@ div.label {
 }
 
 div.label.active {
-	z-index: 16;
+	z-index: 7000 !important;
 	font-size: 5vmin;
 }
 
