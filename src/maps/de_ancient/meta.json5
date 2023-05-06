@@ -1,18 +1,18 @@
 {
 	"version": {
 		// The version of this meta file
-		"radar": 1,
+		"radar": 2,
 		// The object format version this file is using
 		"format": 3
 	},
 
 	// The amount of in-game units per pixel of the 1024px radar image
-	"resolution": 4.19,
+	"resolution": 4.26,
 
 	// How many in-game units is the origin (0,0) of the map from the bottom left point of the radar
 	"offset": {
-		"x": 2520,
-		"y": 2660
+		"x": 2590,
+		"y": 2520
 	},
 
 	// Contains any special map splits
