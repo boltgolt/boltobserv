@@ -14,7 +14,7 @@
   "author": "Boltgolt <hey@boltgolt.nl> (https://boltgolt.nl)",
   "license": "GPL-3.0",
   "devDependencies": {
-    "electron": "^15.3.0",
+    "electron": "^22.3.21",
     "electron-packager": "^15.5.2"
   },
   "dependencies": {
