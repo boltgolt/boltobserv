@@ -9,7 +9,7 @@ module.exports = {
 		if (result && result.game && fs.existsSync(result.game.path)) {
 			console.info("Found installation in", result.game.path)
 
-			let configPath = path.join(result.game.path, "csgo", "cfg", "gamestate_integration_boltobserv.cfg")
+			let configPath = path.join(result.game.path, "game", "core", "cfg", "gamestate_integration_boltobserv.cfg")
 
 			if (fs.existsSync(configPath)) {
 				let foundHeader = fs.readFileSync(configPath, "utf8").split("\n")[0]
@@ -33,7 +33,7 @@ module.exports = {
 
 	install: (target) => {
 		let template = path.join(__dirname, "gamestate_integration_boltobserv.cfg")
-		let dest = path.join(target, "csgo", "cfg", "gamestate_integration_boltobserv.cfg")
+		let dest = path.join(target, "game", "core", "cfg", "gamestate_integration_boltobserv.cfg")
 		fs.copyFileSync(template, dest)
 
 		console.info("Installed config file as", dest)
