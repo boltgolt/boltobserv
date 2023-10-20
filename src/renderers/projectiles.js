@@ -31,6 +31,7 @@ socket.element.addEventListener("projectiles", event => {
 			projectileElement.className = projectile.team
 
 			projectileElement.style.backgroundImage = `url('/img/projectile-${type}-${projectile.type}-${projectile.team}.webp')`
+			if (projectile.type == 'frag') projectileElement.dataset.isfrag = 'true'
 
 			// Add it to the DOM
 			document.getElementById("projectiles").appendChild(projectileElement)
@@ -60,8 +61,8 @@ socket.element.addEventListener("projectiles", event => {
 			// True if more than two packets are known and nade stationary
 			let isStationary = trailParts.length > 6
 
-			// Go through each nade position from last to newest, max last 20
-			for (let i = trailParts.length - 1; i > 2 && trailParts.length - i < 20 * 3; i -= 3) {
+			// Go through each nade position from last to newest, max last 5
+			for (let i = trailParts.length - 1; i > 2 && trailParts.length - i < 5 * 3; i -= 3) {
 				// If the nade moved in this frame, it is not stationary
 				if (trailParts[i] != trailParts[i - 3] || trailParts[i - 1] != trailParts[i - 4]) {
 					isStationary = false
@@ -71,8 +72,9 @@ socket.element.addEventListener("projectiles", event => {
 
 			// Hide nade an tail if nade is stationary
 			if (isStationary) {
-				document.getElementById(projectileID).style.opacity = 0
-				document.getElementById("trail" + projectileID).style.opacity = 0
+				triggerSmokeGap(projectileElement)
+				projectileElement.style.opacity = 0
+				trailElement.style.opacity = 0
 			}
 		}
 
@@ -101,12 +103,31 @@ socket.element.addEventListener("projectiles", event => {
 			let trailElement = document.getElementById("trail" + projectileElement.id)
 			if (trailElement) document.getElementById("trails").removeChild(trailElement)
 
+			// If a frag is no longer on the map it has exploded
+			if (projectileElement.dataset.isfrag == 'true') {
+				triggerSmokeGap(projectileElement)
+			}
+
 			// Clear the old position and buffers
 			delete global.projectilePos[projectileElement.id]
 			delete global.projectileBuffer[projectileElement.id]
 		}
 	}
 })
+
+// Create event to show gap in smoke after frag nade
+function triggerSmokeGap(projectileElement) {
+	let exploEvent = new Event("explosion")
+	exploEvent.data = {
+		id: projectileElement.id,
+		position: {
+			x: parseFloat(projectileElement.style.left.slice(0, -1)),
+			y: parseFloat(projectileElement.style.bottom.slice(0, -1))
+		}
+	}
+
+	socket.element.dispatchEvent(exploEvent)
+}
 
 // Clear all projectiles on round reset
 socket.element.addEventListener("roundend", event => {

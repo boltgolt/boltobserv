@@ -137,30 +137,23 @@ function handleRequest(req, res) {
 			for (let nadeID in game.grenades) {
 				let nade = game.grenades[nadeID]
 
-				if (nade.type == "smoke") {
-					let vel = nade.velocity.split(", ")
+				if (nade.type == "smoke" && nade.effecttime != '0.000') {
+					let pos = nade.position.split(", ")
+					let owner = game.allplayers[nade.owner]
 
-					// BUG: CS2 does not always set velocity to 0.000, so deploy early
-					if (Math.abs(parseFloat(vel[0])) + Math.abs(parseFloat(vel[1])) < 14 && (parseFloat(vel[2]) < 0.1 && parseFloat(vel[2]) > -4.5)) {
-						if (nade.velocity != "0.000, 0.000, 0.000") console.log(nade.velocity)
+					if (!owner) continue
+					let team = owner.team ? owner.team : ""
 
-						let pos = nade.position.split(", ")
-						let owner = game.allplayers[nade.owner]
-
-						if (!owner) continue
-						let team = owner.team ? owner.team : ""
-
-						grenades.smokes.push({
-							id: nadeID,
-							time: parseFloat(nade.effecttime),
-							team: team,
-							position: {
-								x: parseFloat(pos[0]),
-								y: parseFloat(pos[1]),
-								z: parseFloat(pos[2])
-							}
-						})
-					}
+					grenades.smokes.push({
+						id: nadeID,
+						time: parseFloat(nade.effecttime),
+						team: team,
+						position: {
+							x: parseFloat(pos[0]),
+							y: parseFloat(pos[1]),
+							z: parseFloat(pos[2])
+						}
+					})
 				}
 
 				if (nade.type == "flashbang" && parseFloat(nade.lifetime) >= 1.4) {
@@ -198,7 +191,7 @@ function handleRequest(req, res) {
 					}
 				}
 
-				else if (nade.type != "decoy" && nade.velocity != "0.000, 0.000, 0.000") {
+				else if (nade.type != "decoy" && nade.velocity != "0.000, 0.000, 0.000" && (nade.type != "smoke" || nade.effecttime == '0.000')) {
 					let pos = nade.position.split(", ")
 					let owner = game.allplayers[nade.owner]
 
