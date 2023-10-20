@@ -52,6 +52,12 @@ socket.element.addEventListener("players", event => {
 				// Save the health value for next time
 				global.playerHealths[player.num] = player.health
 			}
+
+			// Save the position so the main loop can interpolate it
+			global.playerPos[player.num].x = global.positionToPerc(player.position, "x", player.num)
+			global.playerPos[player.num].y = global.positionToPerc(player.position, "y", player.num)
+			global.playerPos[player.num].a = player.angle
+			global.playerPos[player.num].z = player.position.z
 		}
 
 		// Add all classes as a class string
@@ -61,12 +67,6 @@ socket.element.addEventListener("players", event => {
 		// This prevents unnecessary className updates and CSS recalculations
 		if (playerDot.className != "dot " + newClasses) playerDot.className = "dot " + newClasses
 		if (playerLabel.className != "label " + newClasses) playerLabel.className = "label " + newClasses
-
-		// Save the position so the main loop can interpolate it
-		global.playerPos[player.num].x = global.positionToPerc(player.position, "x", player.num)
-		global.playerPos[player.num].y = global.positionToPerc(player.position, "y", player.num)
-		global.playerPos[player.num].a = player.angle
-		global.playerPos[player.num].z = player.position.z
 
 		// Set the player alive attribute (used in autozoom)
 		global.playerPos[player.num].alive = player.health > 0

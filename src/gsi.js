@@ -137,26 +137,33 @@ function handleRequest(req, res) {
 			for (let nadeID in game.grenades) {
 				let nade = game.grenades[nadeID]
 
-				if (nade.type == "smoke" && nade.velocity == "0.000, 0.000, 0.000") {
-					let pos = nade.position.split(", ")
-					let owner = game.allplayers[nade.owner]
+				if (nade.type == "smoke") {
+					let vel = nade.velocity.split(", ")
 
-					if (!owner) continue
-					let team = owner.team ? owner.team : ""
+					// BUG: CS2 does not always set velocity to 0.000, so deploy early
+					if (Math.abs(parseFloat(vel[0])) + Math.abs(parseFloat(vel[1])) < 14 && (parseFloat(vel[2]) < 0.1 && parseFloat(vel[2]) > -4.5)) {
+						if (nade.velocity != "0.000, 0.000, 0.000") console.log(nade.velocity)
 
-					grenades.smokes.push({
-						id: nadeID,
-						time: nade.effecttime,
-						team: team,
-						position: {
-							x: parseFloat(pos[0]),
-							y: parseFloat(pos[1]),
-							z: parseFloat(pos[2])
-						}
-					})
+						let pos = nade.position.split(", ")
+						let owner = game.allplayers[nade.owner]
+
+						if (!owner) continue
+						let team = owner.team ? owner.team : ""
+
+						grenades.smokes.push({
+							id: nadeID,
+							time: parseFloat(nade.effecttime),
+							team: team,
+							position: {
+								x: parseFloat(pos[0]),
+								y: parseFloat(pos[1]),
+								z: parseFloat(pos[2])
+							}
+						})
+					}
 				}
 
-				else if (nade.type == "flashbang" && parseFloat(nade.lifetime) >= 1.4) {
+				if (nade.type == "flashbang" && parseFloat(nade.lifetime) >= 1.4) {
 					let pos = nade.position.split(", ")
 					grenades.flashbangs.push({
 						id: nadeID,
@@ -176,9 +183,10 @@ function handleRequest(req, res) {
 						for (var i = 0; i < flamesNum; i++) {
 							let pos = Object.values(nade.flames)[i].split(", ")
 							flamesPos.push({
-								x: parseFloat(pos[0]),
-								y: parseFloat(pos[1]),
-								z: parseFloat(pos[2])
+								// BUG: CS2 has the coords doubled for some reason
+								x: parseFloat(pos[0]) / 2,
+								y: parseFloat(pos[1]) / 2,
+								z: parseFloat(pos[2]) / 2
 							})
 						}
 
