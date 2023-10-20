@@ -206,22 +206,33 @@ div.label.dead {
 	position: absolute;
 	border-radius: 100%;
 	opacity: .8;
-	box-sizing: border-box;
 	transform-origin: center;
 	background: #9F9D9D;
-	border: #D7D7D7 solid .6vmin;
+	overflow: hidden;
+	border-color: #D7D7D7;
 	transform: translate(-50%, 50%);
 	transition: opacity .3s;
 }
 
+#smokes > div::before {
+	content: '';
+	display: block;
+	height: 100%;
+	width: 100%;
+	border: transparent solid .6vmin;
+	border-color: inherit;
+	border-radius: 100%;
+	box-sizing: border-box;
+}
+
 #smokes > div.CT {
 	background: #678FAA;
-	border: #77C5F6 solid .6vmin;
+	border-color: #77C5F6;
 }
 
 #smokes > div.T {
 	background: #CCBA7D;
-	border: #F1D369 solid .6vmin;
+	border-color: #F1D369;
 }
 
 #smokes > div.hide {
@@ -230,6 +241,27 @@ div.label.dead {
 
 #smokes > div.fading {
 	transition: opacity 1.8s;
+}
+
+#smokes > div > div {
+	height: 100%;
+	width: 100%;
+	border: transparent solid .6vmin;
+	border-color: inherit;
+	border-radius: 100%;
+	background-color: #364254;
+	transform: translate(-0.6vmin, 0.6vmin);
+	position: absolute;
+	opacity: 1;
+	transition: background-color .15s, opacity .8s;
+}
+
+#smokes > div > div.flash {
+	background-color: #fff;
+}
+
+#smokes > div > div.fade {
+	opacity: 0;
 }
 
 #infernos {

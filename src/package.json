@@ -1,6 +1,6 @@
 {
   "name": "boltobserv",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "External radar for CSGO observers",
   "main": "index.js",
   "homepage": "https://github.com/boltgolt/boltobserv/",
@@ -14,12 +14,12 @@
   "author": "Boltgolt <hey@boltgolt.nl> (https://boltgolt.nl)",
   "license": "GPL-3.0",
   "devDependencies": {
-    "electron": "^15.3.0",
+    "electron": "^22.3.25",
     "electron-packager": "^15.5.2"
   },
   "dependencies": {
     "express": "^4.18.2",
-    "json5": "^2.2.0",
+    "json5": "^2.2.3",
     "steam-game-path": "^2.2.0",
     "ws": "^7.5.9"
   }

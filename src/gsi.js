@@ -137,7 +137,7 @@ function handleRequest(req, res) {
 			for (let nadeID in game.grenades) {
 				let nade = game.grenades[nadeID]
 
-				if (nade.type == "smoke" && nade.velocity == "0.000, 0.000, 0.000") {
+				if (nade.type == "smoke" && nade.effecttime != '0.000') {
 					let pos = nade.position.split(", ")
 					let owner = game.allplayers[nade.owner]
 
@@ -146,7 +146,7 @@ function handleRequest(req, res) {
 
 					grenades.smokes.push({
 						id: nadeID,
-						time: nade.effecttime,
+						time: parseFloat(nade.effecttime),
 						team: team,
 						position: {
 							x: parseFloat(pos[0]),
@@ -156,7 +156,7 @@ function handleRequest(req, res) {
 					})
 				}
 
-				else if (nade.type == "flashbang" && parseFloat(nade.lifetime) >= 1.4) {
+				if (nade.type == "flashbang" && parseFloat(nade.lifetime) >= 1.4) {
 					let pos = nade.position.split(", ")
 					grenades.flashbangs.push({
 						id: nadeID,
@@ -176,9 +176,10 @@ function handleRequest(req, res) {
 						for (var i = 0; i < flamesNum; i++) {
 							let pos = Object.values(nade.flames)[i].split(", ")
 							flamesPos.push({
-								x: parseFloat(pos[0]),
-								y: parseFloat(pos[1]),
-								z: parseFloat(pos[2])
+								// BUG: CS2 has the coords doubled for some reason
+								x: parseFloat(pos[0]) / 2,
+								y: parseFloat(pos[1]) / 2,
+								z: parseFloat(pos[2]) / 2
 							})
 						}
 
@@ -190,7 +191,7 @@ function handleRequest(req, res) {
 					}
 				}
 
-				else if (nade.type != "decoy" && nade.velocity != "0.000, 0.000, 0.000") {
+				else if (nade.type != "decoy" && nade.velocity != "0.000, 0.000, 0.000" && (nade.type != "smoke" || nade.effecttime == '0.000')) {
 					let pos = nade.position.split(", ")
 					let owner = game.allplayers[nade.owner]
 

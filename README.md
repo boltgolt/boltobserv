@@ -1,7 +1,7 @@
 <div align="center">
 	<img src="https://i.imgur.com/VxEv6oI.png" alt="Boltobserv logo" /><br /><br />
-	<strong>Giving CSGO observers a powerful new radar.</strong><br />
-	<span>Easy to read, infinitely resizeable, and with tons of features the default CSGO radar does not have.</span><br /><br />
+	<strong>Giving CS observers a powerful new radar.</strong><br />
+	<span>Easy to read, infinitely resizeable, and with tons of features the default Counter-Strike radar does not have.</span><br /><br />
 	<img src="https://i.imgur.com/ydc2Hf9.gif" />
 </div>
 
@@ -13,7 +13,7 @@ Player dots show more than just the location of the player. With 6 different dot
 
 | Dots                                   | Type              | Description                                                                                                             |
 |----------------------------------------|-------------------|-------------------------------------------------------------------------------------------------------------------------|
-| ![](https://i.imgur.com/rS7z3Hh.png)   | Default           | Player dots as seen on the normal CSGO radar, normally with a slot number on them.                                      |
+| ![](https://i.imgur.com/rS7z3Hh.png)   | Default           | Player dots as seen on the normal CS radar, normally with a slot number on them.                                        |
 | ![](https://i.imgur.com/qCqMGfY.png)   | Flashed           | Flashed players have a semi-white glow. This only shows when players are fully flashed (white screen).                  |
 | ![](https://i.imgur.com/QNhkhlV.png)   | Active            | A ring is shown around players that the observer selects to show the POV from.                                          |
 | ![](https://i.imgur.com/lemRnpz.png)   | Shooting          | Muzzle flashes when a player fires a shot with any weapon. Shows for 1 frame for each shot.                             |
@@ -33,7 +33,7 @@ The radar images used are made in close cooperation with [simpleradar](https://r
 
 When only a few players are alive most of the radar is just empty and only a very small part contains all the action. Boltobserv has an autozoom feature that fixes this. The radar image can automatically pan and zoom according to where the players are located, and smoothly follows the action.
 
-Autozoom tries to keep the action in the middle, with a safe padding around any players so they can never accidentality run off the radar image. it also has a minimal zoom level, so that the radar only zooms in when the action is concentrated in a small part of the map.
+Autozoom tries to keep the action in the middle, with a safe padding around any players so they can never accidentally run off the radar image. it also has a minimal zoom level, so that the radar only zooms in when the action is concentrated in a small part of the map.
 
 ### Advisories
 
@@ -55,7 +55,7 @@ All possible advisories are (with increasing priority):
 Because Boltobserv runs as an external application, it can be resized to be whatever size you want, and be moved to any display you want.
 Running without window borders enables it to dedicate as much space as possible to the radar.
 
-It can even [run in a browser](https://github.com/boltgolt/boltobserv/wiki/Opening-radar-in-browser), allowing you to view the radar over the network. This also means that the radar can be added as a browser source in applications like OBS with ransparent background.
+It can even [run in a browser](https://github.com/boltgolt/boltobserv/wiki/Opening-radar-in-browser), allowing you to view the radar over the network. This also means that the radar can be added as a browser source in applications like OBS with a transparent background.
 
 ### And much more
 
@@ -72,14 +72,14 @@ It can even [run in a browser](https://github.com/boltgolt/boltobserv/wiki/Openi
 ## Installation
 
 1. Download the latest .zip form the [releases](https://github.com/boltgolt/boltobserv/releases) page and unzip it.
-2. Launch `Boltobserv.exe`, it should ask you to automatically install the .cfg file. If it doesn't, copy the `gamestate_integration_boltobserv.cfg` file from the .zip to your CSGO config folder (the same folder you'd put an `autoexec.cfg`).
-3. You're done! (Re)start CSGO and Boltobserv should automatically connect.
+2. Launch `Boltobserv.exe`, it should ask you to automatically install the .cfg file. If it doesn't, copy the `gamestate_integration_boltobserv.cfg` file from the .zip to your CS config folder (the same folder you'd put an `autoexec.cfg`).
+3. You're done! (Re)start CS2 and Boltobserv should automatically connect.
 
 Please report any bugs or feature requests here on Github.
 
 ## Configuration
 
-Most functions of Boltoberv are configurable. To make your own config, go to `/resources/app/config` and either edit the `config.json5` file directly or duplicate it and rename the copy to `config.override.json5`. Using a override file will allow you to move your settings to a different machine or version without breaking the base config file.
+Most functions of Boltobserv are configurable. To make your own config, go to `/resources/app/config` and either edit the `config.json5` file directly or duplicate it and rename the copy to `config.override.json5`. Using a override file will allow you to move your settings to a different machine or version without breaking the base config file.
 
 ## Special thanks
 
