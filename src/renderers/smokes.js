@@ -51,9 +51,9 @@ socket.element.addEventListener("smokes", event => {
 			fadeIn(smokeElement, team)
 
 			// Safety timeout: never show for longer than 23 sec
-			// setTimeout(() =>  {
-			// 	remove(smokeElement)
-			// }, 23000)
+			setTimeout(() =>  {
+				remove(smokeElement)
+			}, 23000)
 		}
 
 		// Set the location of the smoke
