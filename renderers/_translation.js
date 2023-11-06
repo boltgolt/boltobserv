@@ -62,11 +62,11 @@ function translateData(data) {
 	let projectiles = []
 
 	for (let nade of grenades) {
-		if (nade.type == "smoke" && nade.velocity == "0.00000, 0.00000, 0.00000") {
+		if (nade.type == "smoke" && nade.effecttime != '0.00000') {
 			let pos = nade.position.split(", ")
 			smokes.push({
 				id: nade.id,
-				time: nade.effecttime,
+				time: parseFloat(nade.effecttime),
 				team: nade.team,
 				position: {
 					x: parseFloat(pos[0]),
@@ -75,7 +75,7 @@ function translateData(data) {
 				}
 			})
 		}
-		else if (nade.type == "flashbang" && parseFloat(nade.lifetime) >= 1.4) {
+		if (nade.type == "flashbang" && parseFloat(nade.lifetime) >= 1.4) {
 			let pos = nade.position.split(", ")
 			flashbangs.push({
 				id: nade.id,
@@ -102,10 +102,17 @@ function translateData(data) {
 				let flamesPos = []
 				let flamesNum = Object.values(nade.flames).length
 				for (var i = 0; i < flamesNum; i++) {
+					let match = /flame_([pn])([\d.]+)_([pn])([\d.]+)_([pn])([\d.]+)/.exec(Object.keys(nade.flames)[i])
+					let coords = []
+
+					for (let i = 1; i < match.length; i = i + 2) {
+						coords.push((match[i] == 'p' ? 1 : -1) * parseFloat(match[i + 1]))
+					}
+
 					flamesPos.push({
-						x: parseFloat(Object.values(nade.flames)[i].split(", ")[0]),
-						y: parseFloat(Object.values(nade.flames)[i].split(", ")[1]),
-						z: parseFloat(Object.values(nade.flames)[i].split(", ")[2]),
+						x: parseFloat(coords[0]),
+						y: parseFloat(coords[1]),
+						z: parseFloat(coords[2]),
 					})
 				}
 				infernos.push({
@@ -115,7 +122,7 @@ function translateData(data) {
 				})
 			}
 		}
-		else if (nade.type != "decoy") {
+		else if (nade.type != "decoy" && (nade.type != "smoke" || nade.effecttime == '0.00000')) {
 			let pos = nade.position.split(", ")
 			projectiles.push({
 				id: nade.type + nade.id,

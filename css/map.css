@@ -240,6 +240,17 @@ div.label.dead {
 	background-position: center;
 }
 
+#smokes > div::before {
+	content: '';
+	display: block;
+	height: 100%;
+	width: 100%;
+	border: transparent solid .6vmin;
+	border-color: inherit;
+	border-radius: 100%;
+	box-sizing: border-box;
+}
+
 #smokes > div.CT {
 	background-image: url('../img/smoke-ct.png');
 }
@@ -254,6 +265,27 @@ div.label.dead {
 
 #smokes > div.fading {
 	transition: opacity 1.8s;
+}
+
+#smokes > div > div {
+	height: 100%;
+	width: 100%;
+	border: transparent solid .6vmin;
+	border-color: inherit;
+	border-radius: 100%;
+	background-color: #364254;
+	transform: translate(-0.6vmin, 0.6vmin);
+	position: absolute;
+	opacity: 1;
+	transition: background-color .15s, opacity .8s;
+}
+
+#smokes > div > div.flash {
+	background-color: #fff;
+}
+
+#smokes > div > div.fade {
+	opacity: 0;
 }
 
 #infernos {
