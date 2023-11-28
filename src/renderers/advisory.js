@@ -18,7 +18,10 @@ function updateAdvisory() {
 	for (let name in advisories) {
 		if (advisories[name] != -1) {
 			document.getElementById("advisory").className = name
-			document.getElementById("advisory").children[0].innerHTML = idToNum[advisories[name]]
+			document.getElementById("advisory").children[0].innerHTML = idToNum[advisories[name]] + 1
+			if (document.getElementById("advisory").children[0].innerHTML == 10) {
+				document.getElementById("advisory").children[0].innerHTML = 0
+			}
 			return
 		}
 	}
