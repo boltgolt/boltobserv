@@ -31,7 +31,7 @@ body {
 	transition: opacity .4s;
 }
 
-#smokes, #entities, #flashbangs, #trails, #projectiles {
+#smokes, #entities, #flashbangs, #projectiles, #trails {
 	position: absolute;
 	height: 100%;
 	width: 100%;
@@ -42,8 +42,8 @@ body {
 
 div.dot, div.label {
 	position: absolute;
-	height: 8vmin;
-	width: 8vmin;
+	height: 5.6vmin;
+	width: 5.6vmin;
 	left: -100vw;
 	bottom: -100vh;
 	display: block;
@@ -59,12 +59,6 @@ div.dot, div.label {
 	outline: .1vmin solid transparent;
 	-webkit-backface-visibility: hidden;
 	backface-visibility: initial;
-}
-
-div.dot {
-	background-origin: border-box;
-	background-clip: content-box, border-box;
-	border: 1vmin double transparent;
 }
 
 div.dot::before, div.dot::after {
@@ -86,28 +80,26 @@ div.dot::before {
 div.dot::after {
 	height: 6.6vmin;
 	width: 6.6vmin;
-	background-image: url('../img/firing.png');
-	left: 3.2vmin;
-	bottom: 3.6vmin;
-	background-size: contain;
-	transform: rotate(45deg);
+	background: linear-gradient(180deg, #888 1vmin, #0000 0), linear-gradient(270deg, #888 1vmin, #0000 0), linear-gradient(180deg, #bbb 2vmin, #0000 0), linear-gradient(270deg, #bbb 2vmin, #0000 0), linear-gradient(180deg, #fff 3vmin, #0000 0), linear-gradient(270deg, #fff 3vmin, #0000 0);
+	left: 2vmin;
+	bottom: 2vmin;
 }
 
 div.dot.CT {
-	background-image: linear-gradient(45deg, #144662, #121F3E), linear-gradient(45deg, #4d4d4d, #004CB3);
+	background: #5ab8f4;
 }
 
 div.dot.T {
-	background-image: linear-gradient(45deg, #8E621E, #704E19), linear-gradient(45deg, #4d4d4d, #F90);
+	background: #f0c941;
 }
 
 div.dot.bomb {
-	border-radius: 3vmin 1vmin 3vmin 3vmin;
-	background-image: linear-gradient(45deg, #654819, #3E2E12), linear-gradient(45deg, #4d4d4d, #FF5700);
+	border-radius: 2vmin .4vmin 2vmin 2.4vmin;
+	background: #FF8200;
 }
 
 div.dot.active {
-	z-index: 16;
+	z-index: 7000 !important;
 	box-shadow: 0 0 0 .2vmin rgba(0, 0, 0, .9), 0 0 0 1vmin rgba(255, 255, 255, .9), 0 0 2.4vmin 1.2vmin rgba(255, 255, 255, .2);
 }
 
@@ -133,19 +125,8 @@ div.dot.dead {
 	text-shadow: none;
 	border-radius: 0;
 	clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
-	z-index: 13;
+	z-index: 13 !important;
 	filter: none;
-	background-image: none;
-	height: 6vmin;
-	width: 6vmin;
-}
-
-div.dot.dead.CT {
-	background: #0071b2;
-}
-
-div.dot.dead.T {
-	background: #ffa800;
 }
 
 div.dot > div {
@@ -167,23 +148,16 @@ div.dot.dead > div {
 div.label {
 	background: none;
 	text-align: center;
-	color: white;
+	color: black;
 	font-weight: bold;
+	text-shadow: 0 0 1.2vmin rgba(255, 255, 255, .2);
 	box-shadow: none;
-	line-height: 8vmin;
+	line-height: 5.6vmin;
 	font-size: 4.8vmin;
 }
 
-div.label.CT {
-	text-shadow: -0.4vmin 0 1.2vmin #007cff;
-}
-
-div.label.T {
-	text-shadow: -0.4vmin 0 1.2vmin #ff4d04;
-}
-
 div.label.active {
-	z-index: 16;
+	z-index: 7000 !important;
 	font-size: 5vmin;
 }
 
@@ -193,7 +167,7 @@ div.label.dead {
 
 #bomb {
 	position: absolute;
-	background-image: url("../img/bomb-dropped.png");
+	background-image: url("../img/bomb-dropped.webp");
 	background-size: contain;
 	height: 2.2vmin;
 	width: 2.2vmin;
@@ -204,12 +178,12 @@ div.label.dead {
 }
 
 #bomb.defused {
-	background-image: url("../img/bomb-defused.png");
+	background-image: url("../img/bomb-defused.webp");
 	filter: drop-shadow(0 0 .4vmin rgba(0, 255, 0, .3));
 }
 
 #bomb.planted {
-	background-image: url("../img/bomb-planted.png");
+	background-image: url("../img/bomb-planted.webp");
 	animation: beep 1s infinite;
 }
 
@@ -230,14 +204,14 @@ div.label.dead {
 
 #smokes > div {
 	position: absolute;
+	border-radius: 100%;
 	opacity: .8;
-	box-sizing: border-box;
 	transform-origin: center;
+	background: #9F9D9D;
+	overflow: hidden;
+	border-color: #D7D7D7;
 	transform: translate(-50%, 50%);
 	transition: opacity .3s;
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: center;
 }
 
 #smokes > div::before {
@@ -252,11 +226,13 @@ div.label.dead {
 }
 
 #smokes > div.CT {
-	background-image: url('../img/smoke-ct.png');
+	background: #678FAA;
+	border-color: #77C5F6;
 }
 
 #smokes > div.T {
-	background-image: url('../img/smoke-t.png');
+	background: #CCBA7D;
+	border-color: #F1D369;
 }
 
 #smokes > div.hide {
@@ -309,27 +285,26 @@ div.label.dead {
 
 .inferno > div {
 	position: absolute;
+	border-radius: 100%;
 	opacity: .75;
+	background: #ff4848;
 	box-sizing: border-box;
+	border: #ce3f00 solid .2vmin;
 	transform: translate(-50%, 50%);
 	transition: opacity .3s;
-	background-image: url('../img/fire.png');
-	background-size: contain;
-	background-position: center;
-	background-repeat: no-repeat;
 }
 
 #flashbangs > div {
 	position: absolute;
 	opacity: .8;
+	background: #FFF;
 	box-sizing: border-box;
 	transform-origin: center;
+	border-radius: 100%;
 	transform: translate(-50%, 50%);
-	transition: opacity 1s, box-shadow .2s;
-	background-image: url('../img/flash.png');
-	background-size: contain;
-	background-position: center;
-	background-repeat: no-repeat;
+	clip-path: polygon(15% 8%, 40% 25%, 50% 0%, 60% 25%, 85% 8%, 74% 35%, 100% 36%, 78% 50%, 100% 70%, 72.5% 67%, 77.5% 92.5%, 60% 75%, 50% 100%, 40% 75%, 22.5% 92.5%, 27.5% 67%, 0% 70%, 22% 50%, 0% 36%, 26% 35%);
+	box-shadow: inset 0 0 0vmin 1.7vmin #FC9F2D, inset 0 0 5vmin 0 #FEA130;
+	transition: opacity .3s;
 }
 
 #flashbangs > div.full {
@@ -338,6 +313,11 @@ div.label.dead {
 
 #flashbangs > div.hide {
 	opacity: 0;
+}
+
+#trails path {
+	stroke-linejoin: round;
+	fill: none;
 }
 
 #projectiles > div {
@@ -394,7 +374,7 @@ div.label.dead {
 }
 
 #advisory.planting::before {
-	background-image: url("../img/adv-plant.png");
+	background-image: url("../img/adv-plant.webp");
 }
 
 #advisory.planting {
@@ -403,7 +383,7 @@ div.label.dead {
 }
 
 #advisory.defuse::before {
-	background-image: url("../img/adv-defuse.png");
+	background-image: url("../img/adv-defuse.webp");
 }
 
 #advisory.defuse {
@@ -412,7 +392,7 @@ div.label.dead {
 }
 
 #advisory.solesurvivor::before {
-	background-image: url("../img/adv-solesurvivor.png");
+	background-image: url("../img/adv-solesurvivor.webp");
 }
 
 #advisory.solesurvivor {
