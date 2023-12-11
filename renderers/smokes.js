@@ -51,7 +51,7 @@ socket.element.addEventListener("smokes", event => {
 			fadeIn(smokeElement, team)
 
 			// Safety timeout: never show for longer than 23 sec
-			setTimeout(() =>  {
+			setTimeout(() => {
 				remove(smokeElement)
 			}, 23000)
 		}
@@ -153,7 +153,7 @@ socket.element.addEventListener("infernos", event => {
 			// Style the flame
 			flameElement[i].style.height = flameElement[i].style.width = 100 / global.mapData.resolution / 1024 * 100 + "%"
 			flameElement[i].style.left = global.positionToPerc(inferno.flamesPosition[i], "x") + "%"
-			flameElement[i].style.bottom = global.positionToPerc(inferno.flamesPosition[i], "y")  + "%"
+			flameElement[i].style.bottom = global.positionToPerc(inferno.flamesPosition[i], "y") + "%"
 
 			// Add it to the parent inferno
 			flameElementsStr += flameElement[i].outerHTML

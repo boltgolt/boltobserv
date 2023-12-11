@@ -4,7 +4,7 @@
 // without making changes here. This makes your config a lot more portable.
 
 {
-	"_version": "1.0.2",
+	"_version": "1.3.0",
 
 	// Settings related to the Boltobserv window
 	"window": {
@@ -17,7 +17,7 @@
 		// Make the background of the window transparent
 		"transparent": false,
 
-		// Change the background color of the window even with transparency
+		// Change the background color of the window with optional transparency
 		// The color should be in hexadecimal color code
 		// like #FFF or #FFFFFF to normal color and #80FFFFFF to color with transparency
 		"backgroundColor": "#000000",
@@ -59,14 +59,18 @@
 		}
 	},
 
-	// Settings that will change the way the radar will be displayed
+	// Settings that will change the way the radar is displayed
 	"radar": {
 		// Hide advisories on the radar
 		"hideAdvisories": false,
+		// When true, players higher on the map will show over lower ones
+		// If false, the player slot number determines the stacking order
+		// The spectated player is always visible on top of everything
+		"highestPlayerOnTop": true,
 		// Show the buyzones on the map, or only when players can buy
-		// Can either be "never", "buytime" or "always"
+		// Only works on SimpleRadar maps, can either be "never", "buytime" or "always"
 		"showBuyzones": "buytime",
-		// Show Boltobserv and Simple Radar logos
+		// Show Boltobserv, Simple Radar and Lexogrine logos
 		"showLogos": true,
 
 		// Show muzzle flashes for players shooting
@@ -75,9 +79,18 @@
 		"damage": true,
 		// Show flashed players in a lighter color
 		"flashes": true,
+		// Show flying projectiles on the map
+		"projectiles": true,
+
+		// Give active smokes the color of the team that threw it
+		"smokeColors": true,
+		// Show projectiles as very plain and clear letter combinations
+		"plainProjectiles": false,
 
 		// Frames to smooth out player movement
 		"playerSmoothing": 13,
+		// Frames to smooth out flying projectile movement
+		"projectileSmoothing": 5,
 
 		// Amount of scaling to apply to player dots on the radar
 		// Values above 1 might be blurry
@@ -118,13 +131,16 @@
 	"game": {
 		// Seconds of inactivity before considering a connection to the game client as lost
 		// Set to -1 to never timeout
-		"connectionTimout": 30,
+		"connectionTimout": 90,
 
 		// The port GSI will try to connect to
 		"networkPort": 36363,
 
 		// Tries to detect the CSGO game on the machine and prompts to install the CFG file if it hasn't already
-		"installCfg": true
+		"installCfg": true,
+
+		// The hostname for the GSI server to listen on
+		"host": "0.0.0.0"
 	},
 
 	// Settings that should not be used in normal operation, but help to find issues
