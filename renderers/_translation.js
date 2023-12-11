@@ -31,8 +31,8 @@ function translateData(data) {
 		}
 
 		players.push({
-			team: player.gameData.side,
-			num: player.gameData.observer_slot,
+			team: player.gameData.teamSide,
+			num: player.gameData.display_slot,
 			health: player.gameData.state.health,
 			bomb: data.bomb.state == 'carried' && playerid == data.bomb.player,
 			active: player.observed,
@@ -48,7 +48,7 @@ function translateData(data) {
 
 		for (let nadeid in player.deployedGrenades) {
 			player.deployedGrenades[nadeid].id = parseInt(nadeid)
-			player.deployedGrenades[nadeid].team = player.gameData.team
+			player.deployedGrenades[nadeid].team = player.gameData.teamSide
 			grenades.push(player.deployedGrenades[nadeid])
 		}
 	}
@@ -103,7 +103,7 @@ function translateData(data) {
 				let flamesNum = Object.values(nade.flames).length
 				for (var i = 0; i < flamesNum; i++) {
 					let match = /flame_([pn])([\d.]+)_([pn])([\d.]+)_([pn])([\d.]+)/.exec(Object.keys(nade.flames)[i])
-					let coords = []
+					let ords = []
 
 					for (let i = 1; i < match.length; i = i + 2) {
 						coords.push((match[i] == 'p' ? 1 : -1) * parseFloat(match[i + 1]))

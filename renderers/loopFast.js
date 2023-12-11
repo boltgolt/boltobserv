@@ -16,13 +16,13 @@ function step() {
 				// If the angle used to be small, but is large now
 				if (global.playerPos[num].a > 270 && global.playerBuffers[num][0].a < 90) {
 					// Move the old value to the other side of the 360 degree circle
-					global.playerBuffers[num].forEach(buffer => {buffer.a += 360})
+					global.playerBuffers[num].forEach(buffer => { buffer.a += 360 })
 				}
 
 				// If the angle used to be large, but is low now
 				if (global.playerPos[num].a < 90 && global.playerBuffers[num][0].a > 270) {
 					// Move the old value to the other side of the 360 degree circle
-					global.playerBuffers[num].forEach(buffer => {buffer.a -= 360})
+					global.playerBuffers[num].forEach(buffer => { buffer.a -= 360 })
 				}
 			}
 
@@ -81,9 +81,13 @@ function step() {
 				// If the scale indicator is enabled
 				else if (global.config.vertIndicator.type == "scale") {
 					// Scale the dot by height multiplied by the configured delta
-					// scale *= (perc + 0.5) * global.config.vertIndicator.scaleDelta
 					scale *= ((perc - 0.5) / 2 + 1) * global.config.vertIndicator.scaleDelta
 					global.playerLabels[num].style.transform = `scale(${scale}) translate(-50%, 50%)`
+				}
+
+				if (global.config.radar.highestPlayerOnTop) {
+					global.playerDots[num].style.zIndex = Math.round(global.playerPos[num].z + 2500)
+					global.playerLabels[num].style.zIndex = Math.round(global.playerPos[num].z + 2500)
 				}
 			}
 		}
@@ -106,6 +110,23 @@ function step() {
 		else {
 			global.playerDots[num].style.transform = `rotate(0deg) scale(${global.config.radar.playerDotScale}) translate(-50%, 50%)`
 		}
+	}
+
+	// Go through each active projectile
+	for (let id in global.projectilePos) {
+		// Add the newest location to the start of the buffer
+		global.projectileBuffer[id].unshift(global.projectilePos[id])
+
+		// Limit the size of the buffer to the count specified in the config
+		global.projectileBuffer[id] = global.projectileBuffer[id].slice(0, global.config.radar.projectileSmoothing)
+
+		// Calculate the avarage position over the active buffer
+		let bufferPercX = (global.projectileBuffer[id].reduce((prev, curr) => prev + curr.x, 0) / (global.projectileBuffer[id].length))
+		let bufferPercY = (global.projectileBuffer[id].reduce((prev, curr) => prev + curr.y, 0) / (global.projectileBuffer[id].length))
+
+		// Set the location of the projectile
+		global.projectilePos[id].elem.style.left = bufferPercX + "%"
+		global.projectilePos[id].elem.style.bottom = bufferPercY + "%"
 	}
 
 	// Wait for next repaint

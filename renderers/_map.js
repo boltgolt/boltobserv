@@ -32,7 +32,7 @@ socket.element.addEventListener("map", event => {
 		document.getElementById("unknownMap").style.display = "none"
 
 		// Show the radar backdrop
-		document.getElementById("radarBackground").src = `../maps/${mapName}/radar.webp`
+		document.getElementById("radarBackground").src = `../maps/${mapName}/radar.png`
 
 		// Set the map as the current map and in the window title
 		global.currentMap = mapName

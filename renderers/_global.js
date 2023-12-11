@@ -34,13 +34,15 @@ global = {
 			"damage": true,
 			// Show flashed players in a lighter color
 			"flashes": true,
+			// Show flying projectiles on the map
+			"projectiles": true,
 
 			// Frames to smooth out player movement
-			"playerSmoothing": 1,
+			"playerSmoothing": 60,
 
 			// Amount of scaling to apply to player dots on the radar
 			// Values above 1 might be blurry
-			"playerDotScale": 0.7,
+			"playerDotScale": 1,
 			// Same as the above, but for the bomb
 			"bombDotScale": 2
 		},
@@ -60,7 +62,7 @@ global = {
 		// Settings for automatically zooming in on alive players on the map
 		"autozoom": {
 			// Enable or disable autozoom
-			"enable": false,
+			"enable": true,
 
 			// Frames to smooth out zoom movement
 			"smoothing": 32,
@@ -111,6 +113,9 @@ global = {
 	playerAmmos: [],
 	playerHealths: [],
 
+	projectilePos: {},
+	projectileBuffer: {},
+
 	/**
 	 * Convert in-game position units to radar percentages
 	 * @param  {Array}  positionObj In-game position object with X and Y, and an optional Z
@@ -150,6 +155,7 @@ global = {
 		if (typeof playerNum == "number") {
 			// Wipe the location buffer if we've changed split
 			// Prevents the player from flying across the radar on split switch
+			console.log(global)
 			if (global.playerSplits[playerNum] != currentSplit) {
 				global.playerBuffers[playerNum] = []
 			}

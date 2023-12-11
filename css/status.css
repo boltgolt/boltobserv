@@ -23,7 +23,7 @@ img {
 	align-items: center;
 }
 
-#text > div {
+#text>div {
 	display: inline;
 	opacity: .8;
 }

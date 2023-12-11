@@ -31,7 +31,11 @@ body {
 	transition: opacity .4s;
 }
 
-#smokes, #entities, #flashbangs, #projectiles, #trails {
+#smokes,
+#entities,
+#flashbangs,
+#projectiles,
+#trails {
 	position: absolute;
 	height: 100%;
 	width: 100%;
@@ -40,7 +44,8 @@ body {
 	z-index: 2;
 }
 
-div.dot, div.label {
+div.dot,
+div.label {
 	position: absolute;
 	height: 5.6vmin;
 	width: 5.6vmin;
@@ -61,7 +66,8 @@ div.dot, div.label {
 	backface-visibility: initial;
 }
 
-div.dot::before, div.dot::after {
+div.dot::before,
+div.dot::after {
 	content: '';
 	position: absolute;
 	z-index: 14;
@@ -129,19 +135,19 @@ div.dot.dead {
 	filter: none;
 }
 
-div.dot > div {
+div.dot>div {
 	position: absolute;
 	bottom: 1.3vmin;
 	left: 1.3vmin;
 	width: 3vmin;
 	height: 3vmin;
 	background: #0000;
-	box-shadow: inset 0 0 0 1.5vmin rgba(255,255,255,0);
+	box-shadow: inset 0 0 0 1.5vmin rgba(255, 255, 255, 0);
 	box-sizing: border-box;
 	border-radius: 60vmin;
 }
 
-div.dot.dead > div {
+div.dot.dead>div {
 	display: none;
 }
 
@@ -192,17 +198,19 @@ div.label.dead {
 		filter: drop-shadow(0 0 0 rgba(255, 0, 0, 1));
 		background-color: rgba(255, 0, 0, 0);
 	}
+
 	10% {
 		filter: drop-shadow(0 0 1vmin rgba(255, 0, 0, 1));
 		background-color: rgba(255, 0, 0, 0.2);
 	}
+
 	20% {
 		filter: drop-shadow(0 0 1.8vmin rgba(255, 0, 0, 0));
 		background-color: rgba(255, 0, 0, 0);
 	}
 }
 
-#smokes > div {
+#smokes>div {
 	position: absolute;
 	border-radius: 100%;
 	opacity: .8;
@@ -214,7 +222,7 @@ div.label.dead {
 	transition: opacity .3s;
 }
 
-#smokes > div::before {
+#smokes>div::before {
 	content: '';
 	display: block;
 	height: 100%;
@@ -225,25 +233,25 @@ div.label.dead {
 	box-sizing: border-box;
 }
 
-#smokes > div.CT {
+#smokes>div.CT {
 	background: #678FAA;
 	border-color: #77C5F6;
 }
 
-#smokes > div.T {
+#smokes>div.T {
 	background: #CCBA7D;
 	border-color: #F1D369;
 }
 
-#smokes > div.hide {
+#smokes>div.hide {
 	opacity: 0;
 }
 
-#smokes > div.fading {
+#smokes>div.fading {
 	transition: opacity 1.8s;
 }
 
-#smokes > div > div {
+#smokes>div>div {
 	height: 100%;
 	width: 100%;
 	border: transparent solid .6vmin;
@@ -256,11 +264,11 @@ div.label.dead {
 	transition: background-color .15s, opacity .8s;
 }
 
-#smokes > div > div.flash {
+#smokes>div>div.flash {
 	background-color: #fff;
 }
 
-#smokes > div > div.fade {
+#smokes>div>div.fade {
 	opacity: 0;
 }
 
@@ -283,7 +291,7 @@ div.label.dead {
 	transition: opacity .3s;
 }
 
-.inferno > div {
+.inferno>div {
 	position: absolute;
 	border-radius: 100%;
 	opacity: .75;
@@ -294,7 +302,7 @@ div.label.dead {
 	transition: opacity .3s;
 }
 
-#flashbangs > div {
+#flashbangs>div {
 	position: absolute;
 	opacity: .8;
 	background: #FFF;
@@ -307,11 +315,11 @@ div.label.dead {
 	transition: opacity .3s;
 }
 
-#flashbangs > div.full {
+#flashbangs>div.full {
 	opacity: .8;
 }
 
-#flashbangs > div.hide {
+#flashbangs>div.hide {
 	opacity: 0;
 }
 
@@ -320,7 +328,7 @@ div.label.dead {
 	fill: none;
 }
 
-#projectiles > div {
+#projectiles>div {
 	position: absolute;
 	box-sizing: border-box;
 	transform-origin: center;
@@ -379,7 +387,7 @@ div.label.dead {
 
 #advisory.planting {
 	background: linear-gradient(to right, #AD9A3C, #ECCD37);
-	box-shadow: 0 0 .4vmin .3vmin rgba(255,252,0,.2);
+	box-shadow: 0 0 .4vmin .3vmin rgba(255, 252, 0, .2);
 }
 
 #advisory.defuse::before {
@@ -388,7 +396,7 @@ div.label.dead {
 
 #advisory.defuse {
 	background: linear-gradient(to right, #39536d, #3a7eb1);
-	box-shadow: 0 0 .4vmin .3vmin rgba(0,41,255,.2);
+	box-shadow: 0 0 .4vmin .3vmin rgba(0, 41, 255, .2);
 }
 
 #advisory.solesurvivor::before {
@@ -397,10 +405,12 @@ div.label.dead {
 
 #advisory.solesurvivor {
 	background: linear-gradient(to right, #436C39, #40B13A);
-	box-shadow: 0 0 .4vmin .3vmin rgba(13,255,0,.2);
+	box-shadow: 0 0 .4vmin .3vmin rgba(13, 255, 0, .2);
 }
 
-#advisory.planting span, #advisory.defuse span, #advisory.solesurvivor span {
+#advisory.planting span,
+#advisory.defuse span,
+#advisory.solesurvivor span {
 	color: #fff;
 }
 

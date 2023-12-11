@@ -6,7 +6,7 @@
 let socket = {
 	native: null,
 	connected: false,
-	connect: () =>  {
+	connect: () => {
 		console.log('running');
 
 		function attachEvents(websocket) {
@@ -50,15 +50,16 @@ let socket = {
 }
 
 let serverAddress = 'http://localhost:4400/?client=main'
-if (window.location.hash) serverAddress = 'http://' + window.location.hash.substr(1)
-
+if (window.location.hash)
+	serverAddress = 'http://' + window.location.hash.substring(1)
 iosocket = io(serverAddress)
-
+const token = serverAddress.substring(serverAddress.indexOf('=')).slice(1);
+console.log(token)
 iosocket.on('connect', () => {
 	socket.connect()
-	iosocket.emit(`subscribe`, `main_OverlayRadar`)
+	iosocket.emit(`subscribe`, `${token}_OverlayRadar`)
 
-	iosocket.on('main_OverlayRadar', (data) => {
+	iosocket.on(`${token}_OverlayRadar`, (data) => {
 		translateData(data)
 	})
 })

@@ -9,7 +9,7 @@ body {
 	cursor: not-allowed;
 }
 
-body > div {
+body>div {
 	color: white;
 	height: 100vh;
 	width: 100vh;

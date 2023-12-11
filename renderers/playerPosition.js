@@ -24,8 +24,7 @@ socket.element.addEventListener("players", event => {
 			// Make the bomb carrier orange and and a line around the spectated player
 			if (player.bomb) classes.push("bomb")
 			if (player.active) classes.push("active")
-      if (player.flashed > 31) classes.push("flashed")
-
+			if (player.flashed > 31) classes.push("flashed")
 			// // If drawing muzzle flashes is enabled
 			if (global.config.radar.shooting) {
 				if (player.shooting) {

@@ -30,7 +30,7 @@ socket.element.addEventListener("projectiles", event => {
 			projectileElement.id = projectileID
 			projectileElement.className = projectile.team
 
-			projectileElement.style.backgroundImage = `url('/img/projectile-${type}-${projectile.type}-${projectile.team}.webp')`
+			projectileElement.style.backgroundImage = `url('../img/projectile-${type}-${projectile.type}-${projectile.team}.webp')`
 			if (projectile.type == 'frag') projectileElement.dataset.isfrag = 'true'
 
 			// Add it to the DOM
