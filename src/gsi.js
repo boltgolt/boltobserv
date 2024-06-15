@@ -102,6 +102,7 @@ function handleRequest(req, res) {
 				playerArr.push({
 					id: id,
 					num: player.observer_slot,
+					name: player.name,
 					team: player.team,
 					health: player.state.health,
 					active: isActive,
