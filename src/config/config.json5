@@ -73,6 +73,14 @@
 		// Show Boltobserv, Simple Radar and Lexogrine logos
 		"showLogos": true,
 
+		// Show the player name on the dot, options are:
+		// "never"  only show the spec number (observer slot)
+		// "both"   show the name of the player under the dot
+		// "always" replace the spec number by the player name
+		"showName": "never",
+		// Truncate the name of the player after this many characters
+		"maxNameLength": 8,
+
 		// Show muzzle flashes for players shooting
 		"shooting": true,
 		// Show red indicators on player dots when their health gets lower

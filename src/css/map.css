@@ -147,7 +147,8 @@ div.dot.dead > div {
 
 div.label {
 	background: none;
-	text-align: center;
+	display: flex;
+	justify-content: center;
 	color: black;
 	font-weight: bold;
 	text-shadow: 0 0 1.2vmin rgba(255, 255, 255, .2);
@@ -163,6 +164,18 @@ div.label.active {
 
 div.label.dead {
 	display: none;
+}
+
+div.label span {
+	display: block;
+	position: absolute;
+	left: 50%;
+	top: 100%;
+	transform: translateX(-50%);
+	font-size: .7em;
+	color: #FFF;
+	text-shadow: 0 0 .3em #000;
+	opacity: .85;
 }
 
 #bomb {

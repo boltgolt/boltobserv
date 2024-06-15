@@ -1,5 +1,5 @@
 {
   "name": "boltobserv",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "_whatisthis": "Older versions of Boltobserv used this file to check for updates, so it can't be deleted. The real package.json is in /src"
 }

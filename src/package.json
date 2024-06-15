@@ -1,6 +1,6 @@
 {
   "name": "boltobserv",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "External radar for CSGO observers",
   "main": "index.js",
   "homepage": "https://github.com/boltgolt/boltobserv/",

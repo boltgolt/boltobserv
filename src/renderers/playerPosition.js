@@ -70,6 +70,13 @@ socket.element.addEventListener("players", event => {
 
 		// Set the player alive attribute (used in autozoom)
 		global.playerPos[player.num].alive = player.health > 0
+
+		if (global.config.radar.showName == "both") {
+			playerLabel.children[0].textContent = player.name.substring(0, global.config.radar.maxNameLength)
+		}
+		if (global.config.radar.showName == "always") {
+			playerLabel.textContent = player.name.substring(0, global.config.radar.maxNameLength)
+		}
 	}
 })
 
