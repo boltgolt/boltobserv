@@ -58,8 +58,8 @@ socket.element.addEventListener("projectiles", event => {
 		if (projectile.type == 'frag') {
 			// Get the previous coords from the
 			let trailParts = trailElement.getAttributeNS(null, "d").split(" ")
-			// True if more than two packets are known and nade stationary
-			let isStationary = trailParts.length > 6
+			// True if more than three packets are known and nade stationary
+			let isStationary = trailParts.length > 9
 
 			// Go through each nade position from last to newest, max last 5
 			for (let i = trailParts.length - 1; i > 2 && trailParts.length - i < 5 * 3; i -= 3) {
