@@ -98,8 +98,8 @@ socket.element.addEventListener("explosion", event => {
 			gapElement.id = "gap" + event.data.id
 
 			// Calculate gap position within smoke
-			gapElement.style.left = (smokeX - pos.x) / smokeSize * 100 + "%"
-			gapElement.style.bottom = (smokeY - pos.y) / smokeSize * 100 + "%"
+			gapElement.style.left = (pos.x - smokeX) / smokeSize * 100 + "%"
+			gapElement.style.bottom = (pos.y - smokeY) / smokeSize * 100 + "%"
 
 			// Insert gap into smoke
 			smokeElement.appendChild(gapElement)
