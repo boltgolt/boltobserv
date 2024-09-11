@@ -1,3 +1,8 @@
+:root {
+	--config-tombstone-opacity: .4;
+	--config-bomb-dot-scale: .7;
+}
+
 body {
 	overflow: hidden;
 }
@@ -120,11 +125,11 @@ div.dot.flashed.active {
 }
 
 div.dot.dead {
-	opacity: .4;
 	color: transparent;
 	text-shadow: none;
 	border-radius: 0;
 	clip-path: polygon(20% 0%, 0% 20%, 30% 50%, 0% 80%, 20% 100%, 50% 70%, 80% 100%, 100% 80%, 70% 50%, 100% 20%, 80% 0%, 50% 30%);
+	opacity: var(--config-tombstone-opacity);
 	z-index: 13 !important;
 	filter: none;
 }
@@ -186,7 +191,7 @@ div.label span {
 	width: 2.2vmin;
 	bottom: -30%;
 	left: -30%;
-	transform: translate(-50%, 50%);
+	transform: scale(var(--config-bomb-dot-scale)) translate(-50%, 50%);
 	transform-origin: bottom left;
 }
 

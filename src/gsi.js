@@ -177,10 +177,9 @@ function handleRequest(req, res) {
 						for (var i = 0; i < flamesNum; i++) {
 							let pos = Object.values(nade.flames)[i].split(", ")
 							flamesPos.push({
-								// BUG: CS2 has the coords doubled for some reason
-								x: parseFloat(pos[0]) / 2,
-								y: parseFloat(pos[1]) / 2,
-								z: parseFloat(pos[2]) / 2
+								x: parseFloat(pos[0]),
+								y: parseFloat(pos[1]),
+								z: parseFloat(pos[2])
 							})
 						}
 

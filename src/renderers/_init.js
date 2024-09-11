@@ -52,11 +52,13 @@ socket.element.addEventListener("welcome", event => {
 		}
 	}
 
-	// Do the same for the bomb icon
-	document.getElementById("bomb").style.transform = `scale(${event.data.config.radar.bombDotScale}) translate(-50%, 50%)`
+	// Insert stylesheet into head to apply some CSS setings from config
+	document.documentElement.style.setProperty("--config-tombstone-opacity", event.data.config.radar.tombstoneOpacity)
+	document.documentElement.style.setProperty("--config-bomb-dot-scale", event.data.config.radar.bombDotScale)
 })
-if(socket.native && socket.native.readyNumber === 1){
-	socket.native.send("requestWelcome");
+
+if (socket.native && socket.native.readyNumber === 1) {
+	socket.native.send("requestWelcome")
 }
 
 window.addEventListener("DOMContentLoaded", () => {
