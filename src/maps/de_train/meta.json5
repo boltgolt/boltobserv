@@ -1,7 +1,7 @@
 {
 	"version": {
 		// The version of this meta file
-		"radar": 2,
+		"radar": 3,
 		// The object format version this file is using
 		"format": 3
 	},
@@ -11,8 +11,8 @@
 
 	// How many in-game units is the origin (0,0) of the map from the bottom left point of the radar
 	"offset": {
-		"x": 2510,
-		"y": 2440
+		"x": 2730,
+		"y": 2360
 	},
 
 	// Contains any special map splits
