@@ -11,13 +11,10 @@ socket.element.addEventListener("players", event => {
 
 	// Loop though each player
 	for (let player of data.players) {
-		/*console.log(global.showDeathRange);*/
-
 		// Get their player element and start building the class
 		let playerDot = global.playerDots[player.num]
 		let playerLabel = global.playerLabels[player.num]
 		let classes = [player.team]
-
 
 		// Mark dead players with a cross
 		if (player.health <= 0) {
@@ -34,7 +31,8 @@ socket.element.addEventListener("players", event => {
 				}
 
 			}
-      if (player.flashed > 31) classes.push("flashed")
+
+			if (player.flashed > 31) classes.push("flashed")
 
 			// If drawing muzzle flashes is enabled
 			if (global.config.radar.shooting) {
@@ -43,7 +41,7 @@ socket.element.addEventListener("players", event => {
 					if (global.playerAmmos[player.num][weapon]) {
 						// They are shooting if there's less ammo in the clip than the packet before
 						if (global.playerAmmos[player.num][weapon] > player.ammo[weapon]) {
-								classes.push("shooting")
+							classes.push("shooting")
 						}
 					}
 				}
