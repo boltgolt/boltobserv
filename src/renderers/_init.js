@@ -55,6 +55,7 @@ socket.element.addEventListener("welcome", event => {
 	// Insert stylesheet into head to apply some CSS setings from config
 	document.documentElement.style.setProperty("--config-tombstone-opacity", event.data.config.radar.tombstoneOpacity)
 	document.documentElement.style.setProperty("--config-bomb-dot-scale", event.data.config.radar.bombDotScale)
+
 })
 
 if (socket.native && socket.native.readyNumber === 1) {

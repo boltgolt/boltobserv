@@ -7,7 +7,7 @@ let win = false
 let socket = false
 let effects = {}
 
-function executeAction(subject, command) {
+function executeAction(subject, command) {		// comman is toggle,   subject is window.fullscreen
 	switch (command) {
 		case "toggle":
 			if (typeof effects[subject] == "undefined") effects[subject] = false
@@ -35,7 +35,9 @@ function executeAction(subject, command) {
 			key: subject,
 			value: effects[subject]
 		}
+
 	})
+
 
 	switch (subject) {
 		case "window.fullscreen":
@@ -44,74 +46,81 @@ function executeAction(subject, command) {
 		case "window.mousePassthrough":
 			win.setIgnoreMouseEvents(effects[subject])
 			break
+
 	}
 }
 
 
 function parseBind(binds) {
-	function nextBind(binds) {
-		if (binds.length > 0) parseBind(binds)
-	}
+    // If binds is not an array, convert it to one
+    if (!Array.isArray(binds)) {
+        binds = [binds];
+    }
+    
+    // If there are no more binds to process, return
+    if (binds.length === 0) return;
+    
+    // Get the current bind and remove it from the array
+    let bind = binds.shift();
+    
+    let actionRegex = /([\w\.]*?)\s?->\s?(\w*)/;
+    let functionRegex = /([\w\.]*?)\((.*?)\)/;
 
-	let bind = binds
+    if (bind.match(actionRegex)) {
+        let parsed = actionRegex.exec(bind);
+        executeAction(parsed[1], parsed[2]);
+        
+        // Process remaining binds
+        if (binds.length > 0) parseBind(binds);
+    }
+    else if (bind.match(functionRegex)) {
+        let parsed = functionRegex.exec(bind);
+        let argument = parsed[2];
 
-	if (typeof binds == "object") {
-		bind = binds[0]
-		binds.shift()
-	}
+        switch (parsed[1]) {
+            case "functions.sleep":
+                setTimeout(() => {
+                    if (binds.length > 0) parseBind(binds);
+                }, argument * 1000);
+                break;
 
-	let actionRegex = /([\w\.]*?)\s?->\s?(\w*)/
-	let functionRegex = /([\w\.]*?)\((.*?)\)/
+            case "functions.reload":
+                win.reload();
+                socket.send({
+                    type: "pageUpdate"
+                });
+                
+                setTimeout(() => {
+                    if (binds.length > 0) parseBind(binds);
+                }, 100);
+                break;
 
-	if (bind.match(actionRegex)) {
-		let parsed = actionRegex.exec(bind)
-		executeAction(parsed[1], parsed[2])
+            case "window.width":
+                win.setSize(Math.max(0, parseInt(argument)), win.getSize()[1]);
+                if (binds.length > 0) parseBind(binds);
+                break;
+                
+            case "window.height":
+                win.setSize(win.getSize()[0], Math.max(0, parseInt(argument)));
+                if (binds.length > 0) parseBind(binds);
+                break;
 
-		if (binds.length > 0) parseBind(binds)
-	}
-	else if (bind.match(functionRegex)) {
-		let parsed = functionRegex.exec(bind)
-		let argument = parsed[2]
+            case "window.left":
+                win.setBounds({x: parseInt(argument)});
+                if (binds.length > 0) parseBind(binds);
+                break;
+                
+            case "window.top":
+                win.setBounds({y: parseInt(argument)});
+                if (binds.length > 0) parseBind(binds);
+                break;
 
-		switch (parsed[1]) {
-			case "functions.sleep":
-				setTimeout(() => {
-					if (binds.length > 0) parseBind(binds)
-				}, argument * 1000)
-				break
-
-			case "functions.reload":
-				// Reload both electron window and browsers
-				win.reload()
-				socket.send({
-					type: "pageUpdate"
-				})
-
-				// Wait a second for everything to load before executing the next action
-				setTimeout(() => {
-					if (binds.length > 0) parseBind(binds)
-				}, 100)
-				break
-
-			case "window.width":
-				win.setSize(Math.min(0, argument), win.getSize()[1])
-				return nextBind(binds)
-			case "window.height":
-				win.setSize(win.getSize()[0], Math.min(0, argument))
-				return nextBind(binds)
-
-			case "window.left":
-				win.setBounds({x: parseInt(argument)})
-				return nextBind(binds)
-			case "window.top":
-				win.setBounds({y: parseInt(argument)})
-				return nextBind(binds)
-
-			default:
-				console.warn(`WARNING: Unkown keybind function in keybind "${bind}"`)
-				return
-		}
-	}
+            default:
+                console.warn(`WARNING: Unknown keybind function in keybind "${bind}"`);
+                if (binds.length > 0) parseBind(binds);
+                break;
+        }
+    }
 }
 
 module.exports = (_socket, _win) => {

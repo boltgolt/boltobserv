@@ -11,10 +11,13 @@ socket.element.addEventListener("players", event => {
 
 	// Loop though each player
 	for (let player of data.players) {
+		/*console.log(global.showDeathRange);*/
+
 		// Get their player element and start building the class
 		let playerDot = global.playerDots[player.num]
 		let playerLabel = global.playerLabels[player.num]
 		let classes = [player.team]
+
 
 		// Mark dead players with a cross
 		if (player.health <= 0) {
@@ -23,7 +26,14 @@ socket.element.addEventListener("players", event => {
 		else {
 			// Make the bomb carrier orange and and a line around the spectated player
 			if (player.bomb) classes.push("bomb")
-			if (player.active) classes.push("active")
+			if (player.active) {
+				classes.push("active");
+				if(global.bombStatus === "planted" || global.bombStatus === "defusing"){
+					global.spectatedArmor = player.armor;
+					global.spectatedHealth = player.health;
+				}
+
+			}
       if (player.flashed > 31) classes.push("flashed")
 
 			// If drawing muzzle flashes is enabled
@@ -103,4 +113,7 @@ socket.element.addEventListener("roundend", event => {
 		global.playerLabels[num].style.display = "none"
 		global.playerLabels[num].style.display = ""
 	}
+	global.spectatedHealth = 0;
+	global.spectatedArmor = 0;
+
 })

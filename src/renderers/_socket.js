@@ -70,6 +70,7 @@ let socket = {
 				let outev = new Event(incom.type)
 				// Add the data we got to the new event
 				outev.data = incom.data
+
 				// Send the event to other scripts
 				socket.element.dispatchEvent(outev)
 			}
@@ -117,4 +118,10 @@ socket.element.addEventListener("round", event => {
 
 socket.element.addEventListener("effect", event => {
 	global.effects[event.data.key] = event.data.value
+
+	if(event.data.key === "show.DeathRange"){
+		global.showDeathRange = true
+	} else if(event.data.key === "hide.DeathRange"){
+		global.showDeathRange = false
+	}
 })

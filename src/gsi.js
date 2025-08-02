@@ -33,12 +33,14 @@ function handleRequest(req, res) {
 		// Parse JSON packet
 		let game = JSON.parse(body)
 
+		/*console.log(game);*/
 		if (game.provider) {
 			let connObject = {
 				status: "up"
 			}
 
 			if (game.player) {
+
 				if (game.player.activity != "playing") {
 					connObject.player = game.player.name
 				}
@@ -71,6 +73,7 @@ function handleRequest(req, res) {
 				let isActive = false
 				let rawAngle = player.forward.split(", ")
 				let ammo = {}
+				let armor = player.state.armor;
 
 				if (parseFloat(rawAngle[0]) > 0) {
 					angle = 90 + parseFloat(rawAngle[1]) * -1 * 90
@@ -111,6 +114,7 @@ function handleRequest(req, res) {
 					bombActive: bombActive,
 					angle: angle,
 					ammo: ammo,
+					armor: armor,
 					position: {
 						x: parseFloat(pos[0]),
 						y: parseFloat(pos[1]),

@@ -22,6 +22,13 @@ global = {
 
 	projectilePos: {},
 	projectileBuffer: {},
+	spectatedHealth: 0,
+	spectatedArmor: 0,
+	bombStatus: "carried",
+	previousState: [0, 0],
+	showDeathRange: false,
+	alternateSite: false,
+
 
 	/**
 	 * Convert in-game position units to radar percentages
@@ -32,6 +39,7 @@ global = {
 	 */
 	positionToPerc: (positionObj, axis, playerNum) => {
 		// The position of the player in game, with the bottom left corner of the radar as origin (0,0)
+
 		let gamePosition = positionObj[axis] + global.mapData.offset[axis]
 		// The position of the player relative to an 1024x1024 pixel grid
 		let pixelPosition = gamePosition / global.mapData.resolution
