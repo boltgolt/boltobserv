@@ -1,9 +1,9 @@
 {
 	"version": {
 		// The version of this meta file
-		"radar": 3,
+		"radar": 4,
 		// The object format version this file is using
-		"format": 3
+		"format": 4
 	},
 
 	// The amount of in-game units per pixel of the 1024px radar image
@@ -24,8 +24,13 @@
 		"y": 56
 	},
 
+	// The minimum and maximum height a player can be on the map
 	"zRange": {
 		"min": 73,
 		"max": 310
-	}
+	},
+
+	// Distance in units from bomb explosion that a player can survive, depending on health
+	// The first value is the distance at 1 health, the second at 5 health, then 10, etc
+	"survivableDistance": [615, 574, 549, 527, 507, 490, 473, 458, 443, 429, 398, 403, 391, 380, 368, 358, 347, 337, 327, 317, 320]
 }

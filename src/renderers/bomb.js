@@ -144,7 +144,7 @@ all that is left to do now is detect if bomb was planted b or a which you can do
 // Update the function
 function updateBombCircleBasedOnHealth() {
 	// Only proceed if we have both health and armor values
-	if (typeof global.spectatedHealth !== 'undefined' && typeof global.spectatedArmor !== 'undefined') {
+	if (global.spectatedHealth && global.spectatedArmor && global.mapData.survivableDistance) {
 		let circleSize;
 
 		// Get current map name and remove 'de_' prefix
@@ -153,9 +153,6 @@ function updateBombCircleBasedOnHealth() {
 			mapName = mapName + "_alternate"
 		}
 
-		// Get the appropriate lookup table for the current map
-		const currentLookupTable = lookupTables[mapName] || lookupTables.default;
-
 		let localHealth = global.spectatedHealth;
 		global.previousState = [localHealth, global.spectatedArmor];
 
@@ -163,8 +160,8 @@ function updateBombCircleBasedOnHealth() {
 			localHealth /= 2;
 		}
 
-		let valueLower = currentLookupTable[Math.floor((localHealth / 5.0))];
-		let valueUpper = currentLookupTable[Math.ceil((localHealth / 5.0))];
+		let valueLower = global.mapData.survivableDistance[Math.floor((localHealth / 5.0))];
+		let valueUpper = global.mapData.survivableDistance[Math.ceil((localHealth / 5.0))];
 
 		let distance = (valueLower + valueUpper) / 2;
 

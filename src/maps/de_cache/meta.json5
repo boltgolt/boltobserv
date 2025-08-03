@@ -3,7 +3,7 @@
 		// The version of this meta file
 		"radar": 2,
 		// The object format version this file is using
-		"format": 3
+		"format": 4
 	},
 
 	// The amount of in-game units per pixel of the 1024px radar image
