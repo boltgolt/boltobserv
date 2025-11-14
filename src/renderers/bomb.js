@@ -7,6 +7,7 @@ let bombStyle = bombElement.style
 
 socket.element.addEventListener("bomb", event => {
 	let bomb = event.data
+	global.bomb = bomb
 
 	if (bomb.state == "carried" || bomb.state == "exploded") {
 		bombStyle.display = "none"

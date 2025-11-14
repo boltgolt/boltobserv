@@ -85,11 +85,13 @@ function parseBind(binds) {
 				break
 
 			case "functions.reload":
+				// Reload both electron window and browsers
 				win.reload()
 				socket.send({
 					type: "pageUpdate"
 				})
 
+				// Wait a second for everything to load before executing the next action
 				setTimeout(() => {
 					if (binds.length > 0) parseBind(binds)
 				}, 100)

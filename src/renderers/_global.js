@@ -19,9 +19,12 @@ global = {
 	playerLabels: [],
 	playerAmmos: [],
 	playerHealths: [],
+	playerBlasts: [],
 
 	projectilePos: {},
 	projectileBuffer: {},
+	bomb: {status: "carried", countdown: Infinity, position: {x: 0, y: 0, z: 0}},
+
 
 	/**
 	 * Convert in-game position units to radar percentages
@@ -31,6 +34,8 @@ global = {
 	 * @return {Number}             Relative radar percentage
 	 */
 	positionToPerc: (positionObj, axis, playerNum) => {
+		// Make sure it's an object, even when you simply give the number
+		if (typeof positionObj != "object") positionObj = {[axis]: positionObj}
 		// The position of the player in game, with the bottom left corner of the radar as origin (0,0)
 		let gamePosition = positionObj[axis] + global.mapData.offset[axis]
 		// The position of the player relative to an 1024x1024 pixel grid

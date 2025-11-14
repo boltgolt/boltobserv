@@ -24,7 +24,7 @@ socket.element.addEventListener("players", event => {
 			// Make the bomb carrier orange and and a line around the spectated player
 			if (player.bomb) classes.push("bomb")
 			if (player.active) classes.push("active")
-      if (player.flashed > 31) classes.push("flashed")
+			if (player.flashed > 31) classes.push("flashed")
 
 			// If drawing muzzle flashes is enabled
 			if (global.config.radar.shooting) {
@@ -33,7 +33,7 @@ socket.element.addEventListener("players", event => {
 					if (global.playerAmmos[player.num][weapon]) {
 						// They are shooting if there's less ammo in the clip than the packet before
 						if (global.playerAmmos[player.num][weapon] > player.ammo[weapon]) {
-								classes.push("shooting")
+							classes.push("shooting")
 						}
 					}
 				}
@@ -77,13 +77,51 @@ socket.element.addEventListener("players", event => {
 		if (global.config.radar.showName == "always") {
 			playerLabel.textContent = player.name.substring(0, global.config.radar.maxNameLength)
 		}
+
+		if (global.bomb.state === "planted" && global.bomb.countdown < 100 && global.config.radar.showBlastRadius === 'active' && global.mapData.survivableDistance && player.health > 0) {
+			// Calculate distance between player and bomb
+			const dx = player.position.x - global.bomb.position.x
+			const dy = player.position.y - global.bomb.position.y
+			const distance = Math.sqrt(dx * dx + dy * dy);
+
+			const healthIndex = Math.min(global.mapData.survivableDistance.length - 1, Math.floor(player.health / 5))
+			const survivableDistance = global.mapData.survivableDistance[healthIndex]
+
+			if (distance < survivableDistance) {
+				// Normalize the direction vector
+				const norm = Math.sqrt(dx * dx + dy * dy)
+				const dirX = dx / norm
+				const dirY = dy / norm
+
+				// Closest survivable point from player
+				const safeX = global.bomb.position.x + dirX * survivableDistance
+				const safeY = global.bomb.position.y + dirY * survivableDistance
+
+				const arrowSize = 14 * global.mapData.resolution
+				const arrowOffset = arrowSize * -0.25
+
+				global.playerBlasts[player.num][0].setAttribute("stroke", (survivableDistance - distance > (global.bomb.countdown - 1) * 250) ? "rgb(195, 20, 20, .9)" : "")
+				global.playerBlasts[player.num][0].setAttribute("d", `
+					M ${global.positionToPerc(player.position, "x")} ${100 - global.positionToPerc(player.position, "y")}
+					L ${global.positionToPerc(safeX, "x")} ${100 - global.positionToPerc(safeY, "y")}
+					M ${global.positionToPerc(safeX + dirX * arrowOffset + dirY * arrowSize, "x")} ${100 - global.positionToPerc(safeY + dirY * arrowOffset - dirX * arrowSize, "y")}
+					A ${arrowSize / 20},${arrowSize / 20} 0 0 0 ${global.positionToPerc(safeX + dirX * arrowOffset - dirY * arrowSize, "x")},${100 - global.positionToPerc(safeY + dirY * arrowOffset + dirX * arrowSize, "y")}
+				`)
+			}
+			else {
+				global.playerBlasts[player.num][0].setAttribute("stroke", "")
+				global.playerBlasts[player.num][0].setAttribute("d", "")
+			}
+		}
+		else if (global.playerBlasts && global.playerBlasts[player.num]) {
+			global.playerBlasts[player.num][0].setAttribute("stroke", "")
+			global.playerBlasts[player.num][0].setAttribute("d", "")
+		}
 	}
 })
 
 // On round reset
 socket.element.addEventListener("roundend", event => {
-	let phase = event.data
-
 	// Go through each player
 	for (let num in global.playerBuffers) {
 		// Empty the location buffer

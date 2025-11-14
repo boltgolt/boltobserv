@@ -52,6 +52,18 @@ socket.element.addEventListener("welcome", event => {
 		}
 	}
 
+	if (global.config.radar.showBlastRadius === 'active') {
+		for (let i = 0; i < 10; i++) {
+			const blastEl = document.createElementNS("http://www.w3.org/2000/svg", "svg")
+			blastEl.id = `blast${i}`
+			blastEl.setAttribute("viewBox", "0 0 100 100")
+			blastEl.innerHTML = `<path fill="none" d=""></path>`
+  			document.getElementById("blasts").appendChild(blastEl)
+
+			global.playerBlasts.push(blastEl.getElementsByTagName("path"))
+		}
+	}
+
 	// Insert stylesheet into head to apply some CSS setings from config
 	document.documentElement.style.setProperty("--config-tombstone-opacity", event.data.config.radar.tombstoneOpacity)
 	document.documentElement.style.setProperty("--config-bomb-dot-scale", event.data.config.radar.bombDotScale)

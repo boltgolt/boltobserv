@@ -4,7 +4,7 @@
 // without making changes here. This makes your config a lot more portable.
 
 {
-	"_version": "1.5.2",
+	"_version": "1.6.0",
 
 	// Settings related to the Boltobserv window
 	"window": {
@@ -73,6 +73,11 @@
 		// Show Boltobserv, Simple Radar and Lexogrine logos
 		"showLogos": true,
 
+		// When the bomb is planted, show how far away players have to be to survive the blast, options are:
+		// "never"   disable this feature
+		// "active"  shown when bomb countdown under 10s, distance every player has to run to survive
+		"showBlastRadius": "active",
+
 		// Show the player name on the dot, options are:
 		// "never"  only show the spec number (observer slot)
 		// "both"   show the name of the player under the dot
@@ -137,7 +142,7 @@
 		"minZoom": 1.3
 	},
 
-	// Settings related to the CSGO game
+	// Settings related to the game client
 	"game": {
 		// Seconds of inactivity before considering a connection to the game client as lost
 		// Set to -1 to never timeout
@@ -146,7 +151,7 @@
 		// The port GSI will try to connect to
 		"networkPort": 36363,
 
-		// Tries to detect the CSGO game on the machine and prompts to install the CFG file if it hasn't already
+		// Tries to detect the game files on the machine and prompts to install the CFG file if it hasn't already
 		"installCfg": true,
 
 		// The hostname for the GSI server to listen on

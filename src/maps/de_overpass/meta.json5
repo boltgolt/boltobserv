@@ -28,5 +28,9 @@
 	"zRange": {
 		"min": 10,
 		"max": 500
-	}
+	},
+
+	// Distance in units from bomb explosion that a player can survive, depending on health
+	// The first value is the distance at 1 health, the second at 5 health, then 10, etc
+	"survivableDistance": [510, 474, 452, 433, 416, 401, 387, 375, 362, 351, 327, 330, 320, 310, 301, 292, 283, 275, 267, 257, 260]
 }
