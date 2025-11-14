@@ -36,7 +36,7 @@ body {
 	transition: opacity .4s;
 }
 
-#smokes, #entities, #flashbangs, #projectiles, #trails {
+#blasts, #smokes, #entities, #flashbangs, #projectiles, #trails {
 	position: absolute;
 	height: 100%;
 	width: 100%;
@@ -218,6 +218,25 @@ div.label span {
 		filter: drop-shadow(0 0 1.8vmin rgba(255, 0, 0, 0));
 		background-color: rgba(255, 0, 0, 0);
 	}
+}
+
+#blasts > svg {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	stroke: rgba(255, 255, 255, 0.4);
+	stroke-width: .5px;
+	stroke-linecap: round;
+}
+
+#blasts > div {
+	position: absolute;
+	border-radius: 100%;
+	opacity: .6;
+	transform-origin: center;
+	overflow: hidden;
+	border: .6vmin solid #757575;
+	transform: translate(-50%, 50%);
 }
 
 #smokes > div {

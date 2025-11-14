@@ -1,9 +1,9 @@
 {
 	"version": {
 		// The version of this meta file
-		"radar": 2,
+		"radar": 4,
 		// The object format version this file is using
-		"format": 3
+		"format": 4
 	},
 
 	// The amount of in-game units per pixel of the 1024px radar image
@@ -23,6 +23,7 @@
 				"top": -482,
 				"bottom": -2500
 			},
+
 			// The radar offset in percentages to apply when player is in the split
 			"offset": {
 				"x": 0,
@@ -33,7 +34,10 @@
 			"zRange": {
 				"min": -770,
 				"max": -480
-			}
+			},
+
+			// Distance in units from bomb explosion that a player can survive, depending on health
+			"survivableDistance": [375, 349, 332, 317, 305, 293, 282, 272, 262, 253, 237, 229, 221, 214, 207, 200, 193, 187, 181, 180]
 		}
 	],
 
@@ -47,5 +51,9 @@
 	"zRange": {
 		"min": -480,
 		"max": -20
-	}
+	},
+
+	// Distance in units from bomb explosion that a player can survive, depending on health
+	// The first value is the distance at 1 health, the second at 5 health, then 10, etc
+	"survivableDistance": [380, 350, 333, 318, 306, 295, 284, 275, 266, 257, 240, 242, 234, 227, 220, 214, 207, 201, 195, 189, 190]
 }

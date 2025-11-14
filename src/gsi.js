@@ -25,10 +25,10 @@ function handleRequest(req, res) {
 
 	// On end if packet data
 	req.on("end", () => {
-		// Send back empty response immediatly
+		// Send back empty response immediately
 		res.end("")
 
-		// Patch incomming JSON to convert large integers to strings
+		// Patch incoming JSON to convert large integers to strings
 		body = body.replace(/"owner": ([0-9]{10,})/g, '"owner": "$1"')
 		// Parse JSON packet
 		let game = JSON.parse(body)
@@ -38,10 +38,8 @@ function handleRequest(req, res) {
 				status: "up"
 			}
 
-			if (game.player) {
-				if (game.player.activity != "playing") {
-					connObject.player = game.player.name
-				}
+			if (game.player && game.player.activity != "playing") {
+				connObject.player = game.player.name
 			}
 
 			process.send({
@@ -105,6 +103,7 @@ function handleRequest(req, res) {
 					name: player.name,
 					team: player.team,
 					health: player.state.health,
+					armor: player.state.armor,
 					active: isActive,
 					flashed: player.state.flashed,
 					bomb: hasBomb,
@@ -242,6 +241,7 @@ function handleRequest(req, res) {
 				data: {
 					state: game.bomb.state,
 					player: game.bomb.player,
+					countdown: game.bomb.countdown ? parseFloat(game.bomb.countdown) : Infinity,
 					position: {
 						x: parseFloat(pos[0]),
 						y: parseFloat(pos[1]),

@@ -35,7 +35,9 @@ function executeAction(subject, command) {
 			key: subject,
 			value: effects[subject]
 		}
+
 	})
+
 
 	switch (subject) {
 		case "window.fullscreen":
@@ -44,21 +46,22 @@ function executeAction(subject, command) {
 		case "window.mousePassthrough":
 			win.setIgnoreMouseEvents(effects[subject])
 			break
+
 	}
 }
 
 
 function parseBind(binds) {
-	function nextBind(binds) {
-		if (binds.length > 0) parseBind(binds)
+	// If binds is not an array, convert it to one
+	if (!Array.isArray(binds)) {
+		binds = [binds]
 	}
 
-	let bind = binds
+	// If there are no more binds to process, return
+	if (binds.length === 0) return
 
-	if (typeof binds == "object") {
-		bind = binds[0]
-		binds.shift()
-	}
+	// Get the current bind and remove it from the array
+	let bind = binds.shift()
 
 	let actionRegex = /([\w\.]*?)\s?->\s?(\w*)/
 	let functionRegex = /([\w\.]*?)\((.*?)\)/
@@ -67,6 +70,7 @@ function parseBind(binds) {
 		let parsed = actionRegex.exec(bind)
 		executeAction(parsed[1], parsed[2])
 
+		// Process remaining binds
 		if (binds.length > 0) parseBind(binds)
 	}
 	else if (bind.match(functionRegex)) {
@@ -94,22 +98,29 @@ function parseBind(binds) {
 				break
 
 			case "window.width":
-				win.setSize(Math.min(0, argument), win.getSize()[1])
-				return nextBind(binds)
+				win.setSize(Math.max(0, parseInt(argument)), win.getSize()[1])
+				if (binds.length > 0) parseBind(binds)
+				break
+
 			case "window.height":
-				win.setSize(win.getSize()[0], Math.min(0, argument))
-				return nextBind(binds)
+				win.setSize(win.getSize()[0], Math.max(0, parseInt(argument)))
+				if (binds.length > 0) parseBind(binds)
+				break
 
 			case "window.left":
 				win.setBounds({x: parseInt(argument)})
-				return nextBind(binds)
+				if (binds.length > 0) parseBind(binds)
+				break
+
 			case "window.top":
 				win.setBounds({y: parseInt(argument)})
-				return nextBind(binds)
+				if (binds.length > 0) parseBind(binds)
+				break
 
 			default:
-				console.warn(`WARNING: Unkown keybind function in keybind "${bind}"`)
-				return
+				console.warn(`WARNING: Unknown keybind function in keybind "${bind}"`)
+				if (binds.length > 0) parseBind(binds)
+				break
 		}
 	}
 }
